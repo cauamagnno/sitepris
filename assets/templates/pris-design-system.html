@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRIS Sistemas — Design System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* =============================================
+       TOKENS & RESET
+    ============================================= */
+    :root {
+      --pris-navy:      #03045E;
+      --pris-blue:      #0000A4;
+      --pris-accent:    #1C4BE2;
+      --pris-light:     #FFFBFA;
+      --pris-gradient:  linear-gradient(135deg, #03045E 0%, #1C4BE2 100%);
+
+      --gray-50:  #F8F9FA;
+      --gray-100: #F1F3F5;
+      --gray-200: #E9ECEF;
+      --gray-300: #DEE2E6;
+      --gray-400: #CED4DA;
+      --gray-500: #ADB5BD;
+      --gray-600: #6C757D;
+      --gray-700: #495057;
+      --gray-800: #343A40;
+      --gray-900: #212529;
+
+      --success: #2DCB75;
+      --warning: #F59E0B;
+      --danger:  #EF4444;
+      --info:    #3B82F6;
+
+      --radius-sm:  4px;
+      --radius-md:  8px;
+      --radius-lg:  12px;
+      --radius-xl:  20px;
+      --radius-full: 9999px;
+
+      --shadow-sm:  0 1px 3px rgba(3,4,94,0.08);
+      --shadow-md:  0 4px 16px rgba(3,4,94,0.12);
+      --shadow-lg:  0 8px 32px rgba(3,4,94,0.18);
+      --shadow-xl:  0 16px 48px rgba(3,4,94,0.24);
+
+      --font-base: 'Inter', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-base);
+      background: var(--gray-50);
+      color: var(--gray-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =============================================
+       LAYOUT SHELL
+    ============================================= */
+    .shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: var(--pris-navy);
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-logo-icon {
+      width: 36px; height: 36px;
+      background: var(--pris-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(28,75,226,0.4);
+    }
+
+    .sidebar-logo-icon svg { width: 22px; height: 22px; }
+
+    .sidebar-brand-name {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .sidebar-brand-sub {
+      color: rgba(255,255,255,0.45);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .sidebar-nav {
+      padding: 16px 12px;
+      flex: 1;
+    }
+
+    .sidebar-section-label {
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 12px 12px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: var(--radius-md);
+      color: rgba(255,255,255,0.6);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-bottom: 2px;
+      text-decoration: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.07);
+      color: #fff;
+    }
+
+    .nav-item.active {
+      background: rgba(28,75,226,0.35);
+      color: #fff;
+      box-shadow: inset 3px 0 0 var(--pris-accent);
+    }
+
+    .nav-item .nav-icon {
+      width: 16px; height: 16px;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .nav-item.active .nav-icon { opacity: 1; }
+
+    .sidebar-footer {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+    }
+
+    /* Main */
+    .main {
+      margin-left: 240px;
+      flex: 1;
+      padding: 40px 48px;
+      max-width: calc(100% - 240px);
+    }
+
+    /* =============================================
+       PAGE HEADER
+    ============================================= */
+    .page-header {
+      margin-bottom: 40px;
+    }
+
+    .page-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(28,75,226,0.1);
+      color: var(--pris-accent);
+      border: 1px solid rgba(28,75,226,0.2);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--pris-navy);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .page-desc {
+      color: var(--gray-600);
+      font-size: 15px;
+      margin-top: 8px;
+      max-width: 600px;
+    }
+
+    /* =============================================
+       SECTIONS
+    ============================================= */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* =============================================
+       CARDS
+    ============================================= */
+    .card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gray-500);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+
+    /* =============================================
+       COLORS
+    ============================================= */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .color-swatch {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .color-swatch:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .swatch-block {
+      height: 90px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+    }
+
+    .swatch-copy {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .color-swatch:hover .swatch-copy { opacity: 1; }
+
+    .swatch-info {
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .swatch-name {
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--gray-800);
+    }
+
+    .swatch-hex {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .swatch-role {
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    /* Gradient swatch */
+    .swatch-gradient {
+      background: var(--pris-gradient);
+    }
+
+    /* CSS vars box */
+    .code-block {
+      background: #0d1117;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.8;
+      color: #e6edf3;
+      overflow-x: auto;
+    }
+
+    .code-block .token-comment { color: #8b949e; }
+    .code-block .token-prop    { color: #79c0ff; }
+    .code-block .token-value   { color: #a5d6ff; }
+    .code-block .token-string  { color: #a8ff78; }
+    .code-block .token-selector{ color: #ff7b72; }
+
+    /* Color usage table */
+    .usage-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    .usage-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--gray-50);
+      color: var(--gray-600);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .usage-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-700);
+    }
+
+    .usage-table tr:last-child td { border-bottom: none; }
+
+    .dot {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* =============================================
+       TYPOGRAPHY
+    ============================================= */
+    .type-scale-item {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+    }
+
+    .type-scale-item:last-child { border-bottom: none; }
+
+    .type-meta {
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+
+    .type-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--pris-accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .type-spec {
+      font-size: 11px;
+      color: var(--gray-400);
+      font-family: var(--font-mono);
+      margin-top: 3px;
+    }
+
+    .type-preview { flex: 1; }
+
+    .type-h1 { font-size: 48px; font-weight: 800; color: var(--pris-navy); letter-spacing: -0.03em; line-height: 1.1; }
+    .type-h2 { font-size: 36px; font-weight: 700; color: var(--pris-navy); letter-spacing: -0.025em; line-height: 1.2; }
+    .type-h3 { font-size: 28px; font-weight: 700; color: var(--pris-navy); letter-spacing: -0.02em; line-height: 1.25; }
+    .type-h4 { font-size: 22px; font-weight: 600; color: var(--pris-navy); letter-spacing: -0.01em; }
+    .type-h5 { font-size: 18px; font-weight: 600; color: var(--gray-800); }
+    .type-body-lg { font-size: 17px; color: var(--gray-700); line-height: 1.7; }
+    .type-body { font-size: 15px; color: var(--gray-700); line-height: 1.6; }
+    .type-body-sm { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+    .type-caption { font-size: 11px; color: var(--gray-500); letter-spacing: 0.04em; text-transform: uppercase; }
+
+    .font-weight-demo {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .fw-item { text-align: center; }
+    .fw-sample { font-size: 24px; color: var(--pris-navy); margin-bottom: 4px; }
+    .fw-label { font-size: 11px; color: var(--gray-500); }
+
+    /* =============================================
+       LOGO
+    ============================================= */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .logo-variant {
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      border: 1px solid var(--gray-200);
+    }
+
+    .logo-dark  { background: var(--pris-navy); }
+    .logo-light { background: var(--pris-light); }
+    .logo-blue  { background: var(--pris-accent); }
+    .logo-white { background: #fff; }
+
+    .logo-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .logo-dark .logo-label, .logo-blue .logo-label { color: rgba(255,255,255,0.5); }
+    .logo-light .logo-label, .logo-white .logo-label { color: var(--gray-400); }
+
+    /* SVG logos */
+    .pris-logo-svg {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pris-mark { width: 40px; height: 40px; }
+    .pris-wordmark { font-size: 28px; font-weight: 800; letter-spacing: 0.04em; }
+
+    .on-dark .pris-wordmark { color: #fff; }
+    .on-light .pris-wordmark { color: var(--pris-navy); }
+    .on-blue .pris-wordmark { color: #fff; }
+
+    /* Symbol concept */
+    .symbol-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .symbol-display {
+      width: 140px; height: 140px;
+      background: var(--pris-gradient);
+      border-radius: var(--radius-xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .symbol-display svg { width: 80px; height: 80px; }
+
+    .symbol-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pillar {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .pillar-icon {
+      width: 36px; height: 36px;
+      background: rgba(28,75,226,0.08);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--pris-accent);
+      font-size: 16px;
+    }
+
+    .pillar-name { font-weight: 600; font-size: 14px; color: var(--pris-navy); }
+    .pillar-desc { font-size: 13px; color: var(--gray-600); margin-top: 2px; }
+
+    /* Do/Don't */
+    .do-dont-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .do-box, .dont-box {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .do-box {
+      background: rgba(45,203,117,0.06);
+      border: 1px solid rgba(45,203,117,0.25);
+    }
+
+    .dont-box {
+      background: rgba(239,68,68,0.05);
+      border: 1px solid rgba(239,68,68,0.2);
+    }
+
+    .do-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--success);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dont-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--danger);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rule-item {
+      font-size: 13px;
+      color: var(--gray-700);
+      padding: 5px 0;
+      display: flex;
+      gap: 8px;
+    }
+
+    .rule-item::before { content: '–'; color: var(--gray-400); flex-shrink: 0; }
+
+    /* =============================================
+       COMPONENTS
+    ============================================= */
+
+    /* Buttons */
+    .btn-showcase {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 24px;
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-base);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--pris-accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(28,75,226,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--pris-blue);
+      box-shadow: 0 4px 16px rgba(28,75,226,0.45);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--pris-accent);
+      border: 1.5px solid var(--pris-accent);
+    }
+    .btn-secondary:hover {
+      background: rgba(28,75,226,0.06);
+      transform: translateY(-1px);
+    }
+
+    .btn-dark {
+      background: var(--pris-navy);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(3,4,94,0.3);
+    }
+    .btn-dark:hover {
+      background: #050671;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--gray-700);
+      border: 1.5px solid var(--gray-300);
+    }
+    .btn-ghost:hover {
+      border-color: var(--gray-400);
+      background: var(--gray-100);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+    .btn-danger:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    .btn-sm { padding: 6px 14px; font-size: 12.5px; }
+    .btn-lg { padding: 13px 28px; font-size: 15.5px; border-radius: var(--radius-lg); }
+
+    .btn-icon-only {
+      width: 38px; height: 38px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+    }
+
+    /* Cards */
+    .component-card-light {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .component-card-light:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .component-card-dark {
+      background: var(--pris-navy);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      color: #fff;
+      box-shadow: var(--shadow-md);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .component-card-dark:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .component-card-accent {
+      background: var(--pris-gradient);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(28,75,226,0.35);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .component-card-accent:hover {
+      box-shadow: 0 12px 32px rgba(28,75,226,0.45);
+      transform: translateY(-2px);
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .card-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .card-icon-blue { background: rgba(28,75,226,0.1); color: var(--pris-accent); }
+    .card-icon-white { background: rgba(255,255,255,0.15); color: #fff; }
+
+    .card-metric { font-size: 28px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+    .card-metric-label { font-size: 13px; opacity: 0.7; }
+    .card-trend { font-size: 12px; font-weight: 600; color: var(--success); }
+
+    /* Badges */
+    .badge-showcase {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 20px;
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-primary { background: rgba(28,75,226,0.1); color: var(--pris-accent); border: 1px solid rgba(28,75,226,0.2); }
+    .badge-success { background: rgba(45,203,117,0.1); color: #15803d; border: 1px solid rgba(45,203,117,0.25); }
+    .badge-warning { background: rgba(245,158,11,0.1); color: #92400e; border: 1px solid rgba(245,158,11,0.25); }
+    .badge-danger  { background: rgba(239,68,68,0.1); color: #991b1b; border: 1px solid rgba(239,68,68,0.2); }
+    .badge-navy    { background: var(--pris-navy); color: #fff; }
+    .badge-gray    { background: var(--gray-100); color: var(--gray-700); border: 1px solid var(--gray-200); }
+
+    .badge-dot::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Inputs */
+    .input-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 24px;
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+    }
+
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-label { font-size: 13px; font-weight: 600; color: var(--gray-700); }
+    .input-hint  { font-size: 12px; color: var(--gray-500); }
+    .input-error { font-size: 12px; color: var(--danger); }
+
+    .input {
+      padding: 10px 14px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: var(--radius-md);
+      font-family: var(--font-base);
+      font-size: 14px;
+      color: var(--gray-900);
+      background: #fff;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      width: 100%;
+    }
+
+    .input::placeholder { color: var(--gray-400); }
+
+    .input:focus {
+      border-color: var(--pris-accent);
+      box-shadow: 0 0 0 3px rgba(28,75,226,0.12);
+    }
+
+    .input-error-state {
+      border-color: var(--danger);
+    }
+
+    .input-error-state:focus {
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon .input {
+      padding-left: 40px;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+    }
+
+    /* Alerts */
+    .alert {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+    }
+
+    .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .alert-body {}
+    .alert-title { font-weight: 600; margin-bottom: 2px; }
+
+    .alert-info    { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.2); color: #1e40af; }
+    .alert-success { background: rgba(45,203,117,0.08); border-color: rgba(45,203,117,0.2); color: #166534; }
+    .alert-warning { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2); color: #92400e; }
+    .alert-danger  { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.2);  color: #991b1b; }
+
+    /* Progress bars */
+    .progress-track {
+      height: 8px;
+      background: var(--gray-200);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: 6px 0 12px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-blue  { background: var(--pris-accent); }
+    .progress-navy  { background: var(--pris-navy); }
+    .progress-grad  { background: var(--pris-gradient); }
+    .progress-green { background: var(--success); }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-600);
+    }
+
+    /* Avatars */
+    .avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 20px;
+      background: var(--gray-50);
+      border-radius: var(--radius-lg);
+    }
+
+    .avatar {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .avatar-xs  { width: 28px; height: 28px; font-size: 11px; }
+    .avatar-sm  { width: 36px; height: 36px; font-size: 13px; }
+    .avatar-md  { width: 48px; height: 48px; font-size: 16px; }
+    .avatar-lg  { width: 60px; height: 60px; font-size: 20px; }
+    .avatar-xl  { width: 80px; height: 80px; font-size: 26px; }
+
+    .avatar-navy  { background: var(--pris-navy); }
+    .avatar-blue  { background: var(--pris-accent); }
+    .avatar-grad  { background: var(--pris-gradient); }
+    .avatar-gray  { background: var(--gray-400); }
+    .avatar-green { background: var(--success); }
+
+    .avatar-status {
+      position: relative;
+      display: inline-block;
+    }
+
+    .avatar-status::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; right: 2px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .avatar-status.online::after  { background: var(--success); }
+    .avatar-status.away::after    { background: var(--warning); }
+    .avatar-status.offline::after { background: var(--gray-400); }
+
+    .avatar-group {
+      display: flex;
+    }
+
+    .avatar-group .avatar {
+      margin-left: -10px;
+      border: 2px solid #fff;
+    }
+
+    .avatar-group .avatar:first-child { margin-left: 0; }
+
+    /* =============================================
+       LAYOUT / SPACING
+    ============================================= */
+    .spacing-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .spacing-token {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--pris-accent);
+      min-width: 60px;
+    }
+
+    .spacing-bar-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .spacing-bar {
+      height: 20px;
+      background: var(--pris-gradient);
+      border-radius: 3px;
+      opacity: 0.8;
+    }
+
+    .spacing-size {
+      font-size: 12px;
+      color: var(--gray-500);
+      min-width: 40px;
+    }
+
+    /* Grid demo */
+    .grid-demo {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .grid-col {
+      height: 48px;
+      background: rgba(28,75,226,0.12);
+      border-radius: 4px;
+      border: 1px dashed rgba(28,75,226,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--pris-accent);
+      font-weight: 600;
+    }
+
+    /* Border radius */
+    .radius-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .radius-item { text-align: center; }
+
+    .radius-box {
+      width: 60px; height: 60px;
+      background: var(--pris-gradient);
+      margin: 0 auto 8px;
+    }
+
+    .radius-label { font-size: 11px; color: var(--gray-500); font-family: var(--font-mono); }
+
+    /* Breakpoints table */
+    .bp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    .bp-table th {
+      text-align: left;
+      padding: 10px 14px;
+      background: var(--pris-navy);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .bp-table th:first-child { border-radius: var(--radius-md) 0 0 0; }
+    .bp-table th:last-child  { border-radius: 0 var(--radius-md) 0 0; }
+
+    .bp-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-700);
+    }
+
+    .bp-table tr:last-child td { border-bottom: none; }
+    .bp-table tr:nth-child(even) td { background: var(--gray-50); }
+
+    .bp-tag {
+      display: inline-block;
+      background: rgba(28,75,226,0.08);
+      color: var(--pris-accent);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    /* =============================================
+       BRAND / IDENTITY
+    ============================================= */
+    .dna-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .dna-card {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dna-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--pris-gradient);
+    }
+
+    .dna-emoji { font-size: 28px; margin-bottom: 12px; }
+    .dna-title { font-size: 16px; font-weight: 700; color: var(--pris-navy); margin-bottom: 6px; }
+    .dna-desc  { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
+
+    /* Voice */
+    .voice-example {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .voice-good {
+      background: rgba(45,203,117,0.06);
+      border: 1px solid rgba(45,203,117,0.2);
+    }
+
+    .voice-bad {
+      background: rgba(239,68,68,0.05);
+      border: 1px solid rgba(239,68,68,0.18);
+    }
+
+    .voice-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .voice-good .voice-tag { color: var(--success); }
+    .voice-bad  .voice-tag { color: var(--danger); }
+
+    .voice-text { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
+
+    /* Audience */
+    .audience-card {
+      padding: 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .audience-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-lg);
+      background: var(--pris-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .audience-name { font-weight: 600; font-size: 15px; color: var(--pris-navy); margin-bottom: 4px; }
+    .audience-desc { font-size: 13px; color: var(--gray-600); }
+
+    /* Applications */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .app-item {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-700);
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+
+    .app-item:hover {
+      background: rgba(28,75,226,0.05);
+      border-color: rgba(28,75,226,0.2);
+      color: var(--pris-accent);
+    }
+
+    .app-item-icon { font-size: 22px; margin-bottom: 6px; }
+
+    /* =============================================
+       HERO / OVERVIEW SECTION
+    ============================================= */
+    .hero-banner {
+      background: var(--pris-gradient);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      color: #fff;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      right: -60px; top: -60px;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      right: 80px; bottom: -80px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      opacity: 0.75;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .hero-meta-value {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .hero-meta-label {
+      font-size: 12px;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Overview cards */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .overview-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .overview-card:hover {
+      border-color: var(--pris-accent);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .overview-card-icon {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-lg);
+      background: rgba(28,75,226,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 14px;
+    }
+
+    .overview-card-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--pris-navy);
+      margin-bottom: 5px;
+    }
+
+    .overview-card-desc {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+
+    .overview-card-count {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--pris-accent);
+      background: rgba(28,75,226,0.08);
+      border-radius: var(--radius-full);
+      padding: 2px 10px;
+    }
+
+    /* =============================================
+       TOAST (copy notification)
+    ============================================= */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--pris-navy);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 500;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 9999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================================
+       SCROLLBAR
+    ============================================= */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 900px) {
+      .sidebar { width: 200px; }
+      .main { margin-left: 200px; max-width: calc(100% - 200px); padding: 24px; }
+      .overview-grid { grid-template-columns: 1fr 1fr; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .do-dont-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Copiado!</div>
+
+<!-- SHELL -->
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="7" height="7" rx="1.5" fill="white" opacity="0.9"/>
+            <rect x="13" y="2" width="7" height="7" rx="1.5" fill="white" opacity="0.6"/>
+            <rect x="2" y="13" width="7" height="7" rx="1.5" fill="white" opacity="0.6"/>
+            <rect x="13" y="13" width="7" height="7" rx="1.5" fill="white" opacity="0.35"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sidebar-brand-name">PRIS</div>
+          <div class="sidebar-brand-sub">Design System</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Navegação</div>
+
+      <button class="nav-item active" onclick="showSection('overview')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="1" y="1" width="6" height="6" rx="1"/>
+          <rect x="9" y="1" width="6" height="6" rx="1"/>
+          <rect x="1" y="9" width="6" height="6" rx="1"/>
+          <rect x="9" y="9" width="6" height="6" rx="1"/>
+        </svg>
+        Visão Geral
+      </button>
+
+      <button class="nav-item" onclick="showSection('colors')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="8" cy="8" r="6"/>
+          <path d="M8 2a6 6 0 0 1 6 6"/>
+        </svg>
+        Cores
+      </button>
+
+      <button class="nav-item" onclick="showSection('typography')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 4h12M8 4v9M5 13h6"/>
+        </svg>
+        Tipografia
+      </button>
+
+      <button class="nav-item" onclick="showSection('logo')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="5" height="5" rx="1"/>
+          <rect x="9" y="2" width="5" height="5" rx="1"/>
+          <rect x="2" y="9" width="5" height="5" rx="1"/>
+          <rect x="9" y="9" width="5" height="5" rx="1"/>
+        </svg>
+        Logo
+      </button>
+
+      <button class="nav-item" onclick="showSection('components')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="1" y="1" width="14" height="5" rx="1"/>
+          <rect x="1" y="9" width="6" height="6" rx="1"/>
+          <rect x="9" y="9" width="6" height="6" rx="1"/>
+        </svg>
+        Componentes
+      </button>
+
+      <button class="nav-item" onclick="showSection('layout')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="1" y="1" width="14" height="14" rx="1"/>
+          <line x1="1" y1="5" x2="15" y2="5"/>
+          <line x1="6" y1="5" x2="6" y2="15"/>
+        </svg>
+        Layout
+      </button>
+
+      <button class="nav-item" onclick="showSection('brand')">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 1l2 4 4.5.7-3.25 3.15.77 4.5L8 11.25 3.98 13.35l.77-4.5L1.5 5.7 6 5z"/>
+        </svg>
+        Marca
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">v1.0 &nbsp;·&nbsp; 2025</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ==================== OVERVIEW ==================== -->
+    <section class="section active" id="overview">
+      <div class="hero-banner">
+        <div class="hero-tag">🚀 Design System Oficial</div>
+        <div class="hero-title">PRIS Sistemas</div>
+        <div class="hero-desc">
+          Base visual unificada da marca — cores, tipografia, componentes e diretrizes de uso reunidos em um único lugar.
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-value">5</span>
+            <span class="hero-meta-label">Tokens de cor</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-value">9</span>
+            <span class="hero-meta-label">Tamanhos tipo</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-value">30+</span>
+            <span class="hero-meta-label">Componentes</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-value">4</span>
+            <span class="hero-meta-label">Variações de logo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="overview-grid">
+        <a class="overview-card" onclick="showSection('colors')">
+          <div class="overview-card-icon">🎨</div>
+          <div class="overview-card-title">Cores</div>
+          <div class="overview-card-desc">Paleta oficial com tokens, hexadecimais e variáveis CSS prontas para uso.</div>
+          <span class="overview-card-count">5 tokens principais</span>
+        </a>
+        <a class="overview-card" onclick="showSection('typography')">
+          <div class="overview-card-icon">✏️</div>
+          <div class="overview-card-title">Tipografia</div>
+          <div class="overview-card-desc">Escala modular 1.25×, hierarquia de headings, pesos e letter-spacing.</div>
+          <span class="overview-card-count">9 níveis</span>
+        </a>
+        <a class="overview-card" onclick="showSection('logo')">
+          <div class="overview-card-icon">⬡</div>
+          <div class="overview-card-title">Logo</div>
+          <div class="overview-card-desc">4 variações do logo, regras de uso e conceito do símbolo PRIS.</div>
+          <span class="overview-card-count">4 variações</span>
+        </a>
+        <a class="overview-card" onclick="showSection('components')">
+          <div class="overview-card-icon">🧩</div>
+          <div class="overview-card-title">Componentes</div>
+          <div class="overview-card-desc">Botões, cards, badges, inputs, alertas, progress bars e avatares.</div>
+          <span class="overview-card-count">30+ componentes</span>
+        </a>
+        <a class="overview-card" onclick="showSection('layout')">
+          <div class="overview-card-icon">📐</div>
+          <div class="overview-card-title">Layout</div>
+          <div class="overview-card-desc">Espaçamento base 4px, grid 12 colunas, border-radius e breakpoints.</div>
+          <span class="overview-card-count">Grid & spacing</span>
+        </a>
+        <a class="overview-card" onclick="showSection('brand')">
+          <div class="overview-card-icon">⭐</div>
+          <div class="overview-card-title">Marca</div>
+          <div class="overview-card-desc">DNA da marca, 3 pilares, voz, público-alvo e mapa de aplicações.</div>
+          <span class="overview-card-count">Identidade completa</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== COLORS ==================== -->
+    <section class="section" id="colors">
+      <div class="page-header">
+        <div class="page-badge">🎨 Cores</div>
+        <div class="page-title">Paleta de Cores</div>
+        <div class="page-desc">5 tokens principais que definem a identidade visual da PRIS. Clique em qualquer swatch para copiar o hexadecimal.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Tokens Principais</div>
+        <div class="color-grid">
+          <div class="color-swatch" onclick="copyText('#03045E', 'Navy')">
+            <div class="swatch-block" style="background:#03045E;">
+              <span class="swatch-copy">Copiar #03045E</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Navy Deep</div>
+              <div class="swatch-hex">#03045E</div>
+              <div class="swatch-role">Primária principal</div>
+            </div>
+          </div>
+
+          <div class="color-swatch" onclick="copyText('#0000A4', 'Blue')">
+            <div class="swatch-block" style="background:#0000A4;">
+              <span class="swatch-copy">Copiar #0000A4</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Royal Blue</div>
+              <div class="swatch-hex">#0000A4</div>
+              <div class="swatch-role">Primária secundária</div>
+            </div>
+          </div>
+
+          <div class="color-swatch" onclick="copyText('#1C4BE2', 'Accent')">
+            <div class="swatch-block" style="background:#1C4BE2;">
+              <span class="swatch-copy">Copiar #1C4BE2</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Electric Blue</div>
+              <div class="swatch-hex">#1C4BE2</div>
+              <div class="swatch-role">Acento / CTAs</div>
+            </div>
+          </div>
+
+          <div class="color-swatch" onclick="copyText('#FFFBFA', 'Light')">
+            <div class="swatch-block" style="background:#FFFBFA; border-bottom:1px solid #eee;">
+              <span class="swatch-copy" style="color:rgba(0,0,0,0.5);">Copiar #FFFBFA</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Off White</div>
+              <div class="swatch-hex">#FFFBFA</div>
+              <div class="swatch-role">Fundo / texto claro</div>
+            </div>
+          </div>
+
+          <div class="color-swatch" onclick="copyText('linear-gradient(135deg, #03045E 0%, #1C4BE2 100%)', 'Gradient')">
+            <div class="swatch-block swatch-gradient">
+              <span class="swatch-copy">Copiar gradiente</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Official Gradient</div>
+              <div class="swatch-hex">135° Navy → Electric</div>
+              <div class="swatch-role">Destaque / hero</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Variáveis CSS</div>
+          <div class="code-block">
+            <span class="token-selector">:root</span> {<br>
+            &nbsp;&nbsp;<span class="token-prop">--pris-navy</span>: <span class="token-string">#03045E</span>;<br>
+            &nbsp;&nbsp;<span class="token-prop">--pris-blue</span>: <span class="token-string">#0000A4</span>;<br>
+            &nbsp;&nbsp;<span class="token-prop">--pris-accent</span>: <span class="token-string">#1C4BE2</span>;<br>
+            &nbsp;&nbsp;<span class="token-prop">--pris-light</span>: <span class="token-string">#FFFBFA</span>;<br>
+            &nbsp;&nbsp;<span class="token-prop">--pris-gradient</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="token-value">linear-gradient(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;135deg,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#03045E 0%,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#1C4BE2 100%<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;)</span>;<br>
+            }
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Uso por Contexto</div>
+          <table class="usage-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Uso</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="dot" style="background:#03045E;"></span>Navy</td>
+                <td>Textos, sidebar, headers</td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#0000A4;"></span>Blue</td>
+                <td>Hover de botões, links</td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#1C4BE2;"></span>Accent</td>
+                <td>CTAs, ícones ativos, badges</td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#FFFBFA; border:1px solid #ddd;"></span>Off-White</td>
+                <td>Fundos, texto em dark</td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:linear-gradient(135deg,#03045E,#1C4BE2);"></span>Gradient</td>
+                <td>Hero, banners, destaques</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Cores de Status</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <div class="color-swatch" style="width:160px;" onclick="copyText('#2DCB75','Success')">
+            <div class="swatch-block" style="background:#2DCB75;">
+              <span class="swatch-copy">Copiar</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Sucesso</div>
+              <div class="swatch-hex">#2DCB75</div>
+            </div>
+          </div>
+          <div class="color-swatch" style="width:160px;" onclick="copyText('#F59E0B','Warning')">
+            <div class="swatch-block" style="background:#F59E0B;">
+              <span class="swatch-copy">Copiar</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Atenção</div>
+              <div class="swatch-hex">#F59E0B</div>
+            </div>
+          </div>
+          <div class="color-swatch" style="width:160px;" onclick="copyText('#EF4444','Danger')">
+            <div class="swatch-block" style="background:#EF4444;">
+              <span class="swatch-copy">Copiar</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Erro</div>
+              <div class="swatch-hex">#EF4444</div>
+            </div>
+          </div>
+          <div class="color-swatch" style="width:160px;" onclick="copyText('#3B82F6','Info')">
+            <div class="swatch-block" style="background:#3B82F6;">
+              <span class="swatch-copy">Copiar</span>
+            </div>
+            <div class="swatch-info">
+              <div class="swatch-name">Informação</div>
+              <div class="swatch-hex">#3B82F6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TYPOGRAPHY ==================== -->
+    <section class="section" id="typography">
+      <div class="page-header">
+        <div class="page-badge">✏️ Tipografia</div>
+        <div class="page-title">Escala Tipográfica</div>
+        <div class="page-desc">Família Inter em toda a hierarquia. Escala modular 1.25× para coerência visual.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Hierarquia de Headings</div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">H1</div>
+            <div class="type-spec">48px / 800<br>–0.03em</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-h1">PRIS Sistemas</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">H2</div>
+            <div class="type-spec">36px / 700<br>–0.025em</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-h2">Gestão Inteligente</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">H3</div>
+            <div class="type-spec">28px / 700<br>–0.02em</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-h3">Integração de Sistemas</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">H4</div>
+            <div class="type-spec">22px / 600<br>–0.01em</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-h4">Automação de Processos</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">H5</div>
+            <div class="type-spec">18px / 600<br>0em</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-h5">Módulo de Relatórios</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">Body LG</div>
+            <div class="type-spec">17px / 400<br>lh 1.7</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-body-lg">A PRIS oferece soluções completas para gestão empresarial com foco em precisão e integração.</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">Body</div>
+            <div class="type-spec">15px / 400<br>lh 1.6</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-body">Texto de corpo padrão para descrições, parágrafos e conteúdo geral da interface.</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">Body SM</div>
+            <div class="type-spec">13px / 400<br>lh 1.6</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-body-sm">Texto auxiliar para labels, descrições secundárias e notas de rodapé.</div>
+          </div>
+        </div>
+        <div class="type-scale-item">
+          <div class="type-meta">
+            <div class="type-label">Caption</div>
+            <div class="type-spec">11px / 400<br>+0.04em</div>
+          </div>
+          <div class="type-preview">
+            <div class="type-caption">Legenda • Metadata • Label de seção</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Pesos da Fonte</div>
+        <div class="font-weight-demo">
+          <div class="fw-item">
+            <div class="fw-sample" style="font-weight:300;">Aa</div>
+            <div class="fw-label">Light 300</div>
+          </div>
+          <div class="fw-item">
+            <div class="fw-sample" style="font-weight:400;">Aa</div>
+            <div class="fw-label">Regular 400</div>
+          </div>
+          <div class="fw-item">
+            <div class="fw-sample" style="font-weight:500;">Aa</div>
+            <div class="fw-label">Medium 500</div>
+          </div>
+          <div class="fw-item">
+            <div class="fw-sample" style="font-weight:600;">Aa</div>
+            <div class="fw-label">Semi 600</div>
+          </div>
+          <div class="fw-item">
+            <div class="fw-sample" style="font-weight:700;">Aa</div>
+            <div class="fw-label">Bold 700</div>
+          </div>
+          <div class="fw-item">
+            <div class="fw-sample" style="font-weight:800;">Aa</div>
+            <div class="fw-label">Extra 800</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Código — Mono</div>
+        <div class="code-block">
+          <span class="token-comment">/* Fira Code para snippets e dados técnicos */</span><br>
+          <span class="token-prop">font-family</span>: <span class="token-string">'Fira Code'</span>, monospace;<br>
+          <span class="token-prop">font-size</span>: <span class="token-value">13px</span>;<br>
+          <span class="token-prop">font-weight</span>: <span class="token-value">400</span>;<br>
+          <br>
+          <span class="token-comment">/* Exemplo de uso */</span><br>
+          <span class="token-selector">const</span> token = <span class="token-string">"--pris-accent: #1C4BE2"</span>;
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== LOGO ==================== -->
+    <section class="section" id="logo">
+      <div class="page-header">
+        <div class="page-badge">⬡ Logo</div>
+        <div class="page-title">Logo & Símbolo</div>
+        <div class="page-desc">4 variações oficiais do logo PRIS com regras de uso e conceito do símbolo.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Variações de Logo</div>
+        <div class="logo-grid">
+
+          <!-- Dark background -->
+          <div class="logo-variant logo-dark">
+            <div class="pris-logo-svg on-dark">
+              <svg class="pris-mark" viewBox="0 0 40 40" fill="none">
+                <rect x="4" y="4" width="14" height="14" rx="2.5" fill="white" opacity="0.95"/>
+                <rect x="22" y="4" width="14" height="14" rx="2.5" fill="white" opacity="0.65"/>
+                <rect x="4" y="22" width="14" height="14" rx="2.5" fill="white" opacity="0.65"/>
+                <rect x="22" y="22" width="14" height="14" rx="2.5" fill="white" opacity="0.35"/>
+              </svg>
+              <span class="pris-wordmark">PRIS</span>
+            </div>
+            <div class="logo-label">Fundo Escuro</div>
+          </div>
+
+          <!-- Light background -->
+          <div class="logo-variant logo-light">
+            <div class="pris-logo-svg on-light">
+              <svg class="pris-mark" viewBox="0 0 40 40" fill="none">
+                <rect x="4" y="4" width="14" height="14" rx="2.5" fill="#03045E" opacity="1"/>
+                <rect x="22" y="4" width="14" height="14" rx="2.5" fill="#1C4BE2" opacity="0.7"/>
+                <rect x="4" y="22" width="14" height="14" rx="2.5" fill="#1C4BE2" opacity="0.7"/>
+                <rect x="22" y="22" width="14" height="14" rx="2.5" fill="#1C4BE2" opacity="0.35"/>
+              </svg>
+              <span class="pris-wordmark">PRIS</span>
+            </div>
+            <div class="logo-label">Fundo Claro</div>
+          </div>
+
+          <!-- Blue background -->
+          <div class="logo-variant logo-blue">
+            <div class="pris-logo-svg on-blue">
+              <svg class="pris-mark" viewBox="0 0 40 40" fill="none">
+                <rect x="4" y="4" width="14" height="14" rx="2.5" fill="white" opacity="0.95"/>
+                <rect x="22" y="4" width="14" height="14" rx="2.5" fill="white" opacity="0.65"/>
+                <rect x="4" y="22" width="14" height="14" rx="2.5" fill="white" opacity="0.65"/>
+                <rect x="22" y="22" width="14" height="14" rx="2.5" fill="white" opacity="0.35"/>
+              </svg>
+              <span class="pris-wordmark">PRIS</span>
+            </div>
+            <div class="logo-label">Fundo Azul</div>
+          </div>
+
+          <!-- Icon only -->
+          <div class="logo-variant logo-white" style="align-items:center;justify-content:center;">
+            <svg width="60" height="60" viewBox="0 0 40 40" fill="none">
+              <rect x="4" y="4" width="14" height="14" rx="2.5" fill="#03045E" opacity="1"/>
+              <rect x="22" y="4" width="14" height="14" rx="2.5" fill="#1C4BE2" opacity="0.7"/>
+              <rect x="4" y="22" width="14" height="14" rx="2.5" fill="#1C4BE2" opacity="0.7"/>
+              <rect x="22" y="22" width="14" height="14" rx="2.5" fill="#1C4BE2" opacity="0.35"/>
+            </svg>
+            <div class="logo-label">Símbolo Isolado</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Conceito do Símbolo</div>
+        <div class="symbol-grid">
+          <div class="symbol-display">
+            <svg width="80" height="80" viewBox="0 0 40 40" fill="none">
+              <rect x="4" y="4" width="14" height="14" rx="2.5" fill="white" opacity="0.95"/>
+              <rect x="22" y="4" width="14" height="14" rx="2.5" fill="white" opacity="0.65"/>
+              <rect x="4" y="22" width="14" height="14" rx="2.5" fill="white" opacity="0.65"/>
+              <rect x="22" y="22" width="14" height="14" rx="2.5" fill="white" opacity="0.35"/>
+            </svg>
+          </div>
+          <div class="symbol-pillars">
+            <div class="pillar">
+              <div class="pillar-icon">⚙️</div>
+              <div>
+                <div class="pillar-name">Modularidade</div>
+                <div class="pillar-desc">Os 4 quadrados representam módulos independentes que se integram para formar o todo — como os sistemas da PRIS.</div>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">🔗</div>
+              <div>
+                <div class="pillar-name">Integração</div>
+                <div class="pillar-desc">A variação de opacidade ilustra camadas de dados e processos conectados em harmonia.</div>
+              </div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">📈</div>
+              <div>
+                <div class="pillar-name">Evolução</div>
+                <div class="pillar-desc">O degradê de intensidade do canto superior esquerdo para o inferior direito simboliza progresso e crescimento.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Regras de Uso</div>
+        <div class="do-dont-grid">
+          <div class="do-box">
+            <div class="do-label">✓ Correto</div>
+            <div class="rule-item">Usar sobre fundos sólidos aprovados</div>
+            <div class="rule-item">Manter espaço mínimo ao redor igual à altura do símbolo</div>
+            <div class="rule-item">Usar variação de contraste adequada ao fundo</div>
+            <div class="rule-item">Manter proporções originais do símbolo</div>
+            <div class="rule-item">Usar a versão com texto completo "PRIS" em comunicações institucionais</div>
+          </div>
+          <div class="dont-box">
+            <div class="dont-label">✗ Incorreto</div>
+            <div class="rule-item">Deformar ou esticar o logo</div>
+            <div class="rule-item">Alterar as cores dos tokens aprovados</div>
+            <div class="rule-item">Aplicar efeitos de sombra ou contorno</div>
+            <div class="rule-item">Rotacionar o símbolo</div>
+            <div class="rule-item">Usar sobre fundos muito complexos ou com baixo contraste</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== COMPONENTS ==================== -->
+    <section class="section" id="components">
+      <div class="page-header">
+        <div class="page-badge">🧩 Componentes</div>
+        <div class="page-title">Biblioteca de Componentes</div>
+        <div class="page-desc">Todos os componentes UI prontos para uso com hover funcional.</div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="card">
+        <div class="card-title">Botões — Variantes</div>
+        <div class="btn-showcase">
+          <button class="btn btn-primary">Primário</button>
+          <button class="btn btn-secondary">Secundário</button>
+          <button class="btn btn-dark">Dark</button>
+          <button class="btn btn-ghost">Ghost</button>
+          <button class="btn btn-danger">Perigo</button>
+        </div>
+
+        <div style="margin-top:16px;">
+          <div class="card-title" style="margin-bottom:12px;">Tamanhos</div>
+          <div class="btn-showcase">
+            <button class="btn btn-primary btn-sm">Pequeno</button>
+            <button class="btn btn-primary">Médio</button>
+            <button class="btn btn-primary btn-lg">Grande</button>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <div class="card-title" style="margin-bottom:12px;">Com Ícone</div>
+          <div class="btn-showcase">
+            <button class="btn btn-primary">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/>
+              </svg>
+              Novo item
+            </button>
+            <button class="btn btn-secondary">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 8l4 4 8-8"/>
+              </svg>
+              Confirmar
+            </button>
+            <button class="btn btn-ghost btn-icon-only" title="Configurações">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="8" cy="8" r="2.5"/>
+                <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.53 11.53l1.42 1.42M3.05 12.95l1.42-1.42M11.53 4.47l1.42-1.42"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <div class="card">
+        <div class="card-title">Cards</div>
+        <div class="grid-3">
+          <div class="component-card-light">
+            <div class="card-header-row">
+              <div class="card-icon card-icon-blue">📊</div>
+              <span class="badge badge-success badge-dot">Ativo</span>
+            </div>
+            <div class="card-metric" style="color:var(--pris-navy);">1.842</div>
+            <div class="card-metric-label" style="color:var(--gray-600);">Registros hoje</div>
+            <div class="card-trend">↑ +12% vs ontem</div>
+          </div>
+
+          <div class="component-card-dark">
+            <div class="card-header-row">
+              <div class="card-icon card-icon-white">🔄</div>
+              <span class="badge" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);font-size:11px;">Sync</span>
+            </div>
+            <div class="card-metric">98,6%</div>
+            <div class="card-metric-label">Disponibilidade</div>
+            <div class="card-trend" style="color:#2DCB75;">↑ Estável</div>
+          </div>
+
+          <div class="component-card-accent">
+            <div class="card-header-row">
+              <div class="card-icon card-icon-white">⚡</div>
+              <span class="badge" style="background:rgba(255,255,255,0.15);color:#fff;font-size:11px;">Premium</span>
+            </div>
+            <div class="card-metric">347ms</div>
+            <div class="card-metric-label">Tempo médio de resposta</div>
+            <div class="card-trend" style="color:rgba(255,255,255,0.7);">↓ –18% este mês</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="card">
+        <div class="card-title">Badges</div>
+        <div class="badge-showcase">
+          <span class="badge badge-primary">Primário</span>
+          <span class="badge badge-success">Ativo</span>
+          <span class="badge badge-warning">Pendente</span>
+          <span class="badge badge-danger">Erro</span>
+          <span class="badge badge-navy">Enterprise</span>
+          <span class="badge badge-gray">Rascunho</span>
+          <span class="badge badge-success badge-dot">Online</span>
+          <span class="badge badge-warning badge-dot">Ausente</span>
+          <span class="badge badge-danger badge-dot">Offline</span>
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="card">
+        <div class="card-title">Inputs</div>
+        <div class="input-showcase">
+          <div class="grid-2" style="gap:16px;">
+            <div class="input-group">
+              <label class="input-label">Nome completo</label>
+              <input class="input" type="text" placeholder="Ex.: João da Silva" />
+            </div>
+            <div class="input-group">
+              <label class="input-label">E-mail</label>
+              <div class="input-with-icon">
+                <svg class="input-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+                  <path d="M1 3l7 5 7-5"/>
+                </svg>
+                <input class="input" type="email" placeholder="joao@empresa.com" />
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label">CNPJ</label>
+              <input class="input" type="text" placeholder="00.000.000/0000-00" />
+              <span class="input-hint">Somente números</span>
+            </div>
+            <div class="input-group">
+              <label class="input-label">Senha</label>
+              <input class="input input-error-state" type="password" placeholder="••••••••" />
+              <span class="input-error">Senha muito curta (mín. 8 caracteres)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div class="card">
+        <div class="card-title">Alertas</div>
+        <div class="alert alert-info">
+          <span class="alert-icon">ℹ️</span>
+          <div class="alert-body">
+            <div class="alert-title">Informação</div>
+            Nova versão do módulo disponível para atualização.
+          </div>
+        </div>
+        <div class="alert alert-success">
+          <span class="alert-icon">✅</span>
+          <div class="alert-body">
+            <div class="alert-title">Sucesso</div>
+            Relatório exportado com êxito para o e-mail cadastrado.
+          </div>
+        </div>
+        <div class="alert alert-warning">
+          <span class="alert-icon">⚠️</span>
+          <div class="alert-body">
+            <div class="alert-title">Atenção</div>
+            Certificado digital vence em 7 dias. Renove com antecedência.
+          </div>
+        </div>
+        <div class="alert alert-danger">
+          <span class="alert-icon">🚨</span>
+          <div class="alert-body">
+            <div class="alert-title">Erro</div>
+            Falha na integração com o servidor. Verifique as credenciais.
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bars -->
+      <div class="card">
+        <div class="card-title">Progress Bars</div>
+        <div style="padding:8px 0;">
+          <div class="progress-label"><span>Processamento</span><span>72%</span></div>
+          <div class="progress-track"><div class="progress-fill progress-blue" style="width:72%"></div></div>
+
+          <div class="progress-label"><span>Armazenamento</span><span>89%</span></div>
+          <div class="progress-track"><div class="progress-fill progress-navy" style="width:89%"></div></div>
+
+          <div class="progress-label"><span>Conclusão do projeto</span><span>45%</span></div>
+          <div class="progress-track"><div class="progress-fill progress-grad" style="width:45%"></div></div>
+
+          <div class="progress-label"><span>Taxa de sucesso</span><span>96%</span></div>
+          <div class="progress-track"><div class="progress-fill progress-green" style="width:96%"></div></div>
+        </div>
+      </div>
+
+      <!-- Avatars -->
+      <div class="card">
+        <div class="card-title">Avatares</div>
+        <div class="avatar-row">
+          <div class="avatar avatar-xl avatar-grad">CM</div>
+          <div class="avatar avatar-lg avatar-navy">JP</div>
+          <div class="avatar avatar-md avatar-blue">AS</div>
+          <div class="avatar avatar-sm avatar-green">MF</div>
+          <div class="avatar avatar-xs avatar-gray">LR</div>
+
+          <div style="width:1px;height:40px;background:var(--gray-200);margin:0 8px;"></div>
+
+          <div class="avatar-status online">
+            <div class="avatar avatar-md avatar-navy">JK</div>
+          </div>
+          <div class="avatar-status away">
+            <div class="avatar avatar-md avatar-blue">PT</div>
+          </div>
+          <div class="avatar-status offline">
+            <div class="avatar avatar-md avatar-gray">RS</div>
+          </div>
+
+          <div style="width:1px;height:40px;background:var(--gray-200);margin:0 8px;"></div>
+
+          <div class="avatar-group">
+            <div class="avatar avatar-md avatar-navy">CM</div>
+            <div class="avatar avatar-md avatar-blue">JP</div>
+            <div class="avatar avatar-md avatar-green">AS</div>
+            <div class="avatar avatar-md avatar-gray">+5</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== LAYOUT ==================== -->
+    <section class="section" id="layout">
+      <div class="page-header">
+        <div class="page-badge">📐 Layout</div>
+        <div class="page-title">Sistema de Layout</div>
+        <div class="page-desc">Espaçamento base 4px, grid de 12 colunas e breakpoints responsivos.</div>
+      </div>
+
+      <!-- Spacing -->
+      <div class="card">
+        <div class="card-title">Escala de Espaçamento — Base 4px</div>
+        <div class="spacing-grid">
+          <div class="spacing-row">
+            <div class="spacing-token">space-1</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:4px;"></div>
+              <div class="spacing-size">4px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-2</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:8px;"></div>
+              <div class="spacing-size">8px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-3</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:12px;"></div>
+              <div class="spacing-size">12px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-4</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:16px;"></div>
+              <div class="spacing-size">16px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-5</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:20px;"></div>
+              <div class="spacing-size">20px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-6</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:24px;"></div>
+              <div class="spacing-size">24px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-8</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:32px;"></div>
+              <div class="spacing-size">32px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-10</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:40px;"></div>
+              <div class="spacing-size">40px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-12</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:48px;"></div>
+              <div class="spacing-size">48px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-16</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:64px;"></div>
+              <div class="spacing-size">64px</div>
+            </div>
+          </div>
+          <div class="spacing-row">
+            <div class="spacing-token">space-20</div>
+            <div class="spacing-bar-wrap">
+              <div class="spacing-bar" style="width:80px;"></div>
+              <div class="spacing-size">80px</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="card">
+        <div class="card-title">Grid de 12 Colunas</div>
+        <div class="grid-demo">
+          <div class="grid-col">1</div>
+          <div class="grid-col">2</div>
+          <div class="grid-col">3</div>
+          <div class="grid-col">4</div>
+          <div class="grid-col">5</div>
+          <div class="grid-col">6</div>
+          <div class="grid-col">7</div>
+          <div class="grid-col">8</div>
+          <div class="grid-col">9</div>
+          <div class="grid-col">10</div>
+          <div class="grid-col">11</div>
+          <div class="grid-col">12</div>
+
+          <!-- Exemplos de uso -->
+          <div class="grid-col" style="grid-column:span 4;background:rgba(28,75,226,0.2);border-color:rgba(28,75,226,0.5);">4 cols</div>
+          <div class="grid-col" style="grid-column:span 8;background:rgba(28,75,226,0.15);border-color:rgba(28,75,226,0.4);">8 cols</div>
+
+          <div class="grid-col" style="grid-column:span 6;background:rgba(28,75,226,0.2);border-color:rgba(28,75,226,0.5);">6 cols</div>
+          <div class="grid-col" style="grid-column:span 6;background:rgba(28,75,226,0.2);border-color:rgba(28,75,226,0.5);">6 cols</div>
+
+          <div class="grid-col" style="grid-column:span 3;background:rgba(28,75,226,0.15);">3</div>
+          <div class="grid-col" style="grid-column:span 3;background:rgba(28,75,226,0.15);">3</div>
+          <div class="grid-col" style="grid-column:span 3;background:rgba(28,75,226,0.15);">3</div>
+          <div class="grid-col" style="grid-column:span 3;background:rgba(28,75,226,0.15);">3</div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:var(--gray-500);">Gap padrão: 24px &nbsp;·&nbsp; Max-width: 1280px &nbsp;·&nbsp; Padding lateral: 48px (desktop), 24px (mobile)</div>
+      </div>
+
+      <!-- Border Radius -->
+      <div class="card">
+        <div class="card-title">Border Radius</div>
+        <div class="radius-grid">
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:4px;"></div>
+            <div class="radius-label">sm · 4px</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:8px;"></div>
+            <div class="radius-label">md · 8px</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:12px;"></div>
+            <div class="radius-label">lg · 12px</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:20px;"></div>
+            <div class="radius-label">xl · 20px</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:9999px;width:80px;height:40px;"></div>
+            <div class="radius-label">full · ∞</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakpoints -->
+      <div class="card">
+        <div class="card-title">Breakpoints Responsivos</div>
+        <table class="bp-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Prefixo</th>
+              <th>Min-width</th>
+              <th>Uso típico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mobile</td>
+              <td><span class="bp-tag">xs</span></td>
+              <td>0px</td>
+              <td>Smartphones — layout coluna única</td>
+            </tr>
+            <tr>
+              <td>Tablet</td>
+              <td><span class="bp-tag">sm</span></td>
+              <td>640px</td>
+              <td>Tablets portrait — 2 colunas</td>
+            </tr>
+            <tr>
+              <td>Tablet L</td>
+              <td><span class="bp-tag">md</span></td>
+              <td>768px</td>
+              <td>Tablets landscape — sidebar colapsada</td>
+            </tr>
+            <tr>
+              <td>Desktop</td>
+              <td><span class="bp-tag">lg</span></td>
+              <td>1024px</td>
+              <td>Desktops — layout completo</td>
+            </tr>
+            <tr>
+              <td>Wide</td>
+              <td><span class="bp-tag">xl</span></td>
+              <td>1280px</td>
+              <td>Monitores grandes — max-width ativo</td>
+            </tr>
+            <tr>
+              <td>Ultra</td>
+              <td><span class="bp-tag">2xl</span></td>
+              <td>1536px</td>
+              <td>Ultra-wide — espaçamentos ampliados</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== BRAND ==================== -->
+    <section class="section" id="brand">
+      <div class="page-header">
+        <div class="page-badge">⭐ Marca</div>
+        <div class="page-title">Identidade de Marca</div>
+        <div class="page-desc">DNA, pilares, voz, público-alvo e mapa de aplicações da PRIS Sistemas.</div>
+      </div>
+
+      <!-- DNA -->
+      <div class="card">
+        <div class="card-title">DNA da Marca</div>
+        <div class="dna-grid">
+          <div class="dna-card">
+            <div class="dna-emoji">🎯</div>
+            <div class="dna-title">Técnica</div>
+            <div class="dna-desc">A PRIS fala com precisão. Cada palavra carrega responsabilidade com a exatidão dos dados.</div>
+          </div>
+          <div class="dna-card">
+            <div class="dna-emoji">💡</div>
+            <div class="dna-title">Clara</div>
+            <div class="dna-desc">Complexidade técnica traduzida em linguagem acessível sem perder profundidade.</div>
+          </div>
+          <div class="dna-card">
+            <div class="dna-emoji">🚀</div>
+            <div class="dna-title">Moderna</div>
+            <div class="dna-desc">Design e comunicação alinhados com as tendências mais recentes do setor de tecnologia.</div>
+          </div>
+          <div class="dna-card">
+            <div class="dna-emoji">🛡️</div>
+            <div class="dna-title">Confiável</div>
+            <div class="dna-desc">A robustez dos sistemas reflete-se na consistência visual e na clareza da comunicação.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Pilares -->
+      <div class="card">
+        <div class="card-title">3 Pilares Conceituais</div>
+        <div class="grid-3">
+          <div style="text-align:center;padding:24px 16px;">
+            <div style="font-size:48px;margin-bottom:12px;">🔬</div>
+            <div style="font-size:18px;font-weight:700;color:var(--pris-navy);margin-bottom:8px;">Precisão</div>
+            <div style="font-size:13px;color:var(--gray-600);line-height:1.6;">Cada dado processado reflete a realidade com fidelidade máxima. Zero margem para ambiguidade.</div>
+          </div>
+          <div style="text-align:center;padding:24px 16px;border-left:1px solid var(--gray-200);border-right:1px solid var(--gray-200);">
+            <div style="font-size:48px;margin-bottom:12px;">🔗</div>
+            <div style="font-size:18px;font-weight:700;color:var(--pris-navy);margin-bottom:8px;">Integração</div>
+            <div style="font-size:13px;color:var(--gray-600);line-height:1.6;">Sistemas, equipes e processos conectados de forma fluida e inteligente em um único ecossistema.</div>
+          </div>
+          <div style="text-align:center;padding:24px 16px;">
+            <div style="font-size:48px;margin-bottom:12px;">📈</div>
+            <div style="font-size:18px;font-weight:700;color:var(--pris-navy);margin-bottom:8px;">Evolução</div>
+            <div style="font-size:13px;color:var(--gray-600);line-height:1.6;">Tecnologia que acompanha o crescimento do negócio, escalável e sempre à frente das demandas.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Voz da Marca -->
+      <div class="card">
+        <div class="card-title">Voz da Marca</div>
+        <div class="grid-2">
+          <div>
+            <div class="voice-example voice-good">
+              <div class="voice-tag">✓ Use assim</div>
+              <div class="voice-text">
+                "Automatize sua gestão fiscal com precisão e segurança. O módulo de notas fiscais da PRIS integra em tempo real com a SEFAZ."
+              </div>
+            </div>
+            <div class="voice-example voice-good">
+              <div class="voice-tag">✓ Use assim</div>
+              <div class="voice-text">
+                "Dados confiáveis. Decisões inteligentes. A PRIS transforma processos em resultados."
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="voice-example voice-bad">
+              <div class="voice-tag">✗ Evite</div>
+              <div class="voice-text">
+                "Nossa solução incrível vai revolucionar completamente o seu negócio e você vai amar cada funcionalidade!!!"
+              </div>
+            </div>
+            <div class="voice-example voice-bad">
+              <div class="voice-tag">✗ Evite</div>
+              <div class="voice-text">
+                "Não tem problema, qualquer coisa a gente resolve depois... o sistema faz mais ou menos isso."
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Público-alvo -->
+      <div class="card">
+        <div class="card-title">Público-Alvo</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="audience-card">
+            <div class="audience-icon">🏢</div>
+            <div>
+              <div class="audience-name">Gestores e Diretores</div>
+              <div class="audience-desc">Tomadores de decisão que precisam de visibilidade completa sobre operações, KPIs e resultados em tempo real.</div>
+            </div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">💻</div>
+            <div>
+              <div class="audience-name">Equipes de TI e Sistemas</div>
+              <div class="audience-desc">Profissionais técnicos responsáveis pela implementação, integração e manutenção dos módulos PRIS.</div>
+            </div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">📋</div>
+            <div>
+              <div class="audience-name">Financeiro e Contabilidade</div>
+              <div class="audience-desc">Usuários que operam diariamente com notas fiscais, conciliação bancária e relatórios tributários.</div>
+            </div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">📦</div>
+            <div>
+              <div class="audience-name">Operações e Logística</div>
+              <div class="audience-desc">Times que gerenciam estoque, pedidos e fluxo de mercadorias utilizando os módulos ERP.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aplicações -->
+      <div class="card">
+        <div class="card-title">Mapa de Aplicações Aprovadas</div>
+        <div class="app-grid">
+          <div class="app-item"><div class="app-item-icon">🖥️</div>Interface Web</div>
+          <div class="app-item"><div class="app-item-icon">📱</div>App Mobile</div>
+          <div class="app-item"><div class="app-item-icon">📄</div>Documentos PDF</div>
+          <div class="app-item"><div class="app-item-icon">📧</div>E-mail Marketing</div>
+          <div class="app-item"><div class="app-item-icon">🎪</div>Eventos e Feiras</div>
+          <div class="app-item"><div class="app-item-icon">📊</div>Apresentações</div>
+          <div class="app-item"><div class="app-item-icon">🖨️</div>Material Impresso</div>
+          <div class="app-item"><div class="app-item-icon">🌐</div>Redes Sociais</div>
+          <div class="app-item"><div class="app-item-icon">📦</div>Embalagens</div>
+          <div class="app-item"><div class="app-item-icon">👕</div>Vestuário / Brindes</div>
+          <div class="app-item"><div class="app-item-icon">🏠</div>Sinalização</div>
+          <div class="app-item"><div class="app-item-icon">📹</div>Vídeo / Motion</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  function showSection(id) {
+    // Hide all
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    // Show target
+    document.getElementById(id).classList.add('active');
+
+    // Activate nav
+    const navItems = document.querySelectorAll('.nav-item');
+    const sectionMap = ['overview','colors','typography','logo','components','layout','brand'];
+    const idx = sectionMap.indexOf(id);
+    if (navItems[idx]) navItems[idx].classList.add('active');
+
+    // Scroll to top
+    document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function copyText(text, label) {
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toast');
+      toast.textContent = `✓ ${label} copiado!`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }).catch(() => {
+      const toast = document.getElementById('toast');
+      toast.textContent = `✓ ${text}`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    });
+  }
+
+  // Animate progress bars on section show
+  document.querySelectorAll('.nav-item').forEach((item, i) => {
+    item.addEventListener('click', () => {
+      setTimeout(() => {
+        document.querySelectorAll('.progress-fill').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0%';
+          setTimeout(() => bar.style.width = w, 50);
+        });
+      }, 100);
+    });
+  });
+</script>
+
+</body>
+</html>

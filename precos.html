@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planos e Preços — PRISERP</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <style>
+    /* INTEGRAÇÃO TOKENS DS v3 */
+    :root {
+      --pris-navy: #03045E; --pris-blue: #0000A4; --pris-accent: #1C4BE2; --pris-light: #FFFBFA;
+      --pris-gradient: linear-gradient(135deg, #03045E 0%, #1C4BE2 100%);
+      --gray-50: #F8F9FA; --gray-100: #F1F3F5; --gray-200: #E9ECEF; --gray-300: #DEE2E6; --gray-400: #CED4DA; --gray-500: #ADB5BD; --gray-600: #6C757D; --gray-800: #343A40; --gray-900: #212529;
+      --success: #2DCB75;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body { font-family: 'Inter', sans-serif; background: #fff; color: var(--gray-900); overflow-x: hidden; }
+    
+    nav { position: fixed; top:0; left:0; right:0; height:64px; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-100); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+    .btn-primary { background: var(--pris-accent); color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--pris-blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(28,75,226,0.4); }
+
+    .pricing-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 24px; padding: 48px; position: relative; transition: all 0.4s ease; display: flex; flex-direction: column; }
+    .pricing-card.featured { background: var(--pris-navy); color: white; border-color: var(--pris-navy); box-shadow: 0 32px 64px rgba(3,4,94,0.15); transform: scale(1.05); z-index: 10; }
+    .featured .btn-primary { background: white; color: var(--pris-navy); }
+    .featured .btn-primary:hover { background: var(--pris-accent); color: white; }
+
+    .price-value { font-size: 48px; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .price-sub { font-size: 13px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 40px; }
+
+    .feature-list { list-style: none; display: grid; gap: 16px; margin-bottom: 48px; }
+    .feature-list li { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; }
+    .feature-list li iconify-icon { font-size: 18px; flex-shrink: 0; }
+
+    .tag { display: inline-flex; background: rgba(28,75,226,0.07); border: 1px solid rgba(28,75,226,0.15); color: var(--pris-accent); padding: 4px 12px; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
+    
+    footer { background: var(--pris-navy); color: rgba(255,255,255,0.5); padding: 80px 40px 40px; position: relative; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" style="text-decoration:none; display:flex; align-items:center; gap:10px;">
+      <div style="width:32px; height:32px; background:var(--pris-gradient); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+        <iconify-icon icon="solar:prism-bold-duotone" style="color:white; font-size:18px;"></iconify-icon>
+      </div>
+      <span style="font-weight:900; color:var(--pris-navy); font-size:18px;">PRIS<span style="color:var(--pris-accent);">ERP</span></span>
+    </a>
+    <div style="display:flex; gap:32px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-500);">
+      <a href="funcionalidades.html" style="text-decoration:none; color:inherit;">Produto</a>
+      <a href="index.html#segmentos" style="text-decoration:none; color:inherit;">Segmentos</a>
+      <a href="precos.html" style="text-decoration:none; color:inherit;">Preços</a>
+      <a href="parceiros.html" style="text-decoration:none; color:inherit;">Parceiros</a>
+    </div>
+    <a href="#contato" class="btn-primary" style="padding: 10px 20px; font-size:12px; border-radius: 999px;">Demonstração</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header style="padding: 160px 0 80px; text-align:center;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+      <span class="tag">Planos e Licenciamento</span>
+      <h1 style="font-size: clamp(32px, 5vw, 56px); font-weight: 900; color: var(--pris-navy); letter-spacing: -0.04em; margin-bottom: 16px;">
+        Investimento que <span style="-webkit-text-stroke: 1.5px var(--pris-navy); color: transparent;">escala com você.</span>
+      </h1>
+      <p style="font-size:18px; color:var(--gray-600); max-width:600px; margin:0 auto; line-height:1.7;">
+        Licenciamento mensal flexível baseado no tamanho da sua operação. Sem letras miúdas, com suporte total.
+      </p>
+    </div>
+  </header>
+
+  <!-- PRICING GRIDS -->
+  <main style="padding-bottom:120px;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 24px; display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; align-items:stretch;">
+      
+      <!-- ESSENCIAL -->
+      <div class="pricing-card">
+        <h3 style="font-size:20px; font-weight:800; color:var(--pris-navy); margin-bottom:12px;">Essencial</h3>
+        <p style="font-size:14px; color:var(--gray-500); margin-bottom:32px;">Ideal para pequenas empresas que buscam organização básica.</p>
+        
+        <div class="price-value" style="color:var(--pris-navy);">Consulte</div>
+        <div class="price-sub">Licença Mensal</div>
+
+        <ul class="feature-list">
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Emissão de NF-e</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Controle de estoque</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Controle financeiro</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Relatórios básicos</li>
+        </ul>
+
+        <button class="btn btn-primary" style="margin-top:auto; width:100%; justify-content:center; border-radius:999px;">Solicitar demonstração</button>
+      </div>
+
+      <!-- PROFISSIONAL (FEATURED) -->
+      <div class="pricing-card featured">
+        <div style="position:absolute; top:24px; right:24px; background:white; color:var(--pris-navy); padding:4px 12px; border-radius:999px; font-size:10px; font-weight:900; text-transform:uppercase;">Mais Popular</div>
+        <h3 style="font-size:20px; font-weight:800; margin-bottom:12px;">Profissional</h3>
+        <p style="font-size:14px; color:rgba(255,255,255,0.6); margin-bottom:32px;">Para empresas em crescimento que precisam de automação.</p>
+        
+        <div class="price-value">R$ 300<span style="font-size:16px; font-weight:600; opacity:0.6;">/mês</span></div>
+        <div class="price-sub" style="color:rgba(255,255,255,0.4);">Licença Mensal Média</div>
+
+        <ul class="feature-list" style="color:rgba(255,255,255,0.8);">
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--success);"></iconify-icon> Todos recursos Essencial</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--success);"></iconify-icon> PDV Integrado</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--success);"></iconify-icon> Relatórios avançados</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--success);"></iconify-icon> Automação fiscal</li>
+        </ul>
+
+        <button class="btn btn-primary" style="margin-top:auto; width:100%; justify-content:center; border-radius:999px;">Assinar agora</button>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div class="pricing-card">
+        <h3 style="font-size:20px; font-weight:800; color:var(--pris-navy); margin-bottom:12px;">Enterprise</h3>
+        <p style="font-size:14px; color:var(--gray-500); margin-bottom:32px;">Para operações complexas e unidades multiempresa.</p>
+        
+        <div class="price-value" style="color:var(--pris-navy);">Sob Medida</div>
+        <div class="price-sub">Configuração Personalizada</div>
+
+        <ul class="feature-list">
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Multiempresa</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Integrações avançadas (API)</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Implantação presencial</li>
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Suporte dedicado VIP</li>
+        </ul>
+
+        <button class="btn btn-primary" style="background:var(--pris-navy); margin-top:auto; width:100%; justify-content:center; border-radius:999px;">Falar com consultor</button>
+      </div>
+
+    </div>
+
+    <!-- Installation Info -->
+    <div style="max-width:1200px; margin:64px auto 0; text-align:center;">
+       <p style="font-size:13px; color:var(--gray-500); font-weight:600; text-transform:uppercase; letter-spacing:0.1em;">
+         * Instalação a partir de R$ 300,00 a R$ 1.200,00 sob diagnóstico técnico.
+       </p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap:64px;">
+      <div>
+        <div style="font-size:24px; font-weight:900; color:white; margin-bottom:20px;">PRIS<span style="color:var(--pris-accent);">ERP</span></div>
+        <p style="font-size:14px; line-height:1.7;">Soluções inteligentes de gestão para o varejo.</p>
+      </div>
+      <div>
+        <h5 style="color:white; font-size:12px; font-weight:900; text-transform:uppercase; margin-bottom:24px;">Links Rápidos</h5>
+        <ul style="list-style:none; font-size:14px; display:grid; gap:14px;">
+          <li><a href="funcionalidades.html" style="color:inherit; text-decoration:none;">Funcionalidades</a></li>
+          <li><a href="parceiros.html" style="color:inherit; text-decoration:none;">Programa Network</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 style="color:white; font-size:12px; font-weight:900; text-transform:uppercase; margin-bottom:24px;">Suporte</h5>
+        <ul style="list-style:none; font-size:14px; display:grid; gap:14px;">
+          <li><a href="#" style="color:inherit; text-decoration:none;">Central de Ajuda</a></li>
+          <li><a href="#" style="color:inherit; text-decoration:none;">Documentação</a></li>
+        </ul>
+      </div>
+      <div>
+         <h5 style="color:white; font-size:12px; font-weight:900; text-transform:uppercase; margin-bottom:24px;">Contato</h5>
+         <div style="font-size:14px; line-height:1.5;">contato@priserp.com.br</div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

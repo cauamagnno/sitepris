@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funcionalidades — PRISERP</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <style>
+    /* INTEGRAÇÃO TOKENS DS v3 */
+    :root {
+      --pris-navy: #03045E; --pris-blue: #0000A4; --pris-accent: #1C4BE2; --pris-light: #FFFBFA;
+      --pris-gradient: linear-gradient(135deg, #03045E 0%, #1C4BE2 100%);
+      --gray-50: #F8F9FA; --gray-100: #F1F3F5; --gray-200: #E9ECEF; --gray-400: #CED4DA; --gray-500: #ADB5BD; --gray-600: #6C757D; --gray-800: #343A40; --gray-900: #212529;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body { font-family: 'Inter', sans-serif; background: #fff; color: var(--gray-900); overflow-x: hidden; }
+    
+    .animate-reveal { opacity: 0; animation: reveal-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes reveal-up { 0% { clip-path: inset(100% 0 0 0); transform: translateY(20px); opacity: 0; } 100% { clip-path: inset(0 0 0 0); transform: translateY(0); opacity: 1; } }
+
+    .tag { display: inline-flex; background: rgba(28,75,226,0.07); border: 1px solid rgba(28,75,226,0.15); color: var(--pris-accent); padding: 4px 12px; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
+    
+    nav { position: fixed; top:0; left:0; right:0; height:64px; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-100); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+    .btn-primary { background: var(--pris-accent); color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+    .btn-primary:hover { background: var(--pris-blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(28,75,226,0.4); }
+
+    .feature-card { padding: 40px; border-radius: 24px; border: 1px solid var(--gray-100); transition: all 0.4s ease; background: #fff; }
+    .feature-card:hover { border-color: var(--pris-accent); box-shadow: 0 20px 48px rgba(3,4,94,0.08); transform: translateY(-4px); }
+
+    .icon-box { width: 56px; height: 56px; border-radius: 14px; background: rgba(28,75,226,0.05); color: var(--pris-accent); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; font-size: 28px; }
+
+    .grid-bg { background-image: radial-gradient(var(--gray-200) 1px, transparent 1px); background-size: 32px 32px; opacity: 0.3; }
+
+    footer { background: var(--pris-navy); color: rgba(255,255,255,0.5); padding: 80px 40px 40px; position: relative; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" style="text-decoration:none; display:flex; align-items:center; gap:10px;">
+      <div style="width:32px; height:32px; background:var(--pris-gradient); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+        <iconify-icon icon="solar:prism-bold-duotone" style="color:white; font-size:18px;"></iconify-icon>
+      </div>
+      <span style="font-weight:900; color:var(--pris-navy); font-size:18px;">PRIS<span style="color:var(--pris-accent);">ERP</span></span>
+    </a>
+    <div style="display:flex; gap:32px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-500);">
+      <a href="index.html#produto" style="text-decoration:none; color:inherit;">Produto</a>
+      <a href="index.html#segmentos" style="text-decoration:none; color:inherit;">Segmentos</a>
+      <a href="precos.html" style="text-decoration:none; color:inherit;">Preços</a>
+      <a href="parceiros.html" style="text-decoration:none; color:inherit;">Parceiros</a>
+    </div>
+    <a href="#contato" class="btn-primary" style="padding: 10px 20px; font-size:12px; border-radius: 999px;">Demonstração</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header style="padding: 160px 0 80px; position:relative; overflow:hidden;">
+    <div class="grid-bg" style="position:absolute; inset:0; z-index:-1;"></div>
+    <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+      <span class="tag">Módulos do Sistema</span>
+      <h1 style="font-size: clamp(32px, 5vw, 64px); font-weight: 900; color: var(--pris-navy); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 24px;">
+        Recursos desenhados para a <br><span style="-webkit-text-stroke: 1.5px var(--pris-navy); color: transparent;">eficiência total.</span>
+      </h1>
+      <p style="font-size:18px; color:var(--gray-600); max-width:600px; line-height:1.7;">
+        Do fiscal ao PDV, o PRISERP centraliza todas as operações da sua empresa em uma interface intuitiva e escalável.
+      </p>
+    </div>
+  </header>
+
+  <!-- FEATURE BLOCKS -->
+  <main style="padding-bottom:120px;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 24px; display:grid; gap:40px;">
+      
+      <!-- FISCAL -->
+      <div class="feature-card animate-reveal">
+        <div style="display:grid; grid-template-columns: 240px 1fr; gap:60px;">
+          <div>
+            <div class="icon-box"><iconify-icon icon="solar:document-text-bold-duotone"></iconify-icon></div>
+            <h2 style="font-size:28px; font-weight:800; color:var(--pris-navy); margin-bottom:12px;">Gestão Fiscal</h2>
+            <p style="font-size:14px; color:var(--gray-500);">Compliance e automação para sua empresa não parar.</p>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px;">
+            <ul style="list-style:none; font-size:14px; color:var(--gray-600); display:grid; gap:16px;">
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> NF-e, NFC-e e NFS-e</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> CT-e e MDF-e</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> SPED Fiscal Completo</li>
+            </ul>
+            <ul style="list-style:none; font-size:14px; color:var(--gray-600); display:grid; gap:16px;">
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Manifesto do Destinatário</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Importação auto. de XML</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Validação antes da emissão</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ESTOQUE -->
+      <div class="feature-card animate-reveal" style="animation-delay:0.2s;">
+        <div style="display:grid; grid-template-columns: 240px 1fr; gap:60px;">
+          <div>
+            <div class="icon-box" style="color:var(--pris-navy);"><iconify-icon icon="solar:box-bold-duotone"></iconify-icon></div>
+            <h2 style="font-size:28px; font-weight:800; color:var(--pris-navy); margin-bottom:12px;">Gestão de Estoque</h2>
+            <p style="font-size:14px; color:var(--gray-500);">Controle absoluto de cada item disponível.</p>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px;">
+            <ul style="list-style:none; font-size:14px; color:var(--gray-600); display:grid; gap:16px;">
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Cadastro completo de produtos</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Controle de entrada por XML</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Baixa automática no faturamento</li>
+            </ul>
+            <ul style="list-style:none; font-size:14px; color:var(--gray-600); display:grid; gap:16px;">
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Inventário físico e rotativo</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Curva ABC de produtos</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Controle de múltiplos depósitos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINANCEIRO -->
+      <div class="feature-card animate-reveal" style="animation-delay:0.3s;">
+        <div style="display:grid; grid-template-columns: 240px 1fr; gap:60px;">
+          <div>
+            <div class="icon-box" style="color:var(--pris-accent);"><iconify-icon icon="solar:wallet-bold-duotone"></iconify-icon></div>
+            <h2 style="font-size:28px; font-weight:800; color:var(--pris-navy); margin-bottom:12px;">Gestão Financeira</h2>
+            <p style="font-size:14px; color:var(--gray-500);">Saúde financeira sob supervisão constante.</p>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:32px;">
+            <ul style="list-style:none; font-size:14px; color:var(--gray-600); display:grid; gap:16px;">
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Contas a pagar e receber</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Fluxo de caixa detalhado</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Emissão de boletos e PIX</li>
+            </ul>
+            <ul style="list-style:none; font-size:14px; color:var(--gray-600); display:grid; gap:16px;">
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Conciliação bancária automática</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Controle de comissões</li>
+              <li style="display:flex; align-items:center; gap:10px;"><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Monitoramento de margens</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap:64px; position:relative; z-index:10;">
+      <div>
+        <div style="font-size:24px; font-weight:900; color:white; margin-bottom:20px;">PRIS<span style="color:var(--pris-accent);">ERP</span></div>
+        <p style="font-size:14px; line-height:1.7; max-width:240px;">Soluções inteligentes de gestão para o varejo, focadas em simplicidade e controle total.</p>
+      </div>
+      <div>
+        <h5 style="color:white; font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:24px;">Produto</h5>
+        <ul style="list-style:none; font-size:14px; display:grid; gap:14px;">
+          <li><a href="index.html#produto" style="color:inherit; text-decoration:none;">Funcionalidades</a></li>
+          <li><a href="index.html#segmentos" style="color:inherit; text-decoration:none;">Segmentos</a></li>
+          <li><a href="precos.html" style="color:inherit; text-decoration:none;">Preços</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 style="color:white; font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:24px;">Empresa</h5>
+        <ul style="list-style:none; font-size:14px; display:grid; gap:14px;">
+          <li><a href="#" style="color:inherit; text-decoration:none;">Sobre Nós</a></li>
+          <li><a href="#" style="color:inherit; text-decoration:none;">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+         <h5 style="color:white; font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:24px;">Contato</h5>
+         <div style="font-size:14px; line-height:1.5;">
+           contato@priserp.com.br<br>
+           (31) 9999-9999
+         </div>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:80px auto 0; padding-top:40px; border-top:1px solid rgba(255,255,255,0.05); display:flex; justify-content:space-between; font-size:11px; text-transform:uppercase; letter-spacing:0.1em;">
+       <p>© 2024 PRIS Sistemas · Design System v3.0</p>
+       <div style="display:flex; gap:16px;">
+         <iconify-icon icon="solar:instagram-linear" style="font-size:20px;"></iconify-icon>
+         <iconify-icon icon="solar:linkedin-linear" style="font-size:20px;"></iconify-icon>
+       </div>
+    </div>
+  </footer>
+
+</body>
+</html>

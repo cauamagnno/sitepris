@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRIS NETWORK — Programa de Parceiros</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <style>
+    /* INTEGRAÇÃO TOKENS DS v3 */
+    :root {
+      --pris-navy: #03045E; --pris-blue: #0000A4; --pris-accent: #1C4BE2; --pris-light: #FFFBFA;
+      --pris-gradient: linear-gradient(135deg, #03045E 0%, #1C4BE2 100%);
+      --gray-50: #F8F9FA; --gray-100: #F1F3F5; --gray-200: #E9ECEF; --gray-300: #DEE2E6; --gray-400: #CED4DA; --gray-500: #ADB5BD; --gray-600: #6C757D; --gray-800: #343A40; --gray-900: #212529;
+      --success: #2DCB75;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body { font-family: 'Inter', sans-serif; background: #fff; color: var(--gray-900); overflow-x: hidden; }
+    
+    nav { position: fixed; top:0; left:0; right:0; height:64px; background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--gray-100); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+    .btn-primary { background: var(--pris-accent); color: #fff; padding: 12px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--pris-blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(28,75,226,0.4); }
+
+    .tag { display: inline-flex; background: rgba(28,75,226,0.07); border: 1px solid rgba(28,75,226,0.15); color: var(--pris-accent); padding: 4px 12px; border-radius: 999px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 24px; }
+    
+    .level-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 20px; padding: 32px; transition: all 0.4s ease; text-align: center; }
+    .level-card:hover { border-color: var(--pris-accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(3,4,94,0.05); }
+
+    .commission-box { background: var(--gray-900); color: white; border-radius: 24px; padding: 60px; position: relative; overflow: hidden; margin-top: 80px; }
+    .commission-box::before { content: ""; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(28,75,226,0.15) 0%, transparent 70%); }
+
+    footer { background: var(--pris-navy); color: rgba(255,255,255,0.5); padding: 80px 40px 40px; position: relative; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="index.html" style="text-decoration:none; display:flex; align-items:center; gap:10px;">
+      <div style="width:32px; height:32px; background:var(--pris-gradient); border-radius:8px; display:flex; align-items:center; justify-content:center;">
+        <iconify-icon icon="solar:prism-bold-duotone" style="color:white; font-size:18px;"></iconify-icon>
+      </div>
+      <span style="font-weight:900; color:var(--pris-navy); font-size:18px;">PRIS<span style="color:var(--pris-accent);">ERP</span></span>
+    </a>
+    <div style="display:flex; gap:32px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--gray-500);">
+      <a href="funcionalidades.html" style="text-decoration:none; color:inherit;">Produto</a>
+      <a href="index.html#segmentos" style="text-decoration:none; color:inherit;">Segmentos</a>
+      <a href="precos.html" style="text-decoration:none; color:inherit;">Preços</a>
+      <a href="parceiros.html" style="text-decoration:none; color:inherit;">Parceiros</a>
+    </div>
+    <a href="#contato" class="btn-primary" style="padding: 10px 20px; font-size:12px; border-radius: 999px;">Demonstração</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header style="padding: 160px 0 80px; position:relative; overflow:hidden;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+      <span class="tag">PRIS NETWORK</span>
+      <h1 style="font-size: clamp(32px, 5vw, 64px); font-weight: 900; color: var(--pris-navy); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 24px;">
+        Ganhe comissões <br><span style="-webkit-text-stroke: 1.5px var(--pris-navy); color: transparent;">indicando o melhor ERP.</span>
+      </h1>
+      <p style="font-size:18px; color:var(--gray-600); max-width:600px; line-height:1.7;">
+        Um programa voltado para contadores e consultores. Indique empresas e receba comissão recorrente todos os meses.
+      </p>
+    </div>
+  </header>
+
+  <!-- HOW IT WORKS -->
+  <main style="padding-bottom:120px;">
+    <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+      
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:24px; margin-bottom:120px;">
+        <div class="level-card">
+          <iconify-icon icon="solar:medal-bold-duotone" style="font-size:40px; color:#A78B4A; margin-bottom:20px;"></iconify-icon>
+          <h3 style="font-size:18px; font-weight:800; color:var(--pris-navy); margin-bottom:8px;">Bronze</h3>
+          <p style="font-size:13px; color:var(--gray-500);">Até 20 clientes ativos</p>
+        </div>
+        <div class="level-card">
+          <iconify-icon icon="solar:medal-star-bold-duotone" style="font-size:40px; color:#A1A1A1; margin-bottom:20px;"></iconify-icon>
+          <h3 style="font-size:18px; font-weight:800; color:var(--pris-navy); margin-bottom:8px;">Silver</h3>
+          <p style="font-size:13px; color:var(--gray-500);">21 a 50 clientes</p>
+        </div>
+        <div class="level-card">
+          <iconify-icon icon="solar:cup-first-bold-duotone" style="font-size:40px; color:#FFD700; margin-bottom:20px;"></iconify-icon>
+          <h3 style="font-size:18px; font-weight:800; color:var(--pris-navy); margin-bottom:8px;">Gold</h3>
+          <p style="font-size:13px; color:var(--gray-500);">51 a 100 clientes</p>
+        </div>
+        <div class="level-card" style="background:#03045E; border-color:#03045E; color:white;">
+          <iconify-icon icon="solar:crown-minimalistic-bold-duotone" style="font-size:40px; color:var(--pris-accent); margin-bottom:20px;"></iconify-icon>
+          <h3 style="font-size:18px; font-weight:800; margin-bottom:8px;">Black</h3>
+          <p style="font-size:13px; color:rgba(255,255,255,0.5);">Mais de 100 clientes</p>
+        </div>
+      </div>
+
+      <!-- SIMULATION BOX -->
+      <div class="commission-box">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:80px; align-items:center;">
+          <div>
+            <h2 style="font-size:40px; font-weight:900; color:white; line-height:1.1; margin-bottom:24px;">Simule seus ganhos com o PRIS Network.</h2>
+            <p style="font-size:16px; color:rgba(255,255,255,0.6); margin-bottom:40px;">
+              Comissão média de 30% sobre o valor da licença mensal. Receba todos os meses enquanto o cliente estiver ativo.
+            </p>
+            <a href="#" class="btn-primary" style="background:white; color:var(--pris-navy); padding:16px 40px; border-radius:999px;">Quero ser parceiro</a>
+          </div>
+          <div style="background:rgba(255,255,255,0.05); border-radius:24px; padding:40px; border:1px solid rgba(255,255,255,0.1);">
+            <div style="display:grid; gap:24px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.5);">10 Clientes Ativos</span>
+                <span style="font-size:22px; font-weight:800; color:white;">R$ 900,00<span style="font-size:12px; color:rgba(255,255,255,0.4);">/mês</span></span>
+              </div>
+              <div style="height:1px; background:rgba(255,255,255,0.1);"></div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.5);">50 Clientes Ativos</span>
+                <span style="font-size:22px; font-weight:800; color:var(--pris-accent);">R$ 4.500,00<span style="font-size:12px; color:rgba(255,255,255,0.4);">/mês</span></span>
+              </div>
+              <div style="height:1px; background:rgba(255,255,255,0.1);"></div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.5);">100 Clientes Ativos</span>
+                <span style="font-size:32px; font-weight:900; color:var(--success);">R$ 9.000,00<span style="font-size:12px; color:rgba(255,255,255,0.4);">/mês</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div style="max-width:1200px; margin:0 auto; text-align:center;">
+       <div style="font-size:24px; font-weight:900; color:white; margin-bottom:20px;">PRIS<span style="color:var(--pris-accent);">NETWORK</span></div>
+       <p style="font-size:13px; letter-spacing:0.1em; text-transform:uppercase;">© 2024 PRIS Sistemas · Linguagem de Design Proprietária</p>
+    </div>
+  </footer>
+
+</body>
+</html>

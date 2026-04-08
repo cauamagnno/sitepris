@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PRISERP — Gestão Inteligente para o Varejo</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+  <style>
+    /* ============================================================
+       PRIS DESIGN TOKENS (CORE DS3)
+    ============================================================ */
+    :root {
+      --pris-navy:      #03045E;
+      --pris-blue:      #0000A4;
+      --pris-accent:    #1C4BE2;
+      --pris-gradient:  linear-gradient(135deg, #03045E 0%, #1C4BE2 100%);
+      --gray-50:  #F8F9FA; --gray-100: #F1F3F5; --gray-200: #E9ECEF; --gray-600: #6C757D; --gray-900: #212529;
+      --success: #2DCB75;
+      --grid-color: rgba(3, 4, 94, 0.04);
+      --beam-color: #1C4BE2;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      --gx-1: 6%; --gx-2: 28%; --gx-3: 62%; --gx-4: 94%;
+    }
+
+    /* BASE */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: var(--gray-900); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+    /* BACKGROUND GRID & BEAMS (FIXED & STABLE) */
+    .grid-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .grid-v { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid-color); }
+    .grid-h { position: absolute; left: 0; right: 0; height: 1px; background: var(--grid-color); }
+    .marker { position: absolute; width: 5px; height: 5px; background: var(--pris-navy); z-index: 5; opacity: 0.1; box-shadow: 0 0 10px var(--pris-accent); animation: pulse-marker 4s infinite; }
+    @keyframes pulse-marker { 0%, 100% { opacity: 0.1; } 50% { opacity: 0.4; transform: scale(1.5); } }
+
+    /* MOTION SYSTEM UPGRADE (ONYX/GEMINI) */
+    @keyframes spotlight { 0% { opacity: 0.3; transform: scale(0.9); } 100% { opacity: 0.6; transform: scale(1.1); } }
+    @keyframes float-kinetic { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes dash-draw { to { stroke-dashoffset: 0; } }
+    @keyframes radar-pulse { 0% { transform: scale(0.5); opacity: 1; border-width: 2px; } 100% { transform: scale(2.5); opacity: 0; border-width: 0px; } }
+    
+    .nexus-fog { position: absolute; inset: 0; z-index: -2; opacity: 0.5; pointer-events: none; }
+    .onyx-overlay { position: absolute; inset: 0; opacity: 0.04; pointer-events: none; z-index: -1; 
+                    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1' fill='%2303045E'/%3E%3C/svg%3E"); }
+    
+    .gradient-text { background: var(--pris-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    .kinetic-card svg { transition: transform 0.4s var(--ease-ds); }
+    .kinetic-card:hover svg { transform: scale(1.1) rotate(5deg); }
+    
+    .btn-beam { position: relative; overflow: hidden; }
+    .btn-beam::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; 
+                       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+                       transition: 0.6s; }
+    .btn-beam:hover::after { left: 100%; }
+
+    /* AXIS CHART STYLES */
+    .axis-chart { width: 100%; height: 100%; opacity: 0; transition: 1s opacity; }
+    .axis-chart.active { opacity: 1; }
+    .draw-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: dash-draw 2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* GLOW ORBS (BACKGROUND LAYER) */
+    .glow-orb { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(28,75,226,0.04) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: -1; filter: blur(80px); will-change: transform; }
+    
+    @keyframes beam-v { 0% { top: -200px; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+    .beam-v { position: absolute; width: 1px; height: 200px; background: linear-gradient(180deg, transparent, var(--beam-color), transparent); z-index: 10; opacity: 0; }
+
+    /* MOTION ENGINE & STAGGER */
+    .text-reveal-wrapper { overflow: hidden; display: inline-block; vertical-align: bottom; padding-bottom: 5px; margin-bottom: -5px; }
+    .text-reveal-content { transform: translateY(110%); opacity: 0; transition: transform 1.2s cubic-bezier(0.16,1,0.3,1), opacity 1.2s ease; display: block; }
+    .active .text-reveal-content { transform: translateY(0); opacity: 1; }
+
+    .reveal-up { opacity: 0; transform: translateY(40px); transition: 1.2s cubic-bezier(0.16,1,0.3,1); will-change: transform, opacity; }
+    .reveal-up.active { opacity: 1; transform: translateY(0); }
+    
+    .stagger-1 { transition-delay: 0.1s; } .stagger-2 { transition-delay: 0.2s; } .stagger-3 { transition-delay: 0.3s; }
+
+    /* NAVIGATION ENHANCED */
+    nav { position: fixed; top: 0; left: 0; right: 0; height: 75px; background: rgba(255,255,255,0.8); backdrop-filter: blur(24px); border-bottom: 1px solid var(--gray-200); z-index: 1000; display: flex; align-items: center; padding: 0 6%; justify-content: space-between; transition: 0.4s; }
+    nav.scrolled { height: 65px; background: rgba(255,255,255,0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.04); }
+
+    /* HERO (CENTERED & STABLE) */
+    .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 6% 80px; text-align: center; }
+    .hero-inner { max-width: 900px; width: 100%; position: relative; z-index: 10; }
+    .hero-title { font-size: clamp(44px, 7vw, 82px); font-weight: 900; line-height: 1.0; letter-spacing: -0.045em; margin-bottom: 32px; color: var(--pris-navy); }
+    .hero-title .outline { -webkit-text-stroke: 1.5px var(--pris-navy); color: transparent; }
+    .hero-title .gradient { background: var(--pris-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* BUTTONS */
+    .btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 10px; padding: 14px 36px; border-radius: 12px; font-weight: 700; font-size: 14.5px; text-decoration: none; transition: 0.4s; cursor: pointer; border: none; z-index: 1; }
+    .btn::after { content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: 0.6s; transform: skewX(-20deg); }
+    .btn:hover::after { left: 150%; }
+    
+    .btn-primary { background: var(--pris-navy); color: #fff; box-shadow: 0 8px 24px rgba(3,4,94,0.15); }
+    .btn-primary:hover { background: #000; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .btn-secondary { background: white; border: 1.5px solid var(--gray-200); color: var(--pris-navy); }
+
+    /* CARDS & FLASHLIGHT */
+    .card { background: #fff; border: 1px solid var(--gray-200); border-radius: 24px; padding: 40px; position: relative; overflow: hidden; }
+    .flashlight-card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(500px circle at var(--x) var(--y), rgba(28,75,226,0.05), transparent 80%); pointer-events: none; opacity: 0; transition: 0.4s; z-index: 2; }
+    .flashlight-card:hover::before { opacity: 1; }
+
+    /* ICON GRID (SEGMENTOS) */
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-top: 48px; }
+    .segment-cell { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px; background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: 16px; transition: 0.3s; text-align: center; }
+    .segment-cell:hover { background: rgba(28,75,226,0.04); border-color: var(--pris-accent); transform: translateY(-5px); }
+    .segment-cell iconify-icon { font-size: 28px; color: var(--pris-accent); }
+    .segment-cell span { font-size: 13px; font-weight: 700; color: var(--pris-navy); }
+
+    /* MARQUEE */
+    .marquee { background: var(--gray-50); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); padding: 18px 0; overflow: hidden; display: flex; }
+    .marquee-content { display: flex; gap: 60px; animation: marquee 40s linear infinite; flex-shrink: 0; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .marquee-item { font-size: 10px; font-weight: 800; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.15em; display: flex; align-items: center; gap: 10px; }
+    
+    section { padding: 100px 6%; position: relative; z-index: 10; }
+    .ds-label { font-size: 11px; font-weight: 800; color: var(--pris-accent); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 16px; display: block; }
+
+    /* MODAL STYLES */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(3,4,94,0.4); backdrop-filter: blur(12px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity:0; pointer-events:none; transition: 0.4s; }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal-container { background: white; width: 95%; max-width: 460px; border-radius: 32px; padding: 48px 0; position: relative; border: 1px solid var(--gray-200); box-shadow: 0 40px 100px rgba(0,0,0,0.25); overflow: hidden; }
+    .modal-mask { width: 100%; overflow: hidden; }
+    .modal-close { position: absolute; top: 24px; right: 24px; background: none; border: none; font-size: 28px; color: var(--gray-400); cursor: pointer; transition: 0.3s; z-index: 10; }
+    .modal-close:hover { color: var(--pris-navy); }
+    
+    .modal-steps-indicator { display: flex; gap: 8px; margin-bottom: 32px; padding: 0 40px; }
+    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-200); transition: 0.3s; }
+    .step-dot.active { width: 24px; border-radius: 4px; background: var(--pris-accent); }
+
+    .modal-slider { display: flex; transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); width: 100%; }
+    .form-step { width: 100%; flex: 0 0 100%; padding: 0 48px; }
+    .step-title { font-size: 28px; font-weight: 900; color: var(--pris-navy); margin-bottom: 8px; letter-spacing: -0.02em; }
+    .step-desc { font-size: 14px; color: var(--gray-600); margin-bottom: 32px; line-height: 1.5; }
+
+    .input-group { margin-bottom: 24px; text-align: left; }
+    .input-group label { display: block; font-size: 12px; font-weight: 800; color: var(--pris-navy); text-transform: uppercase; margin-bottom: 8px; opacity: 0.7; }
+    .ds-input { width: 100%; padding: 14px 18px; border-radius: 12px; border: 1.5px solid var(--gray-200); font-family: inherit; font-size: 15px; transition: 0.3s; background: var(--gray-50); outline: none; }
+    .ds-input:focus { border-color: var(--pris-accent); background: white; box-shadow: 0 0 0 4px rgba(28,75,226,0.1); }
+    
+    .btn-check { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid var(--gray-200); background: white; font-weight: 700; cursor: pointer; transition: 0.3s; }
+    .btn-check:hover, .btn-check.active { border-color: var(--pris-accent); color: var(--pris-accent); background: rgba(28,75,226,0.05); }
+
+    .success-icon { width: 72px; height: 72px; background: rgba(45,203,117,0.1); color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 42px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+  <!-- ASSET GRID (FIXED) -->
+  <div class="grid-container">
+     <div class="grid-v" style="left:var(--gx-1);"><div class="beam-v" style="animation: beam-v 9s infinite 0.5s;"></div></div>
+     <div class="grid-v" style="left:var(--gx-2);"><div class="beam-v" style="animation: beam-v 7s infinite 2s;"></div></div>
+     <div class="grid-v" style="left:var(--gx-3);"><div class="beam-v" style="animation: beam-v 11s infinite 1.5s;"></div></div>
+     <div class="grid-v" style="left:var(--gx-4);"><div class="beam-v" style="animation: beam-v 8s infinite 3s;"></div></div>
+     <div class="marker" style="left:calc(var(--gx-1) - 2px); top:30%;"></div>
+     <div class="marker" style="left:calc(var(--gx-2) - 2px); top:85%;"></div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav id="main-nav" class="animate-reveal">
+    <a href="#hero" class="nav-brand">
+      <div class="nav-brand-icon"><iconify-icon icon="solar:prism-bold-duotone" style="color:white; font-size:20px;"></iconify-icon></div>
+      <div style="font-weight:900; font-size:18px; color:var(--pris-navy); letter-spacing:-0.03em;">PRIS<span style="color:var(--pris-accent);">ERP</span></div>
+    </a>
+    <div style="display:flex; align-items:center; gap:40px;">
+       <div style="display:flex; gap:32px;">
+         <a href="#funcionalidades" style="font-size:11px; font-weight:800; color:var(--gray-600); text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">Produto</a>
+         <a href="#segmentos" style="font-size:11px; font-weight:800; color:var(--gray-600); text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">Setores</a>
+         <a href="#depoimentos" style="font-size:11px; font-weight:800; color:var(--gray-600); text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">Resultados</a>
+         <a href="#precos" style="font-size:11px; font-weight:800; color:var(--gray-600); text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">Escala</a>
+       </div>
+       <button class="btn btn-primary btn-beam" onclick="openModal()" style="padding: 10px 24px; border-radius:99px; font-size:12px;">Demo Grátis</button>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION (NEXUS ATMOSPHERE) -->
+  <header class="hero" id="hero">
+    <!-- LAYERS -->
+    <canvas id="nexus-fog" class="nexus-fog"></canvas>
+    <div class="onyx-overlay"></div>
+
+    <div class="hero-inner">
+       <div class="animate-reveal" style="margin-bottom:32px;">
+          <span class="ds-label">Gestão Inteligente para Varejo v3.1</span>
+       </div>
+       
+       <h1 class="hero-title animate-reveal delay-100">
+          <span class="text-reveal-wrapper"><span class="text-reveal-content">ERP Simples</span></span><br>
+          <span class="text-reveal-wrapper"><span class="text-reveal-content outline">e Completo para</span></span><br>
+          <span class="text-reveal-wrapper"><span class="text-reveal-content gradient">sua empresa.</span></span>
+       </h1>
+
+       <p class="animate-reveal delay-200" style="font-size:19px; color:var(--gray-600); max-width:640px; margin: 0 auto 52px; line-height:1.7;">
+          A PRISERP desenvolve o software ideal para organizar vendas, estoque, financeiro e fiscal em um único sistema intuitivo e robusto.
+       </p>
+
+       <div class="animate-reveal delay-300" style="display:flex; gap:16px; justify-content:center; margin-bottom:80px;">
+          <button class="btn btn-primary btn-beam" onclick="openModal()">Agendar Demonstração <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
+          <a href="#segmentos" class="btn btn-secondary">Explorar Soluções</a>
+       </div>
+
+       <!-- Dashboard Mockup (AXIS UPGRADE) -->
+       <div class="animate-reveal delay-500">
+          <div class="card flashlight-card" style="max-width:850px; margin:0 auto; box-shadow: 0 60px 140px rgba(3,4,94,0.18); border: 1px solid var(--gray-200); padding:0; overflow:hidden;">
+             <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 24px; background:var(--gray-50); border-bottom:1px solid var(--gray-200);">
+                <div style="display:flex; gap:8px;">
+                   <div style="width:10px; height:10px; border-radius:50%; background:#FF5F56;"></div>
+                   <div style="width:10px; height:10px; border-radius:50%; background:#FFBD2E;"></div>
+                   <div style="width:10px; height:10px; border-radius:50%; background:#27C93F;"></div>
+                </div>
+                <div style="font-size:10px; font-weight:800; color:var(--gray-400); font-family:var(--font-mono);">analytix.pris-erp.io/live</div>
+                <div style="width:40px;"></div>
+             </div>
+             
+             <div style="padding:40px;">
+                <div style="display:grid; grid-template-columns: 240px 1fr; gap:40px;">
+                   <!-- Sidebar Metrics -->
+                   <div style="display:grid; gap:20px; text-align:left;">
+                      <div class="glass-card" style="padding:20px; border:1px solid var(--gray-100);">
+                         <div style="font-size:9px; font-weight:800; color:var(--gray-400); margin-bottom:4px;">FATURAMENTO</div>
+                         <div style="font-size:22px; font-weight:900; color:var(--pris-navy);">R$ 145.280</div>
+                         <div style="font-size:10px; color:var(--success); font-weight:700;">+18.4%</div>
+                      </div>
+                      <div class="glass-card" style="padding:20px; border:1px solid var(--gray-100);">
+                         <div style="font-size:9px; font-weight:800; color:var(--gray-400); margin-bottom:4px;">GIRO DE ESTOQUE</div>
+                         <div style="font-size:22px; font-weight:900; color:var(--pris-navy);">94.8%</div>
+                         <div style="font-size:10px; color:var(--pris-accent); font-weight:700;">Alta Eficiência</div>
+                      </div>
+                   </div>
+                   <!-- AXIS MAIN CHART -->
+                   <div style="background:var(--gray-50); border-radius:16px; border:1px solid var(--gray-200); position:relative; overflow:hidden; padding:24px;">
+                      <div style="display:flex; justify-content:space-between; margin-bottom:32px;">
+                        <span style="font-size:10px; font-weight:900; color:var(--pris-navy);">PERFORMANCE MENSAL</span>
+                        <div style="display:flex; gap:8px;"><span class="step-dot active"></span><span class="step-dot"></span></div>
+                      </div>
+                      <div id="hero-chart" style="height:180px; width:100%;"></div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+  </header>
+
+  <!-- MARQUEE DIVIDER -->
+  <div class="marquee">
+     <div class="marquee-content">
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> FISCAL NATIVO</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> ESTOQUE INTELIGENTE</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> FINANCEIRO</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> VENDAS</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> PDV</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> MULTICAIXAS</span>
+        <!-- Loop duplicate -->
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> FISCAL NATIVO</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> ESTOQUE INTELIGENTE</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> FINANCEIRO</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> VENDAS</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> PDV</span>
+        <span class="marquee-item"><iconify-icon icon="solar:star-bold"></iconify-icon> MULTICAIXAS</span>
+     </div>
+  </div>
+
+  <!-- SOCIAL PROOF (TRUSTED BY) -->
+  <section id="trusted" style="padding: 60px 0; background: #fff;">
+     <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+        <span style="font-size: 10px; font-weight: 800; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 40px;">Empresas que escalam com o PRIS ERP</span>
+        <div style="display: flex; justify-content: space-around; align-items: center; opacity: 0.4; filter: grayscale(1); gap: 40px; flex-wrap: wrap; padding: 0 40px;">
+           <iconify-icon icon="logos:apple-pay" style="font-size: 40px;"></iconify-icon>
+           <iconify-icon icon="logos:mastercard" style="font-size: 40px;"></iconify-icon>
+           <iconify-icon icon="logos:fedex" style="font-size: 40px;"></iconify-icon>
+           <iconify-icon icon="logos:stripe" style="font-size: 40px;"></iconify-icon>
+           <iconify-icon icon="logos:visa" style="font-size: 40px;"></iconify-icon>
+        </div>
+     </div>
+  </section>
+
+  <!-- SEGMENTOS (BENTO MATRIX v3.2) -->
+  <section id="segmentos" style="padding: 120px 0; background: #fff; position: relative; overflow: hidden;">
+     <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+        <div style="text-align: center; margin-bottom: 80px;">
+           <span class="ds-label animate-reveal">Versatilidade Técnica</span>
+           <h2 style="font-size: 42px; font-weight: 900; color: var(--pris-navy); letter-spacing: -0.03em;">Engenharia Adaptada ao <span class="gradient-text">seu Setor.</span></h2>
+           <p style="font-size: 16px; color: var(--gray-600); margin-top: 16px; max-width: 600px; margin-left: auto; margin-right: auto;">
+              O motor PRISERP foi projetado para se moldar às complexidades específicas de cada modelo de negócio.
+           </p>
+        </div>
+
+        <!-- BENTO GRID -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 180px; gap: 20px;" class="animate-reveal">
+           
+           <!-- Varejo Alimentar (Large Bento) -->
+           <div class="card flashlight-card" style="grid-column: span 2; grid-row: span 2; padding: 48px; background: var(--gray-50); display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <iconify-icon icon="solar:cart-bold-duotone" style="font-size: 48px; color: var(--pris-accent);"></iconify-icon>
+                    <span style="font-size: 9px; font-weight: 900; background: var(--pris-navy); color: white; padding: 4px 10px; border-radius: 99px;">SYNC LIVE</span>
+                 </div>
+                 <h3 style="font-size: 28px; font-weight: 900; color: var(--pris-navy); mt:24px; margin-top: 24px;">Supermercados</h3>
+                 <p style="font-size: 14px; color: var(--gray-500); max-width: 280px; margin-top: 12px;">Gestão de milhares de SKUs com pesagem automática e frente de caixa ultrarrápida (PDV).</p>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                 <div style="height: 4px; flex: 1; background: var(--pris-accent); border-radius: 2px;"></div>
+                 <div style="height: 4px; flex: 1; background: var(--pris-accent); opacity: 0.3; border-radius: 2px;"></div>
+                 <div style="height: 4px; flex: 1; background: var(--pris-accent); opacity: 0.1; border-radius: 2px;"></div>
+              </div>
+           </div>
+
+           <!-- Construção (Normal) -->
+           <div class="card flashlight-card" style="grid-column: span 1; grid-row: span 2; background: white; border: 1px solid var(--gray-200); padding: 32px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+              <iconify-icon icon="solar:home-bold-duotone" style="font-size: 40px; color: var(--pris-navy); margin-bottom: 20px;"></iconify-icon>
+              <h4 style="font-weight: 900; color: var(--pris-navy);">Mat. Construção</h4>
+              <p style="font-size: 12px; color: var(--gray-400); margin-top: 8px;">Controle de lotes, carga e frete integrado.</p>
+           </div>
+
+           <!-- Agro (Small) -->
+           <div class="card flashlight-card" style="background: white; border: 1px solid var(--gray-200); display: flex; align-items: center; gap: 16px; padding: 0 24px;">
+              <iconify-icon icon="solar:leaf-bold-duotone" style="font-size: 24px; color: var(--success);"></iconify-icon>
+              <span style="font-size: 13px; font-weight: 800; color: var(--pris-navy);">Agropecuárias</span>
+           </div>
+
+           <!-- Farmácia (Small) -->
+           <div class="card flashlight-card" style="background: white; border: 1px solid var(--gray-200); display: flex; align-items: center; gap: 16px; padding: 0 24px;">
+              <iconify-icon icon="solar:medical-kit-bold-duotone" style="font-size: 24px; color: #ef4444;"></iconify-icon>
+              <span style="font-size: 13px; font-weight: 800; color: var(--pris-navy);">Drogarias</span>
+           </div>
+
+           <!-- Moda (Bento Horizontal) -->
+           <div class="card flashlight-card" style="grid-column: span 2; background: var(--pris-navy); color: white; padding: 0 40px; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 20px;">
+                 <iconify-icon icon="solar:t-shirt-bold-duotone" style="font-size: 32px; color: var(--pris-accent);"></iconify-icon>
+                 <div>
+                    <h4 style="font-weight: 900;">Vestuário & Moda</h4>
+                    <p style="font-size: 11px; opacity: 0.5;">Grade de cor e tamanho e-commerce ready.</p>
+                 </div>
+              </div>
+              <iconify-icon icon="solar:arrow-right-up-linear" style="font-size: 20px; opacity: 0.3;"></iconify-icon>
+           </div>
+
+           <!-- Outros (Grid Bottom) -->
+           <div class="card flashlight-card" style="background: white; border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 12px; font-weight: 800; color: var(--gray-400);">
+              <iconify-icon icon="solar:settings-bold-duotone"></iconify-icon> Auto Peças
+           </div>
+           <div class="card flashlight-card" style="background: white; border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 12px; font-weight: 800; color: var(--gray-400);">
+              <iconify-icon icon="solar:bag-bold-duotone"></iconify-icon> Óticas
+           </div>
+
+        </div>
+
+        <div style="margin-top: 48px; text-align: center; font-size: 12px; font-weight: 800; color: var(--pris-accent);">
+           <span style="padding: 6px 16px; border: 1px solid var(--pris-accent); border-radius: 99px; text-transform: uppercase; letter-spacing: 0.1em;">+25 Outros Segmentos com Módulos Customizados</span>
+        </div>
+     </div>
+  </section>
+
+  <!-- O QUE RESOLVE (KINETIC UPGRADE) -->
+  <section id="funcionalidades" style="background:var(--gray-50); padding:100px 0;">
+     <div style="max-width:1200px; margin:0 auto; padding: 0 24px;">
+        <div style="text-align:center; margin-bottom:80px;">
+           <span class="ds-label animate-reveal">Eficiência Garantida</span>
+           <h2 class="animate-reveal delay-100" style="font-size:42px; font-weight:900; color:var(--pris-navy); letter-spacing:-0.03em;">O que o <span style="color:var(--pris-accent);">PRIS</span> Resolve</h2>
+           <p class="animate-reveal delay-200" style="font-size:16px; color:var(--gray-600); margin-top:16px;">Tecnologia de ponta para os pilares fundamentais do seu negócio.</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:24px;">
+           <!-- Card 1 -->
+           <div class="card flashlight-card kinetic-card animate-reveal delay-100" style="padding:40px; text-align:left;">
+              <div style="position:relative; width:48px; height:48px; margin-bottom:24px; display:flex; align-items:center; justify-content:center;">
+                 <div style="width:10px; height:10px; background:var(--pris-accent); border-radius:50%; z-index:2;"></div>
+                 <div style="position:absolute; inset:0; border:2px solid var(--pris-accent); border-radius:50%; animation: radar-pulse 2s infinite;"></div>
+              </div>
+              <h3 style="font-size:20px; font-weight:900; color:var(--pris-navy); margin-top:24px; margin-bottom:12px;">Fiscal Nativo</h3>
+              <p style="font-size:14px; color:var(--gray-500); line-height:1.6;">Automação total de impostos e emissão de notas com 100% de segurança jurídica.</p>
+           </div>
+           <!-- Card 2 -->
+           <div class="card flashlight-card kinetic-card animate-reveal delay-200" style="padding:40px; text-align:left;">
+              <div style="width:48px; height:48px; display:flex; align-items:center; justify-content:center;">
+                 <svg width="40" height="20" viewBox="0 0 60 30" style="fill:none; stroke:var(--pris-navy); stroke-width:3; stroke-linecap:round;">
+                    <path d="M15,15 C15,5 25,5 30,15 C35,25 45,25 45,15 C45,5 35,5 30,15 C25,25 15,25 15,15 Z" class="draw-path" style="animation: dash-draw 3s infinite linear;"></path>
+                 </svg>
+              </div>
+              <h3 style="font-size:20px; font-weight:900; color:var(--pris-navy); margin-top:24px; margin-bottom:12px;">Financeiro Flux</h3>
+              <p style="font-size:14px; color:var(--gray-500); line-height:1.6;">Controle de caixa infinito com conciliação bancária automática e relatórios DRE.</p>
+           </div>
+           <!-- Card 3 -->
+           <div class="card flashlight-card kinetic-card animate-reveal delay-300" style="padding:40px; text-align:left;">
+              <div style="display:flex; align-items:flex-end; gap:4px; height:32px; width:48px;">
+                 <div style="flex:1; background:var(--gray-200); height:40%; border-radius:2px;"></div>
+                 <div style="flex:1; background:var(--pris-accent); height:80%; border-radius:2px;"></div>
+              </div>
+              <h3 style="font-size:20px; font-weight:900; color:var(--pris-navy); margin-top:24px; margin-bottom:12px;">Estoque Inteligente</h3>
+              <p style="font-size:14px; color:var(--gray-500); line-height:1.6;">Sincronização em tempo real entre PDV e depósito com alertas de reposição via IA.</p>
+           </div>
+           <!-- Card 4 -->
+           <div class="card flashlight-card kinetic-card animate-reveal delay-500" style="padding:40px; text-align:left;">
+              <iconify-icon icon="solar:star-bold-duotone" style="font-size:40px; color:var(--pris-accent);"></iconify-icon>
+              <h3 style="font-size:20px; font-weight:900; color:var(--pris-navy); margin-top:24px; margin-bottom:12px;">BI & Insights</h3>
+              <p style="font-size:14px; color:var(--gray-500); line-height:1.6;">Relatórios estratégicos que transformam dados complexos em lucro real.</p>
+           </div>
+        </div>
+     </div>
+  </section>
+
+  <!-- IMPLEMENTAÇÃO (COMO FUNCIONA) -->
+  <section id="implementacao" style="background: #fff; padding: 120px 0;">
+     <div style="max-width: 1200px; margin: 0 auto; px:6;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+           <div class="animate-reveal">
+              <span class="ds-label">Onboarding Elite</span>
+              <h2 style="font-size: 42px; font-weight: 900; color: var(--pris-navy); margin-bottom: 24px;">Simplicidade na <br><span class="gradient-text">transição de dados.</span></h2>
+              <p style="font-size: 17px; color: var(--gray-600); line-height: 1.7; margin-bottom: 40px;">
+                 Migrar de sistema não precisa ser um trauma. Nossa equipe de engenheiros de dados cuida de tudo para você não parar de vender nem por um minuto.
+              </p>
+              <div style="display: grid; gap: 32px;">
+                 <div style="display: flex; gap: 20px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--pris-navy); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0;">1</div>
+                    <div>
+                       <h4 style="font-weight: 800; color: var(--pris-navy);">Setup & Configuração</h4>
+                       <p style="font-size: 14px; color: var(--gray-500);">Configuramos seu regime fiscal e estoque em tempo recorde.</p>
+                    </div>
+                 </div>
+                 <div style="display: flex; gap: 20px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--pris-navy); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0;">2</div>
+                    <div>
+                       <h4 style="font-weight: 800; color: var(--pris-navy);">Treinamento VIP</h4>
+                       <p style="font-size: 14px; color: var(--gray-500);">Capacitamos sua equipe para extrair o máximo de cada módulo.</p>
+                    </div>
+                 </div>
+                 <div style="display: flex; gap: 20px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--pris-accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0;">3</div>
+                    <div>
+                       <h4 style="font-weight: 800; color: var(--pris-navy);">Go Live & Suporte 24/7</h4>
+                       <p style="font-size: 14px; color: var(--gray-500);">Acompanhamento em tempo real no primeiro dia de operação.</p>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <div class="animate-reveal delay-300">
+              <div class="card flashlight-card" style="padding: 0; background: var(--pris-navy); aspect-ratio: 4/5; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative;">
+                 <iconify-icon icon="solar:videocamera-record-bold-duotone" style="font-size: 64px; color: white; opacity: 0.3;"></iconify-icon>
+                 <div style="position: absolute; bottom: 32px; left: 32px; right: 32px; text-align: left;">
+                    <div style="font-size: 10px; font-weight: 800; color: var(--pris-accent); text-transform: uppercase; margin-bottom: 8px;">Vídeo Case</div>
+                    <h4 style="color: white; font-weight: 800; font-size: 18px;">Veja a PRIS em ação em menos de 2 minutos.</h4>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+  </section>
+
+  <!-- DEPOIMENTOS (SUCCESS STORIES) -->
+  <section id="depoimentos" style="background: var(--gray-50); padding: 120px 0;">
+     <div style="max-width: 1200px; margin: 0 auto; px:6;">
+        <div style="text-align: center; margin-bottom: 80px;">
+           <span class="ds-label animate-reveal">Resultados Reais</span>
+           <h2 class="animate-reveal delay-100" style="font-size: 42px; font-weight: 900; color: var(--pris-navy);">Quem confia na <span class="gradient-text">Engenharia PRIS.</span></h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+           <!-- Reels Format Card -->
+           <div class="card flashlight-card animate-reveal delay-100" style="padding: 0; aspect-ratio: 9/16; border-radius: 32px; background: #000; position: relative;">
+              <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2070&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
+              <div style="position: absolute; inset: 0; display:flex; align-items: center; justify-content: center;">
+                 <div style="width: 64px; height: 64px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.4s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                    <iconify-icon icon="solar:play-bold" style="color: var(--pris-navy); font-size: 24px; padding-left: 4px;"></iconify-icon>
+                 </div>
+              </div>
+              <div style="position: absolute; bottom: 32px; left: 32px; color: white;">
+                 <h4 style="font-weight: 900;">Mercado Central MG</h4>
+                 <p style="font-size: 12px; opacity: 0.7;">Redução de 40% em erros fiscais.</p>
+              </div>
+           </div>
+
+           <!-- Classic Testimonial -->
+           <div class="card flashlight-card animate-reveal delay-300" style="padding: 48px; background: white; display: flex; flex-direction: column;">
+              <iconify-icon icon="solar:quote-bold-duotone" style="font-size: 48px; color: var(--pris-accent); opacity: 0.2; margin-bottom: 24px;"></iconify-icon>
+              <p style="font-size: 18px; font-weight: 600; color: var(--pris-navy); line-height: 1.6; font-style: italic; margin-bottom: 40px;">
+                 "O PRISERP mudou o jogo para nossas 12 lojas. O controle de estoque que era nosso pesadelo hoje é nossa maior força."
+              </p>
+              <div style="margin-top: auto; display: flex; gap: 16px; align-items: center;">
+                 <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--gray-100);"></div>
+                 <div>
+                    <h5 style="font-weight: 800; color: var(--pris-navy);">Carlos Eduardo</h5>
+                    <p style="font-size: 11px; color: var(--gray-500); font-weight: 700; text-transform: uppercase;">CEO - Grupo Alvorada</p>
+                 </div>
+              </div>
+           </div>
+
+           <!-- Reels Format Card 2 -->
+           <div class="card flashlight-card animate-reveal delay-500" style="padding: 0; aspect-ratio: 9/16; border-radius: 32px; background: #000; position: relative;">
+              <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2070&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
+              <div style="position: absolute; inset: 0; display:flex; align-items: center; justify-content: center;">
+                 <div style="width: 64px; height: 64px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                    <iconify-icon icon="solar:play-bold" style="color: var(--pris-navy); font-size: 24px; padding-left: 4px;"></iconify-icon>
+                 </div>
+              </div>
+              <div style="position: absolute; bottom: 32px; left: 32px; color: white;">
+                 <h4 style="font-weight: 900;">Drogaria Premium</h4>
+                 <p style="font-size: 12px; opacity: 0.7;">Sincronização Fiscal em Tempo Real.</p>
+              </div>
+           </div>
+        </div>
+     </div>
+  </section>
+
+  <!-- PLANOS E PREÇOS -->
+  <section id="precos">
+    <div style="max-width:1200px; margin:0 auto; text-align:center;">
+       <span class="ds-label scroll-reveal">Investimento Escalável</span>
+       <h2 style="font-size:48px; font-weight:900; color:var(--pris-navy); margin-bottom:64px; letter-spacing:-0.03em;">Planos sob <span style="color:var(--pris-accent);">Medida.</span></h2>
+
+       <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; align-items: flex-end;">
+          <div class="card flashlight-card reveal-up">
+             <div style="font-size:11px; font-weight:800; color:var(--gray-400); text-transform:uppercase; margin-bottom:12px;">Essencial</div>
+             <div style="font-size:32px; font-weight:900; color:var(--pris-navy); margin-bottom:40px;">Consulte</div>
+             <ul style="list-style:none; text-align:left; display:grid; gap:16px; font-size:14px; font-weight:600; color:var(--gray-600); margin-bottom:40px;">
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Gestão Fiscal Básica</li>
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Controle de Estoque</li>
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Suporte Comercial</li>
+             </ul>
+             <a href="#demo" class="btn btn-secondary" style="width:100%; justify-content:center; border-radius:99px;">Falar com Consultor</a>
+          </div>
+
+          <div class="card flashlight-card reveal-up" style="background:var(--pris-navy); color:white; transform:scale(1.05); z-index:10; box-shadow: 0 40px 100px rgba(3,4,94,0.3); transition: 0.4s;">
+             <div style="display:flex; justify-content:center; margin-bottom:16px;">
+                <span style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; padding:4px 14px; border-radius:99px; font-size:10px; font-weight:800; text-transform:uppercase;">Mais Escolhido</span>
+             </div>
+             <div style="font-size:11px; font-weight:800; opacity:0.5; text-transform:uppercase; margin-bottom:12px;">Profissional</div>
+             <div style="font-size:46px; font-weight:900; margin-bottom:8px;">R$ 300<span style="font-size:18px; opacity:0.5;">/mês</span></div>
+             <ul style="list-style:none; text-align:left; display:grid; gap:16px; font-size:14px; font-weight:600; margin-bottom:48px;">
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--success);"></iconify-icon> Multiempresas Hub</li>
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--success);"></iconify-icon> Automação Fiscal Completa</li>
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--success);"></iconify-icon> Suporte VIP 24/7</li>
+             </ul>
+             <a href="#demo" class="btn btn-primary" style="background:white; color:var(--pris-navy); width:100%; justify-content:center; border-radius:99px;">Agendar Demonstração</a>
+          </div>
+
+          <div class="card flashlight-card reveal-up">
+             <div style="font-size:11px; font-weight:800; color:var(--gray-400); text-transform:uppercase; margin-bottom:12px;">Enterprise</div>
+             <div style="font-size:32px; font-weight:900; color:var(--pris-navy); margin-bottom:40px;">Personalizado</div>
+             <ul style="list-style:none; text-align:left; display:grid; gap:16px; font-size:14px; font-weight:600; color:var(--gray-600); margin-bottom:40px;">
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> API Aberta ILIMITADA</li>
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> BI de Alta Performance</li>
+                <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--pris-accent);"></iconify-icon> Gerente VIP</li>
+             </ul>
+             <a href="#demo" class="btn btn-secondary" style="width:100%; justify-content:center; border-radius:99px;">Solicitar Orçamento</a>
+          </div>
+       </div>
+    </div>
+  </section>
+
+  <!-- PARCEIROS -->
+  <section id="parceiros" style="background:var(--gray-50); border-bottom:none;">
+     <div style="max-width:1200px; margin:0 auto;">
+        <div class="reveal-up" style="background:var(--pris-navy); border-radius:40px; padding:80px; color:white; display:grid; grid-template-columns: 1fr 1fr; gap:100px; align-items:center; overflow:hidden;">
+            <div>
+               <span class="ds-label" style="color:rgba(255,255,255,0.4);">PRIS Network</span>
+               <h2 style="font-size:52px; font-weight:900; line-height:1.1; margin-bottom:32px;">Gere renda extra recorrente.</h2>
+               <p style="font-size:18px; opacity:0.6; line-height:1.7; margin-bottom:40px;">Indique o PRISERP e receba uma fatia mensal vitalícia por cada indicação ativa.</p>
+               <a href="#demo" class="btn btn-primary" style="background:white; color:var(--pris-navy); border-radius:99px; padding:18px 48px;">Seja um Parceiro</a>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:24px; padding:48px;">
+               <div style="font-size:11px; font-weight:800; opacity:0.3; text-transform:uppercase; margin-bottom:12px;">Estimativa Mensal (50 Clientes)</div>
+               <div style="font-size:62px; font-weight:900; color:var(--success); letter-spacing:-0.03em;">R$ 4.500</div>
+               <div style="font-size:13px; opacity:0.5; font-weight:600; margin-top:8px;">Recorrência Mensal Líquida</div>
+            </div>
+        </div>
+     </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:var(--pris-navy); color:rgba(255,255,255,0.5); padding:100px 6% 60px; position:relative; overflow:hidden;">
+     <div style="position:absolute; bottom:-30px; right:0; font-size:180px; font-weight:900; -webkit-text-stroke:1px rgba(255,255,255,0.04); color:transparent; pointer-events:none; user-select:none;">PRIS</div>
+     <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 2fr 1fr 1fr; gap:80px; position:relative; z-index:10;">
+        <div>
+           <div style="font-size:28px; font-weight:900; color:white; margin-bottom:24px;">PRISERP</div>
+           <p style="font-size:14px; line-height:1.7; max-width:320px; margin-bottom:24px;">Liderando a transformação digital de varejos com tecnologia de ponta e foco total no controle do gestor.</p>
+           <div style="display:flex; gap:16px;">
+              <a href="#" style="color:white; font-size:20px; opacity:0.5; transition:0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"><iconify-icon icon="solar:instagram-linear"></iconify-icon></a>
+              <a href="#" style="color:white; font-size:20px; opacity:0.5; transition:0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"><iconify-icon icon="solar:linkedin-linear"></iconify-icon></a>
+           </div>
+        </div>
+        <div>
+           <h4 style="font-size:12px; font-weight:800; color:white; text-transform:uppercase; margin-bottom:24px;">Navegação</h4>
+           <ul style="list-style:none; display:grid; gap:12px; font-size:14px;">
+              <li><a href="#hero" style="color:inherit; text-decoration:none;">Início</a></li>
+              <li><a href="#segmentos" style="color:inherit; text-decoration:none;">Setores</a></li>
+              <li><a href="#funcionalidades" style="color:inherit; text-decoration:none;">Soluções</a></li>
+           </ul>
+        </div>
+        <div>
+           <h4 style="font-size:12px; font-weight:800; color:white; text-transform:uppercase; margin-bottom:24px;">Atendimento comercial</h4>
+           <p style="font-size:14px; margin-bottom:8px;">(31) 9999-9999</p>
+           <p style="font-size:14px;">contato@priserp.com.br</p>
+        </div>
+     </div>
+     <div style="margin-top:60px; padding-top:40px; border-top:1px solid rgba(255,255,255,0.05); text-align:left; font-size:12px;">
+        © 2025 PRIS Sistemas · Tecnologia para Crescer.
+     </div>
+  </footer>
+
+  <!-- MULTI-STEP MODAL -->
+  <div class="modal-overlay" id="demo-modal">
+     <div class="modal-container flashlight-card">
+        <button class="modal-close" onclick="closeModal()"><iconify-icon icon="solar:close-circle-bold-duotone"></iconify-icon></button>
+        <div class="modal-steps-indicator">
+           <div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+        </div>
+
+        <div class="modal-mask">
+           <div class="modal-slider" id="modal-slider">
+              <div class="form-step">
+                 <h3 class="step-title">Vamos começar.</h3>
+                 <p class="step-desc">Como podemos identificar você?</p>
+                 <div class="input-group"><label>Seu Nome</label><input type="text" class="ds-input" placeholder="Ex: João Silva"></div>
+                 <div class="input-group"><label>Telefone / WhatsApp</label><input type="tel" class="ds-input" placeholder="(00) 00000-0000"></div>
+                 <button class="btn btn-primary" onclick="nextStep(1)" style="width:100%; justify-content:center;">Próximo Passo <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+              </div>
+              <div class="form-step">
+                 <h3 class="step-title">Sobre o negócio.</h3>
+                 <p class="step-desc">Conte um pouco sobre sua atuação.</p>
+                 <div class="input-group"><label>Cargo na Empresa</label><input type="text" class="ds-input" placeholder="Ex: Proprietário, Gerente..."></div>
+                 <div class="input-group"><label>Segmento</label><select class="ds-input"><option>Supermercado</option><option>Mat. Construção</option><option>Drogarias</option><option>Outros</option></select></div>
+                 <div style="display:flex; gap:12px;"><button class="btn btn-secondary" onclick="nextStep(0)">Voltar</button><button class="btn btn-primary" onclick="nextStep(2)" style="flex:1; justify-content:center;">Continuar</button></div>
+              </div>
+              <div class="form-step">
+                 <h3 class="step-title">Escala.</h3>
+                 <p class="step-desc">Como está sua operação hoje?</p>
+                 <div class="input-group"><label>Nº de Colaboradores</label><input type="number" class="ds-input" placeholder="Qtd. total"></div>
+                 <div class="input-group"><label>Principal Dificuldade</label><input type="text" class="ds-input" placeholder="Ex: Estoque, Fiscal..."></div>
+                 <div style="display:flex; gap:12px;"><button class="btn btn-secondary" onclick="nextStep(1)">Voltar</button><button class="btn btn-primary" onclick="nextStep(3)" style="flex:1; justify-content:center;">Último Passo</button></div>
+              </div>
+              <div class="form-step">
+                 <h3 class="step-title">Finalizando...</h3>
+                 <p class="step-desc">Já utiliza algum sistema de gestão?</p>
+                 <div class="input-group"><label>Já possui ERP?</label><div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;"><button class="btn-check" onclick="setERP(true)">Sim</button><button class="btn-check" onclick="setERP(false)">Não</button></div></div>
+                 <button class="btn btn-primary" style="width:100%; justify-content:center; margin-top:20px;" onclick="finishDemo()">Finalizar Solicitação</button>
+              </div>
+              <div class="form-step" id="success-step">
+                 <div style="text-align:center;">
+                    <div class="success-icon"><iconify-icon icon="solar:check-circle-bold-duotone"></iconify-icon></div>
+                    <h3 class="step-title" style="margin-top:24px;">Enviado com Sucesso!</h3>
+                    <p class="step-desc">Nosso time entrará em contato em breve para agendar sua apresentação.</p>
+                    <button class="btn btn-secondary" onclick="closeModal()">Fechar</button>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+  </div>
+
+  <div class="glow-orb" id="glow-orb"></div>
+
+  <script>
+    const orb = document.getElementById('glow-orb');
+    const nav = document.getElementById('main-nav');
+    const modal = document.getElementById('demo-modal');
+    const slider = document.getElementById('modal-slider');
+    const dots = document.querySelectorAll('.step-dot');
+
+    document.addEventListener('mousemove', (e) => {
+       if(orb) orb.style.transform = `translate(${e.clientX - 300}px, ${e.clientY - 300}px)`;
+       document.querySelectorAll('.flashlight-card').forEach(card => {
+          const rect = card.getBoundingClientRect();
+          card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+          card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+       });
+    });
+
+    window.addEventListener('scroll', () => { if(nav) window.pageYOffset > 50 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled'); });
+
+    function openModal() { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; setTimeout(() => nextStep(0), 400); }
+    function nextStep(i) { slider.style.transform = `translateX(-${i * 100}%)`; dots.forEach((d, idx) => d.classList.toggle('active', idx === i)); }
+    function setERP(v) { document.querySelectorAll('.btn-check').forEach(b => b.classList.remove('active')); event.target.classList.add('active'); }
+    function finishDemo() { slider.style.transform = `translateX(-400%)`; dots.forEach(d => d.style.opacity = '0'); }
+
+    document.querySelectorAll('a[href="#demo"]').forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); openModal(); }));
+
+    // --- NEXUS FOG ENGINE ---
+    const fogCanvas = document.getElementById('nexus-fog');
+    if (fogCanvas) {
+      const ctx = fogCanvas.getContext('2d');
+      let w, h;
+      const blobs = [
+        { x: 0, y: 0, r: 0, vx: 0.2, vy: 0.1, c: 'rgba(28,75,226,0.03)' },
+        { x: 0, y: 0, r: 0, vx: -0.1, vy: 0.2, c: 'rgba(3,4,94,0.04)' },
+        { x: 0, y: 0, r: 0, vx: 0.15, vy: -0.1, c: 'rgba(28,75,226,0.02)' }
+      ];
+
+      function resizeFog() {
+        w = fogCanvas.width = window.innerWidth;
+        h = fogCanvas.height = window.innerHeight;
+        blobs.forEach(b => {
+          b.x = Math.random() * w;
+          b.y = Math.random() * h;
+          b.r = Math.min(w, h) * 0.6;
+        });
+      }
+      window.addEventListener('resize', resizeFog);
+      resizeFog();
+
+      function animateFog() {
+        ctx.clearRect(0, 0, w, h);
+        blobs.forEach(b => {
+          b.x += b.vx; b.y += b.vy;
+          if (b.x < -b.r || b.x > w + b.r) b.vx *= -1;
+          if (b.y < -b.r || b.y > h + b.r) b.vy *= -1;
+          const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+          g.addColorStop(0, b.c); g.addColorStop(1, 'transparent');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+        });
+        requestAnimationFrame(animateFog);
+      }
+      animateFog();
+    }
+
+    // --- AXIS CHART ENGINE ---
+    function initAxisChart(id, color) {
+      const container = document.getElementById(id);
+      if (!container) return;
+      const w = container.offsetWidth;
+      const h = container.offsetHeight;
+      const points = Array.from({length: 12}, (_, i) => ({
+        x: (i / 11) * w,
+        y: h - (Math.random() * h * 0.6 + h * 0.2)
+      }));
+
+      let d = `M ${points[0].x},${points[0].y}`;
+      for (let i = 1; i < points.length; i++) {
+        const p = points[i-1], c = points[i];
+        const cp1x = p.x + (c.x - p.x) * 0.5;
+        d += ` C ${cp1x},${p.y} ${cp1x},${c.y} ${c.x},${c.y}`;
+      }
+
+      container.innerHTML = `
+        <svg width="100%" height="100%" viewBox="0 0 ${w} ${h}">
+          <path d="${d}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" class="draw-path" />
+          <path d="${d} L ${w},${h} L 0,${h} Z" fill="${color}" fill-opacity="0.05" class="animate-reveal" />
+        </svg>
+      `;
+    }
+
+    // --- GLOBAL REVEAL ENGINE ---
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          if (entry.target.id === 'hero-chart') initAxisChart('hero-chart', '#1C4BE2');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.animate-reveal, .reveal-up, #hero-chart').forEach(el => revealObserver.observe(el));
+    setTimeout(() => { document.querySelectorAll('.hero .reveal-up, .hero .hero-title').forEach(el => el.classList.add('active')); }, 100);
+  </script>
+</body>
+</html>

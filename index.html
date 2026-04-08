@@ -148,6 +148,49 @@
     .btn-check:hover, .btn-check.active { border-color: var(--pris-accent); color: var(--pris-accent); background: rgba(28,75,226,0.05); }
 
     .success-icon { width: 72px; height: 72px; background: rgba(45,203,117,0.1); color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 42px; margin: 0 auto; }
+
+    /* ============================================================
+       MOBILE RESPONSIVENESS (v3.2 LUXE)
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .hero-title { font-size: clamp(38px, 8vw, 64px); }
+      .icon-grid, #funcionalidades .grid-4, #precos .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+      #implementacao .grid-2 { grid-template-columns: 1fr !important; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 80px 20px; }
+      nav { padding: 0 20px; }
+      .nav-links-wrapper { display: none; } /* Simplified for mobile demo */
+      
+      .hero { padding-top: 140px; }
+      .hero-title { line-height: 1.1; margin-bottom: 24px; }
+      
+      /* Bento Matrix Stack */
+      #segmentos .animate-reveal { grid-template-columns: repeat(2, 1fr) !important; grid-auto-rows: auto !important; }
+      #segmentos .card { grid-column: span 2 !important; grid-row: span 1 !important; padding: 32px !important; }
+      
+      /* Features & Results */
+      #funcionalidades .grid-4, #depoimentos .grid-3, #precos .grid-3 { grid-template-columns: 1fr !important; gap: 16px; }
+      #depoimentos .card { aspect-ratio: auto !important; padding: 32px !important; }
+      #depoimentos .card img { height: 300px; }
+      
+      /* Partners/Footer */
+      #parceiros .reveal-up { grid-template-columns: 1fr !important; padding: 40px 24px !important; gap: 48px !important; }
+      footer .grid-footer { grid-template-columns: 1fr !important; gap: 40px !important; }
+      
+      /* Modal Mobile Polish */
+      .modal-container { width: 100%; height: 100%; border-radius: 0; max-width: none; border: none; padding: 60px 0; }
+      .form-step { padding: 0 24px; }
+      .step-title { font-size: 24px; }
+    }
+
+    /* Support for very small screens */
+    @media (max-width: 480px) {
+      .hero-title { font-size: 34px; }
+      .btn { width: 100%; justify-content: center; }
+      .ds-input { font-size: 16px; } /* Prevent iOS zoom */
+    }
   </style>
 </head>
 <body>
@@ -169,7 +212,7 @@
       <div style="font-weight:900; font-size:18px; color:var(--pris-navy); letter-spacing:-0.03em;">PRIS<span style="color:var(--pris-accent);">ERP</span></div>
     </a>
     <div style="display:flex; align-items:center; gap:40px;">
-       <div style="display:flex; gap:32px;">
+       <div class="nav-links-wrapper" style="display:flex; gap:32px;">
          <a href="#funcionalidades" style="font-size:11px; font-weight:800; color:var(--gray-600); text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">Produto</a>
          <a href="#segmentos" style="font-size:11px; font-weight:800; color:var(--gray-600); text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">Setores</a>
          <a href="#depoimentos" style="font-size:11px; font-weight:800; color:var(--gray-600); text-decoration:none; text-transform:uppercase; letter-spacing:0.1em;">Resultados</a>
@@ -368,7 +411,7 @@
            <p class="animate-reveal delay-200" style="font-size:16px; color:var(--gray-600); margin-top:16px;">Tecnologia de ponta para os pilares fundamentais do seu negócio.</p>
         </div>
 
-        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:24px;">
+        <div class="grid-4" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:24px;">
            <!-- Card 1 -->
            <div class="card flashlight-card kinetic-card animate-reveal delay-100" style="padding:40px; text-align:left;">
               <div style="position:relative; width:48px; height:48px; margin-bottom:24px; display:flex; align-items:center; justify-content:center;">
@@ -410,7 +453,7 @@
   <!-- IMPLEMENTAÇÃO (COMO FUNCIONA) -->
   <section id="implementacao" style="background: #fff; padding: 120px 0;">
      <div style="max-width: 1200px; margin: 0 auto; px:6;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+        <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
            <div class="animate-reveal">
               <span class="ds-label">Onboarding Elite</span>
               <h2 style="font-size: 42px; font-weight: 900; color: var(--pris-navy); margin-bottom: 24px;">Simplicidade na <br><span class="gradient-text">transição de dados.</span></h2>
@@ -462,7 +505,7 @@
            <h2 class="animate-reveal delay-100" style="font-size: 42px; font-weight: 900; color: var(--pris-navy);">Quem confia na <span class="gradient-text">Engenharia PRIS.</span></h2>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <div class="grid-3" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
            <!-- Reels Format Card -->
            <div class="card flashlight-card animate-reveal delay-100" style="padding: 0; aspect-ratio: 9/16; border-radius: 32px; background: #000; position: relative;">
               <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2070&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
@@ -515,7 +558,7 @@
        <span class="ds-label scroll-reveal">Investimento Escalável</span>
        <h2 style="font-size:48px; font-weight:900; color:var(--pris-navy); margin-bottom:64px; letter-spacing:-0.03em;">Planos sob <span style="color:var(--pris-accent);">Medida.</span></h2>
 
-       <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; align-items: flex-end;">
+       <div class="grid-3" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; align-items: flex-end;">
           <div class="card flashlight-card reveal-up">
              <div style="font-size:11px; font-weight:800; color:var(--gray-400); text-transform:uppercase; margin-bottom:12px;">Essencial</div>
              <div style="font-size:32px; font-weight:900; color:var(--pris-navy); margin-bottom:40px;">Consulte</div>
@@ -558,7 +601,7 @@
   <!-- PARCEIROS -->
   <section id="parceiros" style="background:var(--gray-50); border-bottom:none;">
      <div style="max-width:1200px; margin:0 auto;">
-        <div class="reveal-up" style="background:var(--pris-navy); border-radius:40px; padding:80px; color:white; display:grid; grid-template-columns: 1fr 1fr; gap:100px; align-items:center; overflow:hidden;">
+        <div class="reveal-up grid-2" style="background:var(--pris-navy); border-radius:40px; padding:80px; color:white; display:grid; grid-template-columns: 1fr 1fr; gap:100px; align-items:center; overflow:hidden;">
             <div>
                <span class="ds-label" style="color:rgba(255,255,255,0.4);">PRIS Network</span>
                <h2 style="font-size:52px; font-weight:900; line-height:1.1; margin-bottom:32px;">Gere renda extra recorrente.</h2>
@@ -577,7 +620,7 @@
   <!-- FOOTER -->
   <footer style="background:var(--pris-navy); color:rgba(255,255,255,0.5); padding:100px 6% 60px; position:relative; overflow:hidden;">
      <div style="position:absolute; bottom:-30px; right:0; font-size:180px; font-weight:900; -webkit-text-stroke:1px rgba(255,255,255,0.04); color:transparent; pointer-events:none; user-select:none;">PRIS</div>
-     <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 2fr 1fr 1fr; gap:80px; position:relative; z-index:10;">
+     <div class="grid-footer" style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 2fr 1fr 1fr; gap:80px; position:relative; z-index:10;">
         <div>
            <div style="font-size:28px; font-weight:900; color:white; margin-bottom:24px;">PRISERP</div>
            <p style="font-size:14px; line-height:1.7; max-width:320px; margin-bottom:24px;">Liderando a transformação digital de varejos com tecnologia de ponta e foco total no controle do gestor.</p>

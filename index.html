@@ -49,8 +49,8 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Barlow', sans-serif;
-      background: var(--d-bg);
-      color: var(--d-text);
+      background: var(--l-bg);
+      color: var(--l-text);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -63,7 +63,7 @@
     }
     .t-heading { font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
     .t-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--accent);
       display: block; margin-bottom: 16px;
     }
@@ -76,28 +76,33 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; height: 68px;
-      background: rgba(2,3,24,0.75);
+      position: fixed; top: 0; left: 0; right: 0; height: 76px;
+      background: rgba(255,255,255,0.85);
       backdrop-filter: blur(16px) saturate(140%);
       z-index: 1000; display: flex; align-items: center;
       padding: 0 6%; justify-content: space-between;
-      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s;
+      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s, height 0.4s;
+      border-bottom: 1px solid transparent;
     }
     nav.scrolled {
-      background: rgba(2,3,24,0.95);
+      background: rgba(255,255,255,0.98);
       backdrop-filter: blur(24px) saturate(160%);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: 0 4px 20px rgba(3,4,94,0.05);
+      border-bottom: 1px solid var(--l-border);
+      height: 68px;
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo img { height: 34px; }
-    .nav-logo-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: white; letter-spacing: 0.04em; line-height: 1; }
+    .nav-logo img { height: 40px; transition: height 0.4s; }
+    nav.scrolled .nav-logo img { height: 34px; }
+    .nav-logo-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--navy); letter-spacing: 0.04em; line-height: 1; transition: font-size 0.4s; }
+    nav.scrolled .nav-logo-wordmark { font-size: 20px; }
     .nav-logo-sub { font-size: 8px; font-weight: 600; color: var(--accent); letter-spacing: 0.3em; text-transform: uppercase; }
     .nav-links a {
-      font-size: 11px; font-weight: 700; color: var(--d-muted);
-      text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em;
+      font-size: 13px; font-weight: 700; color: var(--l-muted);
+      text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: white; }
+    .nav-links a:hover { color: var(--accent); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 22px; border-radius: 6px;
@@ -134,10 +139,10 @@
     }
     .btn-blue:hover { background: var(--bright); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(28,75,226,0.6); }
     .btn-ghost {
-      background: transparent; color: white;
-      border: 1.5px solid rgba(255,255,255,0.2);
+      background: transparent; color: var(--navy);
+      border: 1.5px solid rgba(3,4,94,0.2);
     }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--bright); background: rgba(28,75,226,0.08); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(28,75,226,0.05); }
     .btn-ghost-dark {
       background: transparent; color: var(--navy);
       border: 1.5px solid rgba(3,4,94,0.25);
@@ -196,16 +201,16 @@
     .hero {
       min-height: 100vh; display: flex; align-items: center;
       padding: 140px 6% 80px; position: relative; overflow: hidden;
-      background: var(--d-bg);
+      background: var(--l-bg);
     }
     .hero-art { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
     .hero::before {
       content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      background: linear-gradient(105deg, rgba(2,3,24,0.82) 0%, rgba(2,3,24,0.55) 45%, rgba(2,3,24,0.05) 70%);
+      background: radial-gradient(circle at 80% 20%, rgba(28,75,226,0.08) 0%, transparent 50%);
     }
     .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .hero-title { font-size: clamp(52px, 6.5vw, 96px); color: white; margin-bottom: 28px; }
-    .hero-desc { font-size: 18px; line-height: 1.7; color: var(--d-muted); margin-bottom: 44px; font-weight: 400; max-width: 440px; }
+    .hero-title { font-size: clamp(52px, 6.5vw, 96px); color: var(--navy); margin-bottom: 28px; }
+    .hero-desc { font-size: 18px; line-height: 1.7; color: var(--l-muted); margin-bottom: 44px; font-weight: 500; max-width: 440px; }
     .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 
     /* ── FLOATING DASHBOARD CARD ── */
@@ -313,8 +318,8 @@
     .cta-abstract { position:absolute; inset:0; z-index:0; overflow:hidden; }
 
     /* ── FOOTER ── */
-    .footer-link { font-size:14px; color:var(--d-muted); text-decoration:none; transition:color 0.2s; display:block; margin-bottom:12px; }
-    .footer-link:hover { color:var(--bright); }
+    .footer-link { font-size:14px; color:var(--l-muted); text-decoration:none; transition:color 0.2s; display:block; margin-bottom:12px; }
+    .footer-link:hover { color:var(--accent); }
 
     /* ── ABSTRACT SHAPES ── */
     .geo-shape {
@@ -617,129 +622,9 @@
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
-  <!-- Abstract ribbon art — inspired by brand identity PDF cover -->
-  <svg class="hero-art" viewBox="0 0 1440 860" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <!-- Background radial glows -->
-      <radialGradient id="rg-right" cx="72%" cy="42%" r="55%">
-        <stop offset="0%" stop-color="#1C4BE2" stop-opacity="0.32"/>
-        <stop offset="100%" stop-color="#020318" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="rg-left" cx="25%" cy="72%" r="45%">
-        <stop offset="0%" stop-color="#5500CC" stop-opacity="0.22"/>
-        <stop offset="100%" stop-color="#020318" stop-opacity="0"/>
-      </radialGradient>
-
-      <!-- Blue ribbon fill gradient -->
-      <linearGradient id="lg-blue1" x1="0%" y1="100%" x2="100%" y2="0%">
-        <stop offset="0%"   stop-color="#020B30"/>
-        <stop offset="25%"  stop-color="#0C2EA0"/>
-        <stop offset="55%"  stop-color="#1C4BE2"/>
-        <stop offset="80%"  stop-color="#4A7FFF"/>
-        <stop offset="100%" stop-color="#2A60FF" stop-opacity="0.5"/>
-      </linearGradient>
-      <!-- Inner shine of blue ribbon -->
-      <linearGradient id="lg-blue-shine" x1="0%" y1="100%" x2="100%" y2="0%">
-        <stop offset="0%"   stop-color="#1C4BE2" stop-opacity="0"/>
-        <stop offset="40%"  stop-color="#7FB0FF" stop-opacity="0.55"/>
-        <stop offset="65%"  stop-color="#FFFFFF"  stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="#4A7FFF"  stop-opacity="0"/>
-      </linearGradient>
-
-      <!-- Purple ribbon fill gradient -->
-      <linearGradient id="lg-purple1" x1="10%" y1="90%" x2="90%" y2="10%">
-        <stop offset="0%"   stop-color="#1A004A" stop-opacity="0.6"/>
-        <stop offset="30%"  stop-color="#5500AA"/>
-        <stop offset="65%"  stop-color="#8B44FF"/>
-        <stop offset="100%" stop-color="#3A00AA" stop-opacity="0.4"/>
-      </linearGradient>
-      <!-- Purple shine -->
-      <linearGradient id="lg-purple-shine" x1="10%" y1="90%" x2="90%" y2="10%">
-        <stop offset="0%"   stop-color="#8B44FF" stop-opacity="0"/>
-        <stop offset="50%"  stop-color="#C090FF" stop-opacity="0.5"/>
-        <stop offset="80%"  stop-color="#FFFFFF"  stop-opacity="0.25"/>
-        <stop offset="100%" stop-color="#8B44FF"  stop-opacity="0"/>
-      </linearGradient>
-
-      <!-- Glow blur filters -->
-      <filter id="f-glow-lg" x="-40%" y="-40%" width="180%" height="180%">
-        <feGaussianBlur stdDeviation="40" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="f-glow-sm" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="12" result="blur"/>
-        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="f-blur-edge">
-        <feGaussianBlur stdDeviation="3"/>
-      </filter>
-    </defs>
-
-    <!-- Ambient background glow -->
-    <rect width="1440" height="860" fill="url(#rg-right)"/>
-    <rect width="1440" height="860" fill="url(#rg-left)"/>
-
-    <!-- ── BLUE RIBBON (main) ── -->
-    <!-- Body -->
-    <path d="
-      M -80,940
-      C 80,760 280,520 560,310
-      C 740,170 980,50 1300,-60
-      C 1380,-85 1480,-70 1480,-70
-      L 1480,45
-      C 1260,20 1020,120 840,260
-      C 560,470 360,710 180,960
-      Z"
-      fill="url(#lg-blue1)" opacity="0.92" filter="url(#f-glow-lg)"/>
-    <!-- Shine overlay -->
-    <path d="
-      M -80,940
-      C 80,760 280,520 560,310
-      C 740,170 980,50 1300,-60
-      C 1380,-85 1480,-70 1480,-70
-      L 1480,45
-      C 1260,20 1020,120 840,260
-      C 560,470 360,710 180,960
-      Z"
-      fill="url(#lg-blue-shine)" opacity="0.7"/>
-    <!-- Top edge highlight line -->
-    <path d="M -80,940 C 80,760 280,520 560,310 C 740,170 980,50 1300,-60 C 1380,-85 1480,-70 1480,-70"
-      stroke="url(#lg-blue-shine)" stroke-width="2.5" fill="none" opacity="0.9" filter="url(#f-blur-edge)"/>
-    <!-- Bright specular line -->
-    <path d="M 200,780 C 340,640 520,470 740,330 C 900,220 1080,130 1300,-20"
-      stroke="rgba(200,225,255,0.55)" stroke-width="1.2" fill="none" filter="url(#f-glow-sm)"/>
-
-    <!-- ── PURPLE RIBBON (accent) ── -->
-    <!-- Body -->
-    <path d="
-      M 120,960
-      C 250,760 430,540 680,360
-      C 860,220 1100,110 1480,30
-      L 1480,145
-      C 1110,225 870,340 690,480
-      C 440,660 260,880 140,1070
-      Z"
-      fill="url(#lg-purple1)" opacity="0.80" filter="url(#f-glow-lg)"/>
-    <!-- Shine overlay -->
-    <path d="
-      M 120,960
-      C 250,760 430,540 680,360
-      C 860,220 1100,110 1480,30
-      L 1480,145
-      C 1110,225 870,340 690,480
-      C 440,660 260,880 140,1070
-      Z"
-      fill="url(#lg-purple-shine)" opacity="0.6"/>
-    <!-- Top edge highlight -->
-    <path d="M 120,960 C 250,760 430,540 680,360 C 860,220 1100,110 1480,30"
-      stroke="url(#lg-purple-shine)" stroke-width="2" fill="none" opacity="0.85" filter="url(#f-blur-edge)"/>
-    <!-- Specular -->
-    <path d="M 340,840 C 480,680 650,510 870,380 C 1020,280 1200,180 1480,90"
-      stroke="rgba(200,160,255,0.45)" stroke-width="1" fill="none" filter="url(#f-glow-sm)"/>
-  </svg>
   <!-- Geometric shapes -->
-  <div class="geo-shape parallax-slow" style="width:320px;height:320px;top:40px;right:8%;transform:rotate(22deg);opacity:0.6;"></div>
-  <div class="geo-shape parallax-medium" style="width:180px;height:180px;bottom:15%;left:4%;transform:rotate(-15deg);opacity:0.4;"></div>
+  <div class="geo-shape parallax-slow" style="width:320px;height:320px;top:40px;right:8%;transform:rotate(22deg);opacity:0.3; filter: blur(40px); background: var(--accent);"></div>
+  <div class="geo-shape parallax-medium" style="width:180px;height:180px;bottom:15%;left:4%;transform:rotate(-15deg);opacity:0.2; filter: blur(30px); background: var(--bright);"></div>
 
   <div class="hero-inner">
     <!-- LEFT -->
@@ -751,73 +636,37 @@
         <span class="text-clip-line delay-3"><span>seu Varejo.</span></span>
       </h1>
       <p class="hero-desc reveal delay-3">
-        A PRIS Sistemas reúne vendas, estoque, financeiro e fiscal em um único sistema intuitivo — feito para gestores que querem controle real.
+        A PRIS Sistemas reúne vendas, estoque, financeiro e fiscal em um único sistema intuitivo — feito para gestores que querem controle real, com um visual leve e objetivo.
       </p>
       <div class="hero-btns reveal delay-4">
         <button class="btn btn-blue btn-beam" onclick="openModal()">Agendar Demo <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
-        <a href="#produto" class="btn btn-ghost btn-beam">Explorar <iconify-icon icon="solar:arrow-down-linear"></iconify-icon></a>
+        <a href="#produto" class="btn btn-ghost-dark btn-beam">Explorar <iconify-icon icon="solar:arrow-down-linear"></iconify-icon></a>
       </div>
       <!-- Trust badges -->
       <div class="reveal delay-4" style="display:flex;align-items:center;gap:24px;margin-top:48px;">
         <div style="display:flex;align-items:center;gap:6px;">
           <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--d-muted);">+500 empresas</span>
+          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">+500 empresas</span>
         </div>
-        <div style="width:1px;height:16px;background:var(--d-border);"></div>
+        <div style="width:1px;height:16px;background:var(--l-border);"></div>
         <div style="display:flex;align-items:center;gap:6px;">
           <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--d-muted);">99.9% uptime</span>
+          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">99.9% uptime</span>
         </div>
-        <div style="width:1px;height:16px;background:var(--d-border);"></div>
+        <div style="width:1px;height:16px;background:var(--l-border);"></div>
         <div style="display:flex;align-items:center;gap:6px;">
           <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--d-muted);">Suporte 24/7</span>
+          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">Suporte 24/7</span>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT: Floating Dashboard -->
-    <div class="dash-card reveal delay-2">
-      <div class="dash-topbar">
-        <div class="dot" style="background:#FF5F56;"></div>
-        <div class="dot" style="background:#FFBD2E;"></div>
-        <div class="dot" style="background:#27C93F;"></div>
-        <span class="dash-title">sistema.prissistemas.com.br</span>
-      </div>
-      <div class="dash-body">
-        <div class="dash-metrics">
-          <div class="dash-metric">
-            <div class="dash-metric-label">Faturamento</div>
-            <div class="dash-metric-value">R$ 145k</div>
-            <div class="dash-metric-delta">▲ +18.4%</div>
-          </div>
-          <div class="dash-metric">
-            <div class="dash-metric-label">Estoque</div>
-            <div class="dash-metric-value">94.8%</div>
-            <div class="dash-metric-delta" style="color:var(--bright);">Alta eficiência</div>
-          </div>
-          <div class="dash-metric">
-            <div class="dash-metric-label">NF-e emitidas</div>
-            <div class="dash-metric-value">1.284</div>
-            <div class="dash-metric-delta">▲ +6.2%</div>
-          </div>
-          <div class="dash-metric">
-            <div class="dash-metric-label">Clientes ativos</div>
-            <div class="dash-metric-value">382</div>
-            <div class="dash-metric-delta">▲ +12</div>
-          </div>
-        </div>
-        <div class="dash-chart-label">Performance Mensal</div>
-        <canvas id="mini-chart" width="340" height="100"></canvas>
-      </div>
+    <!-- RIGHT: Platform Mockup -->
+    <div class="reveal delay-2" style="position:relative;">
+      <img src="assets/platform-mockup-1.jpg" alt="PRIS ERP Dashboard" style="width:100%; border-radius:12px; box-shadow: 0 30px 60px rgba(3,4,94,0.12), 0 0 0 1px rgba(3,4,94,0.05); transform: perspective(1000px) rotateY(-5deg); transition: transform 0.5s;">
     </div>
   </div>
 </section>
-
-<!-- WAVE dark→light -->
-<div class="wave-div" style="background:var(--d-bg);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 C360,80 1080,0 1440,60 L1440,80 L0,80 Z" fill="#FFFBFA"/></svg>
-</div>
 
 <!-- ═══ METRICS (light) ═══ -->
 <section class="sec-light" style="padding:0;" id="metricas">
@@ -841,9 +690,9 @@
   </div>
 </section>
 
-<!-- WAVE light→dark -->
-<div class="wave-div" style="background:var(--l-bg);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,60 C360,0 1080,80 1440,20 L1440,80 L0,80 Z" fill="var(--d-bg)"/></svg>
+<!-- WAVE offwhite->light -->
+<div class="wave-div" style="background:var(--offwhite);">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,60 C360,0 1080,80 1440,20 L1440,80 L0,80 Z" fill="var(--l-bg)"/></svg>
 </div>
 
 <!-- ═══ MARQUEE SOCIAL PROOF ═══ -->
@@ -1250,72 +1099,39 @@
   </div>
 </section>
 
-<!-- WAVE offwhite→navy -->
-<div class="wave-div" style="background:var(--offwhite);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,0 C720,80 1440,0 1440,60 L1440,80 L0,80 Z" fill="var(--navy)"/></svg>
-</div>
 
-<!-- ═══ PARCEIROS CTA (navy) ═══ -->
-<section class="sec-navy" id="parceiros">
-  <!-- Abstract fluid background -->
-  <canvas id="cta-canvas" style="position:absolute;inset:0;z-index:0;opacity:0.4;width:100%;height:100%;"></canvas>
-  <!-- Geo shapes -->
-  <div class="geo-shape" style="width:400px;height:400px;top:-100px;right:-80px;transform:rotate(30deg);opacity:0.5;"></div>
-  <div class="geo-shape" style="width:200px;height:200px;bottom:60px;left:5%;transform:rotate(-20deg);opacity:0.3;"></div>
-
-  <div class="container" style="position:relative;z-index:1;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
-      <div>
-        <span class="t-label" style="color:rgba(255,255,255,0.35);" class="reveal">PRIS Network</span>
-        <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:white;margin-bottom:24px;">
-          Gere renda extra <span class="grad-text">recorrente.</span>
-        </h2>
-        <p style="font-size:17px;color:var(--d-muted);line-height:1.7;margin-bottom:40px;" class="reveal delay-2">
-          Indique o PRIS Sistemas e receba uma comissão mensal vitalícia por cada cliente que você trouxer.
-        </p>
-        <button class="btn btn-blue reveal delay-3" onclick="openModal()">Seja um Parceiro <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
-      </div>
-      <div class="reveal delay-2" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:48px;text-align:center;backdrop-filter:blur(12px);">
-        <div style="font-size:10px;font-weight:800;color:var(--d-faint);text-transform:uppercase;letter-spacing:0.18em;margin-bottom:16px;">Estimativa Mensal (50 clientes)</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(48px,6vw,72px);font-weight:900;color:#2DCB75;letter-spacing:-0.03em;line-height:1;">R$ 4.500</div>
-        <div style="font-size:13px;color:var(--d-muted);font-weight:600;margin-top:12px;">Recorrência Mensal Líquida</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══ FOOTER ═══ -->
-<footer style="background:var(--d-bg);border-top:1px solid var(--d-border);padding:80px 6% 48px;position:relative;overflow:hidden;">
-  <div style="position:absolute;bottom:-30px;right:0;font-family:'Barlow Condensed',sans-serif;font-size:180px;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.03);pointer-events:none;user-select:none;">PRIS</div>
+<footer style="background:var(--l-bg);border-top:1px solid var(--l-border);padding:80px 6% 48px;position:relative;overflow:hidden;">
+  <div style="position:absolute;bottom:-30px;right:0;font-family:'Barlow Condensed',sans-serif;font-size:180px;font-weight:900;color:var(--l-border);opacity:0.3;pointer-events:none;user-select:none;">PRIS</div>
   <div class="grid-footer" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:80px;position:relative;z-index:1;">
     <div>
       <div style="display:flex;align-items:center;margin-bottom:24px;">
-        <img src="assets/logo-pris-white.svg" alt="PRIS Sistemas" style="height:34px;" />
+        <img src="assets/logo-pris.svg" alt="PRIS Sistemas" style="height:34px;" />
       </div>
-      <p style="font-size:14px;line-height:1.7;color:var(--d-muted);max-width:300px;margin-bottom:28px;">Liderando a transformação digital de varejos com tecnologia de ponta e foco total no controle do gestor.</p>
+      <p style="font-size:14px;line-height:1.7;color:var(--l-muted);max-width:300px;margin-bottom:28px;">Liderando a transformação digital de varejos com tecnologia de ponta e foco total no controle do gestor.</p>
       <div style="display:flex;gap:14px;">
-        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--d-surf);border:1px solid var(--d-border);display:flex;align-items:center;justify-content:center;color:var(--d-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--bright)'" onmouseout="this.style.borderColor='var(--d-border)';this.style.color='var(--d-muted)'"><iconify-icon icon="solar:instagram-linear"></iconify-icon></a>
-        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--d-surf);border:1px solid var(--d-border);display:flex;align-items:center;justify-content:center;color:var(--d-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--bright)'" onmouseout="this.style.borderColor='var(--d-border)';this.style.color='var(--d-muted)'"><iconify-icon icon="solar:linkedin-linear"></iconify-icon></a>
+        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-bg);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:instagram-linear"></iconify-icon></a>
+        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-bg);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:linkedin-linear"></iconify-icon></a>
       </div>
     </div>
     <div>
-      <h4 style="font-size:10px;font-weight:800;color:white;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Navegação</h4>
+      <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Navegação</h4>
       <a href="#hero" class="footer-link">Início</a>
       <a href="#segmentos" class="footer-link">Setores</a>
       <a href="#funcionalidades" class="footer-link">Funcionalidades</a>
       <a href="#precos" class="footer-link">Preços</a>
-      <a href="#parceiros" class="footer-link">Parceiros</a>
     </div>
     <div>
-      <h4 style="font-size:10px;font-weight:800;color:white;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Atendimento</h4>
-      <p style="font-size:14px;color:var(--d-muted);margin-bottom:8px;">(31) 9999-9999</p>
-      <p style="font-size:14px;color:var(--d-muted);margin-bottom:24px;">contato@prissistemas.com.br</p>
+      <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Atendimento</h4>
+      <p style="font-size:14px;color:var(--l-muted);margin-bottom:8px;">(31) 9999-9999</p>
+      <p style="font-size:14px;color:var(--l-muted);margin-bottom:24px;">contato@prissistemas.com.br</p>
       <button class="nav-cta" onclick="openModal()" style="font-size:11px;">Agendar Demo</button>
     </div>
   </div>
-  <div style="max-width:1200px;margin:48px auto 0;padding-top:28px;border-top:1px solid var(--d-border);display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:12px;color:var(--d-faint);">© 2025 PRIS Sistemas · Tecnologia para Crescer.</span>
-    <span style="font-size:12px;color:var(--d-faint);">Todos os direitos reservados.</span>
+  <div style="max-width:1200px;margin:48px auto 0;padding-top:28px;border-top:1px solid var(--l-border);display:flex;justify-content:space-between;align-items:center;">
+    <span style="font-size:12px;color:var(--l-muted);">© 2025 PRIS Sistemas · Tecnologia para Crescer.</span>
+    <span style="font-size:12px;color:var(--l-muted);">Todos os direitos reservados.</span>
   </div>
 </footer>
 

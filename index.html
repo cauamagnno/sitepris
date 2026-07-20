@@ -92,8 +92,8 @@
       height: 68px;
     }
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo img { height: 40px; transition: height 0.4s; }
-    nav.scrolled .nav-logo img { height: 34px; }
+    .nav-logo img { height: 75px; transition: height 0.4s; }
+    nav.scrolled .nav-logo img { height: 55px; }
     .nav-logo-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--navy); letter-spacing: 0.04em; line-height: 1; transition: font-size 0.4s; }
     nav.scrolled .nav-logo-wordmark { font-size: 20px; }
     .nav-logo-sub { font-size: 8px; font-weight: 600; color: var(--accent); letter-spacing: 0.3em; text-transform: uppercase; }
@@ -571,11 +571,12 @@
       .price-card-featured { transform:none; }
       .screens-grid { grid-template-columns:1fr !important; }
       .feat-grid { grid-template-columns:1fr !important; }
-      .footer-grid { grid-template-columns:1fr !important; gap:40px !important; }
+      .footer-grid, .grid-footer { grid-template-columns:1fr !important; gap:40px !important; }
       .modal-box { border-radius:0; width:100%; max-height:100dvh; overflow-y:auto; }
       .form-step { padding:0 20px; }
       .sec-header { margin-bottom:48px; }
       .wave-div svg { height:50px; }
+      .nav-logo img { height: 50px !important; }
     }
     @media(max-width:480px) {
       .metrics-strip { grid-template-columns:1fr; }
@@ -880,7 +881,7 @@
             <div style="width:8px;height:8px;border-radius:50%;background:#27C93F;"></div>
             <span style="font-size:8px;color:var(--d-faint);font-family:'Fira Code',monospace;margin:0 auto;">login.prissistemas.com.br</span>
           </div>
-          <img src="assets/screenshot-login.png" alt="Login PRIS Sistemas" style="width:100%;display:block;"
+          <img src="assets/print-login.png" alt="Login PRIS Sistemas" style="width:100%;display:block;"
                onerror="this.style.cssText='width:100%;height:220px;display:block;background:rgba(255,255,255,0.03);'" />
         </div>
       </div>
@@ -893,7 +894,7 @@
             <div style="width:8px;height:8px;border-radius:50%;background:#27C93F;"></div>
             <span style="font-size:8px;color:var(--d-faint);font-family:'Fira Code',monospace;margin:0 auto;">app.prissistemas.com.br</span>
           </div>
-          <img src="assets/screenshot-sistema.png" alt="Sistema PRIS Sistemas" style="width:100%;display:block;"
+          <img src="assets/print-produtos.png" alt="Sistema PRIS Sistemas" style="width:100%;display:block;"
                onerror="this.style.cssText='width:100%;height:220px;display:block;background:rgba(255,255,255,0.03);'" />
         </div>
       </div>
@@ -1068,7 +1069,7 @@
   <div class="grid-footer" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:80px;position:relative;z-index:1;">
     <div>
       <div style="display:flex;align-items:center;margin-bottom:24px;">
-        <img src="assets/logo-pris.png" alt="PRIS Sistemas" style="height:34px;" />
+        <img src="assets/logo-pris.png" alt="PRIS Sistemas" style="height:70px;" />
       </div>
       <p style="font-size:14px;line-height:1.7;color:var(--l-muted);max-width:300px;margin-bottom:28px;">Liderando a transformação digital de varejos com tecnologia de ponta e foco total no controle do gestor.</p>
       <div style="display:flex;gap:14px;">
@@ -1172,10 +1173,11 @@ const revObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('in');
-      revObs.unobserve(e.target);
+    } else {
+      e.target.classList.remove('in');
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-blur, .reveal-rotate, .text-clip-line')
   .forEach(el => revObs.observe(el));
 

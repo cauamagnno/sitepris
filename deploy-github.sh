@@ -4,7 +4,7 @@
 #  Script de Deploy: index2.html → GitHub
 # ============================================
 
-GH_TOKEN="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"
+GH_TOKEN="SEU_TOKEN_AQUI"
 REPO_NAME="sitepris"
 GH_USER=$(curl -s -H "Authorization: token $GH_TOKEN" https://api.github.com/user | python3 -c "import sys,json; print(json.load(sys.stdin)['login'])")
 

@@ -1,1469 +1,1182 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PRIS Sistemas — Gestão Inteligente para o Varejo</title>
+  <title>PRIS Sistemas — Gestão pensada para a sua rotina</title>
+  <meta name="description" content="O PRIS integra vendas, estoque, gestão financeira e fiscal para simplificar o dia a dia da sua empresa. Acompanhe seu negócio de onde estiver." />
+  <link rel="preload" as="image" href="assets/print-dashboard.jpg" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Barlow+Condensed:wght@600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
-  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js" defer></script>
 
   <style>
-    /* ═══════════════════════════════════════════════════
-       PRIS SISTEMAS — DESIGN SYSTEM v5 INSTITUTIONAL
-       Paleta: #03045E · #0000A4 · #1C4BE2 · #FFFBFA
-    ═══════════════════════════════════════════════════ */
     :root {
-      --navy:    #03045E;
-      --blue:    #0000A4;
-      --accent:  #1C4BE2;
-      --bright:  #4A7FFF;
-      --white:   #FFFBFA;
-      --offwhite:#F4F6FB;
-
-      /* Dark surfaces */
-      --d-bg:    #020318;
-      --d-surf:  rgba(255,255,255,0.04);
-      --d-surf2: rgba(255,255,255,0.08);
-      --d-border:rgba(255,255,255,0.09);
-      --d-borderb:rgba(28,75,226,0.35);
-      --d-text:  rgba(255,255,255,0.90);
-      --d-muted: rgba(255,255,255,0.50);
-      --d-faint: rgba(255,255,255,0.25);
-
-      /* Light surfaces */
-      --l-bg:    #FFFBFA;
-      --l-surf:  #F0F4FF;
-      --l-border:#DDE4F5;
-      --l-text:  #03045E;
-      --l-muted: #54648A;
-
-      --grad: linear-gradient(135deg, #03045E 0%, #1C4BE2 100%);
-      --grad-bright: linear-gradient(135deg, #1C4BE2 0%, #4A7FFF 100%);
-      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+      --navy:   #03045E;
+      --accent: #1C4BE2;
+      --bright: #4A7FFF;
+      --accent-hover: #0000A4;
+      --accent-soft: #F0F4FF;
+      --text:   #03045E;
+      --muted:  #54648A;
+      --border: #DDE4F5;
+      --bg:     #FFFBFA;
+      --bg-alt: #F4F6FB;
+      --success:#16A34A;
+      --radius: 12px;
+      --container: 1180px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
     body {
-      font-family: 'Barlow', sans-serif;
-      background: var(--l-bg);
-      color: var(--l-text);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text); background: var(--bg);
+      line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden;
     }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    iconify-icon { display: inline-block; width: 1em; height: 1em; }
 
-    /* ── TYPOGRAPHY ── */
-    .t-display {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900; line-height: 0.95;
-      letter-spacing: -0.02em;
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+    .section { padding: 96px 0; }
+    .section-alt { background: var(--bg-alt); }
+    .eyebrow {
+      display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent);
+      background: var(--accent-soft); padding: 6px 14px; border-radius: 999px; margin-bottom: 20px;
     }
-    .t-heading { font-weight: 800; letter-spacing: -0.025em; line-height: 1.1; }
-    .t-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--accent);
-      display: block; margin-bottom: 16px;
-    }
-    .t-label-light { color: var(--accent); }
-    .grad-text {
-      background: var(--grad-bright);
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; height: 76px;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(16px) saturate(140%);
-      z-index: 1000; display: flex; align-items: center;
-      padding: 0 6%; justify-content: space-between;
-      transition: background 0.4s, backdrop-filter 0.4s, box-shadow 0.4s, height 0.4s;
-      border-bottom: 1px solid transparent;
-    }
-    nav.scrolled {
-      background: rgba(255,255,255,0.98);
-      backdrop-filter: blur(24px) saturate(160%);
-      box-shadow: 0 4px 20px rgba(3,4,94,0.05);
-      border-bottom: 1px solid var(--l-border);
-      height: 68px;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo img { width: 150px; height: auto; transition: width 0.4s; }
-    nav.scrolled .nav-logo img { width: 120px; }
-    .nav-logo-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--navy); letter-spacing: 0.04em; line-height: 1; transition: font-size 0.4s; }
-    nav.scrolled .nav-logo-wordmark { font-size: 20px; }
-    .nav-logo-sub { font-size: 8px; font-weight: 600; color: var(--accent); letter-spacing: 0.3em; text-transform: uppercase; }
-    .nav-links a {
-      font-size: 13px; font-weight: 700; color: var(--l-muted);
-      text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 22px; border-radius: 6px;
-      background: var(--accent); color: white;
-      font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      border: none; cursor: pointer; text-decoration: none;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-    .nav-cta:hover {
-      background: var(--bright);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(28,75,226,0.5);
-    }
+    .h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; color: var(--navy); }
+    .h2 strong { color: var(--accent); font-weight: 800; }
+    .lead { font-size: 18px; color: var(--muted); max-width: 640px; }
+    .sec-head { text-align: center; margin: 0 auto 56px; max-width: 760px; }
+    .sec-head .lead { margin: 16px auto 0; }
+    .sec-cta { display: flex; justify-content: center; margin-top: 48px; }
+    .intro .sec-cta { margin-top: 28px; }
+    .stats .sec-cta { margin-top: 8px; padding: 0 24px 48px; }
+    .price .btn, .mobile-nav .btn { width: 100%; }
+    .hero-copy, .hero-shot, .tab-panel > div { min-width: 0; }
 
     /* ── BUTTONS ── */
     .btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 16px 36px; border-radius: 6px;
-      font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      cursor: pointer; border: none; text-decoration: none;
-      position: relative; overflow: hidden; transition: 0.3s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 48px; padding: 0 24px; border-radius: 999px;
+      font-size: 15px; font-weight: 600; white-space: nowrap;
+      transition: background .2s, color .2s, border-color .2s, transform .2s;
     }
-    .btn::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-      transform: translateX(-100%); transition: 0.5s;
-    }
-    .btn:hover::after { transform: translateX(100%); }
-    .btn-blue {
-      background: var(--accent); color: white;
-      box-shadow: 0 6px 28px rgba(28,75,226,0.4);
-    }
-    .btn-blue:hover { background: var(--bright); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(28,75,226,0.6); }
-    .btn-ghost {
-      background: transparent; color: var(--navy);
-      border: 1.5px solid rgba(3,4,94,0.2);
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(28,75,226,0.05); }
-    .btn-ghost-dark {
-      background: transparent; color: var(--navy);
-      border: 1.5px solid rgba(3,4,94,0.25);
-    }
-    .btn-ghost-dark:hover { border-color: var(--accent); color: var(--accent); }
+    .btn:active { transform: scale(.98); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--navy); background: #fff; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-sm { height: 40px; padding: 0 18px; font-size: 14px; }
+    .btn-white { background: #fff; color: var(--accent); }
+    .btn-white:hover { background: var(--accent-soft); }
 
-    /* ── CARDS ── */
-    .card-dark {
-      background: var(--d-surf); border: 1px solid var(--d-border);
-      border-radius: 16px; padding: 36px;
-      transition: border-color 0.3s, transform 0.4s;
-      position: relative; overflow: hidden;
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--navy); color: #fff; font-size: 14px; text-align: center;
+      padding: 10px 24px;
     }
-    .card-dark:hover { border-color: var(--d-borderb); transform: translateY(-4px); }
-    .card-dark::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(28,75,226,0.07), transparent 70%);
-      opacity: 0; transition: opacity 0.4s; pointer-events: none;
+    .topbar button { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; margin-left: 6px; }
+
+    /* ── HEADER ── */
+    .header {
+      position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.96);
+      border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s;
     }
-    .card-dark:hover::before { opacity: 1; }
-    .card-light {
-      background: white; border: 1px solid var(--l-border);
-      border-radius: 16px; padding: 36px;
-      box-shadow: 0 2px 16px rgba(3,4,94,0.06);
-      transition: box-shadow 0.3s, transform 0.4s;
+    .header.scrolled { border-color: var(--border); box-shadow: 0 2px 12px rgba(3,4,94,.04); }
+    .header-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo img { width: 128px; height: auto; }
+    .nav { display: flex; gap: 32px; font-size: 15px; font-weight: 500; color: var(--muted); }
+    .nav a:hover { color: var(--accent); }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .link-login { font-size: 15px; font-weight: 600; color: var(--navy); padding: 0 8px; }
+    .link-login:hover { color: var(--accent); }
+    .hamburger { display: none; font-size: 26px; color: var(--navy); }
+    .mobile-nav {
+      display: none; flex-direction: column; gap: 4px; padding: 8px 24px 24px;
+      border-top: 1px solid var(--border); background: #fff;
     }
-    .card-light:hover { box-shadow: 0 12px 48px rgba(3,4,94,0.12); transform: translateY(-4px); }
-
-    /* ── SECTIONS ── */
-    .sec-dark  { background: var(--d-bg); color: white; padding: 120px 6%; position: relative; z-index: 1; }
-    .sec-light { background: var(--l-bg); color: var(--l-text); padding: 120px 6%; position: relative; z-index: 1; }
-    .sec-navy  { background: var(--navy); color: white; padding: 120px 6%; position: relative; z-index: 1; overflow: hidden; }
-
-    .container { max-width: 1200px; margin: 0 auto; }
-    .sec-header { text-align: center; margin-bottom: 72px; }
-
-    /* ── WAVE DIVIDERS ── */
-    .wave-div { display: block; line-height: 0; overflow: hidden; }
-    .wave-div svg { display: block; width: 100%; }
-
-    /* ── REVEAL ANIMATIONS ── */
-    .reveal         { opacity:0; transform:translateY(40px);   transition:opacity 0.85s var(--ease-spring), transform 0.85s var(--ease-spring); }
-    .reveal-left    { opacity:0; transform:translateX(-50px);  transition:opacity 0.85s var(--ease-spring), transform 0.85s var(--ease-spring); }
-    .reveal-right   { opacity:0; transform:translateX(50px);   transition:opacity 0.85s var(--ease-spring), transform 0.85s var(--ease-spring); }
-    .reveal-scale   { opacity:0; transform:scale(0.88);        transition:opacity 0.85s var(--ease-spring), transform 0.85s var(--ease-spring); }
-    .reveal-blur    { opacity:0; filter:blur(12px) saturate(0); transition:opacity 0.9s ease, filter 0.9s ease; }
-    .reveal.in, .reveal-left.in, .reveal-right.in, .reveal-scale.in { opacity:1; transform:none; }
-    .reveal-blur.in { opacity:1; filter:none; }
-    .delay-1 { transition-delay:0.08s; }
-    .delay-2 { transition-delay:0.16s; }
-    .delay-3 { transition-delay:0.24s; }
-    .delay-4 { transition-delay:0.32s; }
-    .delay-5 { transition-delay:0.40s; }
+    .mobile-nav a { padding: 12px 0; font-weight: 500; border-bottom: 1px solid var(--border); }
+    .mobile-nav .btn { margin-top: 16px; }
+    .mobile-nav.open { display: flex; }
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh; display: flex; align-items: center;
-      padding: 140px 6% 80px; position: relative; overflow: hidden;
-      background: var(--l-bg);
+      position: relative; padding: 72px 0 96px; overflow: hidden;
+      background:
+        radial-gradient(600px 400px at 85% 20%, rgba(28,75,226,.12), transparent 70%),
+        radial-gradient(500px 360px at 5% 90%, rgba(107,140,255,.10), transparent 70%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
     }
-    .hero-art { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
     .hero::before {
-      content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-      background: radial-gradient(circle at 80% 20%, rgba(28,75,226,0.08) 0%, transparent 50%);
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(rgba(3,4,94,.08) 1px, transparent 1px);
+      background-size: 22px 22px;
+      mask-image: linear-gradient(180deg, #000 0%, transparent 80%);
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 80%);
     }
-    .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .hero-title { font-size: clamp(52px, 6.5vw, 96px); color: var(--navy); margin-bottom: 28px; }
-    .hero-desc { font-size: 18px; line-height: 1.7; color: var(--l-muted); margin-bottom: 44px; font-weight: 500; max-width: 440px; }
-    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-grid { position: relative; display: grid; grid-template-columns: minmax(360px, 1fr) 1fr; gap: 56px; align-items: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px;
+      padding: 6px 14px 6px 10px; border-radius: 999px; background: #fff; border: 1px solid var(--border);
+      font-size: 13px; font-weight: 600; color: var(--navy); box-shadow: 0 4px 14px rgba(3,4,94,.05);
+    }
+    .hero-badge i { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
+    .hero-badge i::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--success); animation: badgePing 2s ease-out infinite; }
+    @keyframes badgePing { to { transform: scale(2.6); opacity: 0; } }
+    .hero h1 {
+      font-size: clamp(40px, 4.6vw, 60px); font-weight: 800; line-height: 1.04;
+      letter-spacing: -0.035em; color: var(--navy);
+    }
+    .hero h1 .hl {
+      background: linear-gradient(135deg, var(--accent), var(--bright));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero-sub { list-style: none; display: grid; gap: 12px; margin-top: 28px; }
+    .hero-sub li { display: flex; align-items: center; gap: 12px; font-size: clamp(16px, 1.5vw, 19px); font-weight: 600; color: var(--navy); }
+    .hero-sub iconify-icon {
+      flex-shrink: 0; width: 34px; height: 34px; padding: 8px; border-radius: 10px;
+      background: var(--accent-soft); color: var(--accent); font-size: 18px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+    .hero-trust { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 24px; font-size: 14px; color: var(--muted); }
+    .hero-trust span { display: inline-flex; align-items: center; gap: 6px; }
+    .hero-trust iconify-icon { color: var(--success); font-size: 18px; }
 
-    /* ── FLOATING DASHBOARD CARD ── */
-    .dash-card {
-      background: rgba(2,3,24,0.85);
-      border: 1px solid rgba(28,75,226,0.3);
-      border-radius: 20px; overflow: hidden;
-      box-shadow: 0 40px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(28,75,226,0.2), 0 0 80px rgba(28,75,226,0.1);
-      animation: float 8s ease-in-out infinite;
-      backdrop-filter: blur(20px);
+    .hero-shot { position: relative; margin: 0; min-width: 0; }
+    .hero-shot .browser { width: 100%; max-width: 100%; }
+    .browser {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(3,4,94,.16);
     }
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-    .dash-topbar { display:flex; align-items:center; gap:8px; padding:12px 18px; border-bottom:1px solid rgba(255,255,255,0.06); }
-    .dash-topbar .dot { width:8px; height:8px; border-radius:50%; }
-    .dash-title { font-size:9px; font-weight:700; color:var(--d-faint); font-family:'Fira Code',monospace; margin-left:auto; }
-    .dash-body { padding:24px; }
-    .dash-metrics { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
-    .dash-metric { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px; }
-    .dash-metric-label { font-size:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--d-faint); margin-bottom:4px; }
-    .dash-metric-value { font-size:20px; font-weight:900; color:white; font-family:'Barlow Condensed',sans-serif; }
-    .dash-metric-delta { font-size:9px; font-weight:700; color:#2DCB75; margin-top:2px; }
-    .dash-chart-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--d-faint); margin-bottom:10px; }
+    .float-card {
+      position: absolute; z-index: 2; display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px; border-radius: 14px; background: #fff; border: 1px solid var(--border);
+      box-shadow: 0 18px 40px rgba(3,4,94,.14); animation: floatY 5s ease-in-out infinite;
+    }
+    .float-card .fc-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .float-card small { display: block; font-size: 12px; color: var(--muted); line-height: 1.3; }
+    .float-card b { display: block; font-size: 17px; color: var(--navy); line-height: 1.3; }
+    .float-card em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--success); }
+    .fc-revenue { left: -36px; bottom: -40px; }
+    .fc-revenue .fc-icon { background: #E8F7EE; color: var(--success); }
+    .fc-nfe { right: 8%; top: -28px; animation-delay: -2.5s; }
+    .fc-nfe .fc-icon { background: var(--accent-soft); color: var(--accent); }
+    @keyframes floatY { 50% { transform: translateY(-10px); } }
+    @media (max-width: 1100px) and (min-width: 901px) {
+      .float-card { padding: 10px 12px; gap: 10px; }
+      .float-card b { font-size: 15px; }
+      .float-card em { display: none; }
+      .fc-revenue { left: -20px; bottom: -32px; }
+    }
 
-    /* ── METRICS STRIP (light) ── */
-    .metrics-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
-    .metric-block { text-align:center; padding:56px 24px; border-right:1px solid var(--l-border); }
-    .metric-block:last-child { border-right:none; }
-    .metric-num { font-family:'Barlow Condensed',sans-serif; font-size:clamp(44px,5vw,64px); font-weight:900; color:var(--accent); line-height:1; }
-    .metric-label { font-size:13px; font-weight:600; color:var(--l-muted); margin-top:8px; }
+    .intro { padding: 72px 0 0; background: var(--bg); text-align: center; }
+    .intro p {
+      max-width: 820px; margin: 0 auto; font-size: clamp(19px, 2vw, 24px); line-height: 1.55;
+      color: var(--muted); font-weight: 500; letter-spacing: -0.01em;
+    }
+    .intro p strong { color: var(--navy); font-weight: 700; }
+    .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--border); background: #FAFBFD; }
+    .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #E2E5EE; }
+    .browser-url { margin: 0 auto; font-size: 12px; color: var(--muted); background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 2px 14px; }
+    .browser img { width: 100%; height: auto; aspect-ratio: 1600 / 573; }
 
-    /* ── BENTO SEGMENTS ── */
-    .bento { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
-    .bento-span2 { grid-column:span 2; }
-    .bento-cell {
-      background:var(--d-surf); border:1px solid var(--d-border);
-      border-radius:14px; padding:32px;
-      min-height:200px; display:flex; flex-direction:column; justify-content:flex-end;
-      position:relative; overflow:hidden;
-      transition:border-color 0.3s, transform 0.4s;
+    /* ── STATS (faixa do site atual) ── */
+    .stats { background: var(--bg); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 56px 24px; text-align: center; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat b {
+      display: block; font-family: 'Barlow Condensed', 'Inter', sans-serif;
+      font-size: clamp(44px, 5vw, 64px); font-weight: 900; color: var(--accent);
+      letter-spacing: -0.02em; line-height: 1;
     }
-    .bento-cell:hover { border-color:var(--d-borderb); transform:scale(1.015); }
-    .bento-cell-accent { background:linear-gradient(135deg, rgba(28,75,226,0.15) 0%, rgba(3,4,94,0.3) 100%); border-color:var(--d-borderb); }
-    .bento-geo {
-      position:absolute; top:-20px; right:-20px;
-      width:120px; height:120px; border-radius:16px;
-      background:rgba(28,75,226,0.12); border:1px solid rgba(28,75,226,0.2);
-      transform:rotate(20deg); pointer-events:none;
-    }
-    .bento-geo2 {
-      position:absolute; bottom:-30px; right:20px;
-      width:80px; height:80px; border-radius:12px;
-      background:rgba(74,127,255,0.08); border:1px solid rgba(74,127,255,0.15);
-      transform:rotate(35deg); pointer-events:none;
-    }
-    .bento-icon { font-size:32px; color:var(--accent); margin-bottom:16px; display:block; }
-    .bento-tag { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.18em; color:var(--accent); margin-bottom:8px; }
-    .bento-cell h3 { font-size:20px; font-weight:800; color:white; }
-    .bento-cell p { font-size:13px; color:var(--d-muted); line-height:1.6; margin-top:8px; }
+    .stat span { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin-top: 8px; }
 
-    /* ── LIVE CHART SECTION (light) ── */
-    .chart-frame {
-      background:white; border:1px solid var(--l-border); border-radius:16px;
-      overflow:hidden; box-shadow:0 8px 48px rgba(3,4,94,0.1);
-    }
-    .chart-topbar { display:flex; align-items:center; gap:8px; padding:14px 20px; border-bottom:1px solid var(--l-border); background:var(--offwhite); }
-    .chart-topbar .dot { width:8px; height:8px; border-radius:50%; }
-    .chart-topbar-url { font-size:9px; font-weight:700; color:var(--l-muted); font-family:'Fira Code',monospace; flex:1; text-align:center; }
-    .chart-inner { padding:32px; }
-    .chart-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:28px; }
-    .chart-kpi { }
-    .chart-kpi-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--l-muted); margin-bottom:4px; }
-    .chart-kpi-val { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--navy); line-height:1; }
-    .chart-kpi-delta { font-size:10px; font-weight:700; color:#2DCB75; margin-top:2px; }
+    /* ── TABS (Gerir / Vender / Acompanhar) ── */
+    .tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 999px; margin: 0 auto 48px; }
+    .tabs-wrap { text-align: center; }
+    .tab { padding: 10px 24px; border-radius: 999px; font-size: 15px; font-weight: 600; color: var(--muted); transition: background .2s, color .2s; }
+    .tab[aria-selected="true"] { background: var(--accent); color: #fff; }
+    .tab-panel { display: none; grid-template-columns: 1fr 1.25fr; gap: 64px; align-items: center; }
+    .tab-panel.active { display: grid; }
+    .tab-panel h3 { font-size: clamp(24px, 2.6vw, 32px); font-weight: 800; line-height: 1.2; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 16px; }
+    .tab-panel p { color: var(--muted); font-size: 17px; margin-bottom: 24px; }
+    .checks { list-style: none; display: grid; gap: 12px; margin-bottom: 32px; }
+    .checks li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--text); }
+    .checks iconify-icon { color: var(--accent); font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .shot { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(3,4,94,.08); background: #fff; }
+    .shot img { width: 100%; height: auto; }
 
-    /* ── FEAT ICONS ── */
-    .feat-icon {
-      width:52px; height:52px; border-radius:12px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:24px; margin-bottom:24px;
+    /* ── BENEFITS ── */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .card {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 32px;
     }
-    .feat-icon-dark { background:rgba(28,75,226,0.12); border:1px solid rgba(28,75,226,0.25); color:var(--accent); }
-    .feat-icon-light { background:rgba(28,75,226,0.08); border:1px solid rgba(28,75,226,0.18); color:var(--accent); }
+    .card-icon {
+      width: 48px; height: 48px; border-radius: 12px; background: var(--accent-soft); color: var(--accent);
+      display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px;
+    }
+    .card h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .card p { font-size: 15px; color: var(--muted); }
 
-    /* ── STEPS ── */
-    .step-num { font-family:'Barlow Condensed',sans-serif; font-size:64px; font-weight:900; color:rgba(28,75,226,0.15); line-height:1; margin-bottom:16px; }
-    .step-num-light { color:rgba(28,75,226,0.25); }
+    /* ── MODULES ── */
+    .modules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .module {
+      display: flex; align-items: center; gap: 14px; min-width: 0; padding: 18px 20px;
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      font-size: 15px; font-weight: 600; color: var(--navy);
+    }
+    .module iconify-icon { font-size: 22px; color: var(--accent); flex-shrink: 0; }
+
+    /* ── SEGMENTS ── */
+    .segments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .segment { display: flex; gap: 16px; align-items: flex-start; padding: 24px; border: 1px solid var(--border); border-radius: var(--radius); background: #fff; transition: border-color .25s, box-shadow .25s, transform .35s cubic-bezier(.2,.8,.2,1); }
+    .segment .card-icon { margin: 0; flex-shrink: 0; }
+    .segment h3 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .segment p { font-size: 14px; color: var(--muted); }
 
     /* ── TESTIMONIALS ── */
-    .quote-mark { font-size:48px; color:var(--accent); opacity:0.4; line-height:1; font-family:Georgia,serif; margin-bottom:8px; }
+    .quote p { font-size: 16px; color: var(--text); margin-bottom: 24px; }
+    .stars { color: #F59E0B; font-size: 16px; display: flex; gap: 2px; margin-bottom: 16px; }
+    .author { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .author b { display: block; font-size: 14px; color: var(--navy); }
+    .author span { font-size: 13px; color: var(--muted); }
 
-    /* ── PRICE CARDS ── */
-    .price-card {
-      border-radius:16px; padding:44px 36px;
-      position:relative; overflow:hidden;
-    }
-    .price-card-base { background:var(--d-surf); border:1px solid var(--d-border); }
-    .price-card-featured {
-      background:var(--accent);
-      box-shadow:0 20px 80px rgba(28,75,226,0.5);
-      transform:scale(1.04); z-index:2;
-    }
-    .price-check { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; margin-bottom:14px; }
+    /* ── PRICING ── */
+    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+    .price { display: flex; flex-direction: column; }
+    .price .plan { font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+    .price .value { font-size: 36px; font-weight: 800; color: var(--navy); margin: 8px 0 4px; letter-spacing: -0.02em; }
+    .price .value small { font-size: 15px; font-weight: 500; color: var(--muted); }
+    .price .desc { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .price .checks { flex: 1; }
+    .price-featured { border: 2px solid var(--accent); position: relative; }
+    .badge { position: absolute; top: -13px; left: 32px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
 
-    /* ── PARTNER CTA ── */
-    .cta-abstract { position:absolute; inset:0; z-index:0; overflow:hidden; }
+    /* ── CTA ── */
+    .cta { background: var(--accent); color: #fff; border-radius: 24px; padding: 64px 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: center; }
+    .cta h2 { font-size: clamp(26px, 3.2vw, 38px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
+    .cta p { margin-top: 12px; color: rgba(255,255,255,.85); font-size: 17px; }
+    .cta-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+    .cta .btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+    .cta .btn-outline:hover { border-color: #fff; color: #fff; }
 
     /* ── FOOTER ── */
-    .footer-link { font-size:14px; color:var(--l-muted); text-decoration:none; transition:color 0.2s; display:block; margin-bottom:12px; }
-    .footer-link:hover { color:var(--accent); }
-
-    /* ── ABSTRACT SHAPES ── */
-    .geo-shape {
-      position:absolute; border-radius:18px;
-      background:linear-gradient(135deg, rgba(28,75,226,0.2), rgba(74,127,255,0.08));
-      border:1px solid rgba(28,75,226,0.2);
-      pointer-events:none;
-    }
+    .footer { border-top: 1px solid var(--border); padding: 64px 0 32px; font-size: 14px; color: var(--muted); }
+    .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; }
+    .footer h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .footer-grid a { display: block; margin-bottom: 10px; }
+    .footer-grid a:hover { color: var(--accent); }
+    .footer .logo img { margin-bottom: 16px; }
+    .social { display: flex; gap: 10px; margin-top: 20px; }
+    .social a { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; margin: 0; }
+    .social a:hover { border-color: var(--accent); }
+    .footer-bottom { border-top: 1px solid var(--border); margin-top: 48px; padding-top: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
     /* ── MODAL ── */
-    .modal-overlay { position:fixed; inset:0; background:rgba(2,3,24,0.8); backdrop-filter:blur(16px); z-index:2000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:0.4s; }
-    .modal-overlay.active { opacity:1; pointer-events:all; }
-    .modal-box { background:#060920; border:1px solid rgba(28,75,226,0.4); width:95%; max-width:460px; border-radius:20px; padding:48px 0; position:relative; box-shadow:0 40px 120px rgba(0,0,0,0.7), 0 0 60px rgba(28,75,226,0.15); overflow:hidden; }
-    .modal-close { position:absolute; top:18px; right:18px; background:none; border:none; font-size:24px; color:var(--d-faint); cursor:pointer; transition:0.2s; }
-    .modal-close:hover { color:var(--bright); }
-    .modal-slider { display:flex; transition:0.7s var(--ease-spring); }
-    .form-step { width:100%; flex:0 0 100%; padding:0 44px; }
-    .step-title { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:800; color:white; margin-bottom:8px; }
-    .step-desc { font-size:14px; color:var(--d-muted); margin-bottom:28px; line-height:1.6; }
-    .step-dots { display:flex; gap:8px; padding:0 44px; margin-bottom:32px; }
-    .step-dot { width:8px; height:8px; border-radius:4px; background:var(--d-border); transition:0.3s; }
-    .step-dot.active { width:24px; background:var(--accent); }
-    .ds-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--d-muted); margin-bottom:8px; display:block; }
-    .ds-input { width:100%; padding:13px 16px; border-radius:8px; border:1.5px solid var(--d-border); background:var(--d-surf); color:white; font-family:'Barlow',sans-serif; font-size:14px; outline:none; transition:0.25s; }
-    .ds-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(28,75,226,0.15); }
-    .ds-input::placeholder { color:var(--d-faint); }
-    .btn-check { width:100%; padding:12px; border-radius:8px; border:1.5px solid var(--d-border); background:var(--d-surf); color:var(--d-muted); font-family:'Barlow',sans-serif; font-weight:700; font-size:13px; cursor:pointer; transition:0.25s; text-align:left; }
-    .btn-check:hover,.btn-check.active { border-color:var(--accent); color:var(--bright); background:rgba(28,75,226,0.08); }
-    .input-group { margin-bottom:18px; }
+    .modal { position: fixed; inset: 0; z-index: 200; background: rgba(3,4,94,.45); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .modal.active { opacity: 1; pointer-events: auto; }
+    .modal-box { width: 100%; max-width: 440px; max-height: calc(100dvh - 32px); overflow-y: auto; background: #fff; border-radius: 20px; padding: 36px; position: relative; }
+    .modal-close { position: absolute; top: 16px; right: 16px; font-size: 24px; color: var(--muted); }
+    .modal-close:hover { color: var(--navy); }
+    .step-dots { display: flex; gap: 6px; margin-bottom: 24px; }
+    .step-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--border); transition: width .2s, background .2s; }
+    .step-dot.active { width: 24px; background: var(--accent); }
+    .modal-viewport { overflow: hidden; transition: height .35s ease; }
+    .modal-slider { display: flex; align-items: flex-start; transition: transform .35s ease; }
+    .form-step { min-width: 100%; padding: 3px; }
+    .step-title { font-size: 24px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+    .step-desc { font-size: 15px; color: var(--muted); margin-bottom: 24px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .field input, .field select { width: 100%; height: 46px; padding: 0 14px; border: 1px solid var(--border); border-radius: 10px; font: inherit; font-size: 15px; color: var(--text); background: #fff; outline: none; transition: border-color .2s, box-shadow .2s; }
+    .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%235B6380' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+    .field input:focus, .field select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(28,75,226,.12); }
+    .choice-row { display: flex; gap: 10px; }
+    .option { width: 100%; text-align: left; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 10px; transition: border-color .2s, background .2s; }
+    .choice-row .option { flex: 1; text-align: center; margin-bottom: 0; }
+    .option:hover, .option.active { border-color: var(--accent); background: var(--accent-soft); }
+    .done-icon { font-size: 56px; color: var(--success); margin-bottom: 16px; }
 
-    /* ── SCROLL PROGRESS (enhanced) ── */
-    .scroll-bar {
-      position:fixed; top:0; left:0; height:3px; z-index:9999;
-      transition:width 0.1s; transform-origin:left;
-      background: linear-gradient(90deg, var(--accent), var(--bright), #8B44FF, var(--accent));
-      background-size: 300% 100%;
-      animation: scrollBarShimmer 3s ease infinite;
-      box-shadow: 0 0 12px rgba(28,75,226,0.5), 0 0 4px rgba(28,75,226,0.3);
+    /* ── REVEAL (só com JS ativo) ── */
+    .js .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1), border-color .25s, box-shadow .25s, background .25s, color .25s;
+      transition-delay: calc(var(--d, 0) * 70ms);
     }
-    @keyframes scrollBarShimmer {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    .js .reveal.in { opacity: 1; transform: none; }
+    .js .reveal.in:hover { --d: 0; transition-delay: 0s; }
 
-    /* ── CLIP-PATH TEXT REVEAL ── */
-    .text-clip-line {
-      overflow: hidden;
-      display: block;
+    /* ── PRIS MOTION SYSTEM ── */
+    .page-progress {
+      position: fixed; inset: 0 auto auto 0; z-index: 300; width: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--bright));
+      box-shadow: 0 0 12px rgba(28,75,226,.45); pointer-events: none;
     }
-    .text-clip-line > span {
-      display: inline-block;
-      transform: translateY(110%);
-      opacity: 0;
-      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    .hero h1 { animation: heroEnter .7s cubic-bezier(.2,.8,.2,1) both; }
+    .hero-sub { animation: heroEnter .7s .1s cubic-bezier(.2,.8,.2,1) both; }
+    .hero-badge { animation: heroEnter .7s cubic-bezier(.2,.8,.2,1) both; }
+    .fc-nfe { animation: cardPop .6s .9s cubic-bezier(.2,.8,.2,1) both, floatY 5s 1.5s ease-in-out infinite; }
+    .fc-revenue { animation: cardPop .6s 1.1s cubic-bezier(.2,.8,.2,1) both, floatY 5s 1.7s ease-in-out infinite; }
+    @keyframes cardPop { from { opacity: 0; transform: translateY(16px) scale(.92); } to { opacity: 1; transform: none; } }
+    .hero-ctas { animation: heroEnter .7s .26s cubic-bezier(.2,.8,.2,1) both; }
+    .hero-trust { animation: heroEnter .7s .34s cubic-bezier(.2,.8,.2,1) both; }
+    .hero-shot { animation: heroShotEnter .9s .32s cubic-bezier(.16,1,.3,1) both; }
+    @keyframes heroEnter {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: none; }
     }
-    .text-clip-line.in > span {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    /* ── MARQUEE SECTION ── */
-    .marquee-section {
-      position: relative;
-      padding: 56px 0;
-      overflow: hidden;
-      background: var(--d-bg);
-      border-top: 1px solid var(--d-border);
-      border-bottom: 1px solid var(--d-border);
-    }
-    .marquee-section::before,
-    .marquee-section::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 120px;
-      z-index: 2;
-      pointer-events: none;
-    }
-    .marquee-section::before {
-      left: 0;
-      background: linear-gradient(90deg, var(--d-bg) 0%, transparent 100%);
-    }
-    .marquee-section::after {
-      right: 0;
-      background: linear-gradient(-90deg, var(--d-bg) 0%, transparent 100%);
-    }
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      animation: marqueeScroll 35s linear infinite;
-    }
-    .marquee-track:hover {
-      animation-play-state: paused;
-    }
-    @keyframes marqueeScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .marquee-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 48px;
-      white-space: nowrap;
-      color: var(--d-faint);
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
-    .marquee-item:hover { color: var(--bright); }
-    .marquee-item iconify-icon { font-size: 28px; color: var(--d-muted); transition: color 0.3s; }
-    .marquee-item:hover iconify-icon { color: var(--bright); }
-    .marquee-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent); opacity: 0.4;
-      flex-shrink: 0;
+    @keyframes heroShotEnter {
+      from { opacity: 0; transform: translateY(44px) scale(.97); }
+      to { opacity: 1; transform: none; }
     }
 
-    /* ── CARD TILT 3D ── */
-    .tilt-card {
-      transform-style: preserve-3d;
-      transition: transform 0.4s var(--ease-spring), box-shadow 0.4s;
+    .browser { position: relative; }
+    .browser::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.42) 48%, transparent 58%);
+      transform: translateX(-120%); animation: dashboardShine 7s 1.8s ease-in-out infinite;
     }
-    .tilt-card:hover {
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(28,75,226,0.1);
-    }
-    .tilt-card .tilt-inner {
-      transform: translateZ(20px);
-      transition: transform 0.3s;
+    @keyframes dashboardShine {
+      0%, 72% { transform: translateX(-120%); }
+      88%, 100% { transform: translateX(120%); }
     }
 
-    /* ── SECTION FADE ON SCROLL ── */
-    .section-fade {
-      transition: opacity 0.6s ease, filter 0.6s ease;
-    }
-    .section-fade.fading-out {
-      opacity: 0.3;
-      filter: blur(4px) saturate(0.5);
-    }
-
-    /* ── SHIMMER BEAM (enhanced) ── */
-    .btn-beam {
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-beam::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-      transform: skewX(-20deg);
-      transition: none;
-      pointer-events: none;
-    }
-    .btn-beam:hover::before {
-      animation: beamSweep 0.8s ease forwards;
-    }
-    @keyframes beamSweep {
-      0% { left: -60%; }
-      100% { left: 130%; }
+    .pris-divider { display: block; line-height: 0; }
+    .pris-divider svg { display: block; width: 100%; height: 72px; }
+    .pris-divider.to-alt { background: var(--bg); }
+    .pris-divider.to-white { background: var(--bg-alt); }
+    .pris-divider.to-alt .divider-fill { fill: var(--bg-alt); }
+    .pris-divider.to-white .divider-fill { fill: var(--bg); }
+    @media (max-width: 640px) {
+      .pris-divider svg { height: 48px; }
     }
 
-    /* ── PARALLAX DEPTH LAYERS ── */
-    .parallax-slow { will-change: transform; }
-    .parallax-medium { will-change: transform; }
+    .grid-3 .reveal:nth-child(2), .segments .reveal:nth-child(2), .price-grid .reveal:nth-child(2),
+    .stats-grid .stat:nth-child(2), .modules .module:nth-child(4n+2) { --d: 1; }
+    .grid-3 .reveal:nth-child(3), .segments .reveal:nth-child(3), .price-grid .reveal:nth-child(3),
+    .stats-grid .stat:nth-child(3), .modules .module:nth-child(4n+3) { --d: 2; }
+    .grid-3 .reveal:nth-child(4), .segments .reveal:nth-child(4),
+    .stats-grid .stat:nth-child(4), .modules .module:nth-child(4n+4) { --d: 3; }
+    .grid-3 .reveal:nth-child(5), .segments .reveal:nth-child(5) { --d: 4; }
+    .grid-3 .reveal:nth-child(6), .segments .reveal:nth-child(6) { --d: 5; }
 
-    /* ── REVEAL ENHANCEMENTS ── */
-    .reveal-rotate {
-      opacity: 0;
-      transform: translateY(40px) rotate(3deg);
-      transition: opacity 0.85s var(--ease-spring), transform 0.85s var(--ease-spring);
+    .card-icon { transition: transform .35s cubic-bezier(.2,.8,.2,1), background .25s, color .25s; }
+    .module iconify-icon { transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+    .js .reveal.in.card:hover,
+    .js .reveal.in.module:hover,
+    .js .reveal.in.segment:hover {
+      transform: translateY(-8px);
+      border-color: #C5D2F8;
+      box-shadow: 0 16px 36px rgba(28,75,226,.12);
     }
-    .reveal-rotate.in { opacity: 1; transform: none; }
+    .card:hover .card-icon, .segment:hover .card-icon {
+      transform: translateY(-4px) scale(1.12) rotate(-8deg);
+      background: var(--accent); color: #fff;
+    }
+    .module:hover { background: var(--accent-soft); color: var(--accent); }
+    .module:hover iconify-icon { transform: scale(1.22) rotate(-10deg); }
+    .stat:hover b { color: var(--bright); }
+    .shot { transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s; }
+    .shot:hover { transform: translateY(-5px); box-shadow: 0 28px 62px rgba(3,4,94,.13); }
+    .shot img { transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+    .shot:hover img { transform: scale(1.018); }
+    .btn iconify-icon { transition: transform .25s; }
+    .btn:hover iconify-icon { transform: translateX(3px); }
 
-    /* ── HAMBURGER ── */
-    .nav-hamburger {
-      display:none; flex-direction:column; justify-content:center; gap:5px;
-      width:40px; height:40px; cursor:pointer; background:none; border:none; padding:6px;
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .js .reveal { opacity: 1; transform: none; transition: none; }
+      .hero h1, .hero-sub, .hero-badge, .hero-badge i::after, .float-card, .hero-ctas, .hero-trust, .hero-shot,
+      .browser::after { animation: none; }
+      .card, .card-icon, .module iconify-icon, .shot, .shot img { transition: none; }
     }
-    .nav-hamburger span {
-      display:block; width:22px; height:2px; background:white;
-      transition:transform 0.35s var(--ease-spring), opacity 0.2s;
-      border-radius:2px;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity:0; }
-    .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-
-    .mobile-menu {
-      position:fixed; top:68px; left:0; right:0; bottom:0;
-      background:rgba(2,3,24,0.97); backdrop-filter:blur(20px);
-      z-index:999; display:flex; flex-direction:column; align-items:center;
-      justify-content:center; gap:36px;
-      opacity:0; pointer-events:none;
-      transform:translateY(-16px);
-      transition:opacity 0.4s var(--ease-spring), transform 0.4s var(--ease-spring);
-    }
-    .mobile-menu.open { opacity:1; pointer-events:all; transform:none; }
-    .mobile-menu a {
-      font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:800;
-      color:rgba(255,255,255,0.85); text-decoration:none; text-transform:uppercase;
-      letter-spacing:0.04em; transition:color 0.2s;
-    }
-    .mobile-menu a:hover { color:var(--bright); }
 
     /* ── RESPONSIVE ── */
-    @media(max-width:1024px) {
-      .hero-inner { grid-template-columns:1fr; }
-      .dash-card { max-width:480px; width:100%; animation:none; }
-      .bento { grid-template-columns:repeat(2,1fr); }
-      .bento-span2 { grid-column:span 2; }
-      .metrics-strip { grid-template-columns:repeat(2,1fr); }
-      .metric-block:nth-child(2) { border-right:none; }
-      .metric-block:nth-child(3) { border-top:1px solid var(--l-border); }
-      .metric-block:nth-child(4) { border-top:1px solid var(--l-border); border-right:none; }
-      .produto-grid { grid-template-columns:1fr !important; }
-      .steps-grid { grid-template-columns:1fr 1fr !important; gap:24px !important; }
-      .depo-grid { grid-template-columns:1fr 1fr !important; }
-      .price-grid { grid-template-columns:1fr 1fr !important; }
-      .price-card-featured { transform:none; }
-      .screens-grid { grid-template-columns:1fr !important; }
+    @media (max-width: 1100px) {
+      .nav { gap: 18px; font-size: 14px; }
+      .hero-shot .browser { width: 100%; max-width: none; }
+      .fc-revenue { left: 0; bottom: -28px; }
+      .fc-nfe { right: 0; }
     }
-    @media(max-width:768px) {
-      .sec-dark,.sec-light,.sec-navy { padding:72px 20px; }
-      nav { padding:0 20px; height:60px; }
-      .nav-links { display:none !important; }
-      .nav-cta { display:none; }
-      .nav-hamburger { display:none !important; }
-      .mobile-menu { top:60px; }
-      .hero { padding:100px 20px 60px; min-height:auto; }
-      .hero-inner { gap:36px; }
-      .dash-card { max-width:100%; }
-      .hero-title { font-size:clamp(40px,11vw,64px) !important; }
-      .bento { grid-template-columns:1fr; }
-      .bento-span2 { grid-column:span 1; }
-      .metrics-strip { grid-template-columns:1fr 1fr; }
-      .metric-block { padding:36px 16px; }
-      .metric-block:nth-child(2) { border-right:none; }
-      .produto-grid { grid-template-columns:1fr !important; gap:40px !important; }
-      .chart-kpis { grid-template-columns:1fr 1fr !important; }
-      .steps-grid { grid-template-columns:1fr !important; }
-      .depo-grid { grid-template-columns:1fr !important; }
-      .price-grid { grid-template-columns:1fr !important; }
-      .price-card-featured { transform:none; }
-      .screens-grid { grid-template-columns:1fr !important; }
-      .feat-grid { grid-template-columns:1fr !important; }
-      .footer-grid, .grid-footer { grid-template-columns:1fr !important; gap:40px !important; }
-      .modal-box { border-radius:0; width:100%; max-height:100dvh; overflow-y:auto; }
-      .form-step { padding:0 20px; }
-      .sec-header { margin-bottom:48px; }
-      .wave-div svg { height:50px; }
-      .nav-logo img { width: 130px !important; }
+    @media (max-width: 1024px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
-    @media(max-width:480px) {
-      .metrics-strip { grid-template-columns:1fr; }
-      .metric-block { border-right:none !important; border-top:1px solid var(--l-border) !important; }
-      .metric-block:first-child { border-top:none !important; }
-      .chart-kpis { grid-template-columns:1fr !important; }
-      .hero-btns { flex-direction:column; }
-      .hero-btns .btn { width:100%; justify-content:center; }
+    @media (max-width: 900px) {
+      .topbar { font-size: 13px; line-height: 1.45; padding: 10px 16px; }
+      .modules { grid-template-columns: repeat(2, 1fr); }
+      .nav, .header-actions .link-login, .header-actions .btn { display: none; }
+      .hamburger { display: block; }
+      .tab-panel.active { grid-template-columns: 1fr; gap: 32px; }
+      .grid-3, .segments { grid-template-columns: 1fr 1fr; }
+      .price-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; gap: 32px; }
+      .cta { grid-template-columns: 1fr; padding: 40px 24px; border-radius: 20px; }
+      .cta-actions { justify-content: flex-start; }
+      .cta-actions .btn { flex: 1 1 200px; }
+      .float-card { max-width: calc(100% - 24px); }
+      .hero { padding: 48px 0 80px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+      .hero-shot .browser { width: 100%; max-width: none; }
+      .fc-revenue { left: 12px; bottom: -36px; }
+      .fc-nfe { right: 12px; top: -24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
     }
+    @media (max-width: 640px) {
+      .container { padding: 0 16px; }
+      .section { padding: 64px 0; }
+      .sec-head { margin-bottom: 36px; }
+      .topbar { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+      .topbar button { margin-left: 0; }
+      .header-inner { height: 64px; gap: 12px; }
+      .hero { padding-top: 48px; }
+      .hero h1 { font-size: clamp(34px, 10vw, 44px); }
+      .intro p { font-size: 18px; }
+      .stat { padding: 36px 16px; }
+      .stat b { font-size: 52px; }
+      .modal { padding: 12px; }
+      .modal-box { padding: 28px 18px; border-radius: 16px; }
+      .footer { padding-bottom: 96px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .sec-cta .btn, .hero-ctas .btn, .cta-actions .btn, .tab-panel .btn {
+        width: 100%; white-space: normal; text-align: center; height: auto; min-height: 48px; padding: 12px 16px;
+      }
+      .grid-3, .segments, .price-grid { grid-template-columns: 1fr; }
+      .module { padding: 14px; gap: 10px; font-size: 14px; min-width: 0; }
+      .modules { grid-template-columns: 1fr 1fr; }
+      .tabs { display: flex; width: 100%; }
+      .tab { flex: 1; padding: 10px 8px; font-size: 14px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+      .hero-ctas .btn { width: 100%; }
+      .fc-nfe { display: none; }
+      .fc-revenue { left: 12px; bottom: -40px; padding: 8px 12px; gap: 10px; }
+      .fc-revenue .fc-icon { width: 32px; height: 32px; }
+      .float-card b { font-size: 15px; }
+      .float-card em { display: none; }
+      .intro { padding-top: 64px; }
+      .theme-toggle span { display: none; }
+      .theme-toggle { right: 12px; bottom: 12px; width: 48px; padding: 0; }
+    }
+    @media (max-width: 420px) {
+      .modules { grid-template-columns: 1fr; }
+      .tab { font-size: 12px; padding: 10px 2px; }
+    }
+
+    /* ── VERSÃO ESCURA (prévia) ── */
+    html[data-theme="dark"] {
+      --navy: #EEF1FF;
+      --accent: #8EABFF;
+      --accent-hover: #A9BFFF;
+      --accent-soft: rgba(142,171,255,.16);
+      --text: #E7EAF6;
+      --muted: #A7AEC6;
+      --border: #2C3454;
+      --bg: #0B1020;
+      --bg-alt: #131A2E;
+      --success: #4ADE80;
+      color-scheme: dark;
+    }
+    html[data-theme="dark"] body { background: var(--bg); color: var(--text); }
+    html[data-theme="dark"] .topbar { background: #070B16; }
+    html[data-theme="dark"] .header { background: rgba(11,16,32,.92); }
+    html[data-theme="dark"] .header.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,.4); }
+    html[data-theme="dark"] .mobile-nav { background: var(--bg); }
+    html[data-theme="dark"] .logo img { filter: invert(1); mix-blend-mode: screen; }
+    html[data-theme="dark"] .hero {
+      background:
+        radial-gradient(640px 420px at 85% 15%, rgba(90,120,255,.28), transparent 70%),
+        radial-gradient(520px 380px at 0% 100%, rgba(28,75,226,.22), transparent 70%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    }
+    html[data-theme="dark"] .hero::before { background-image: radial-gradient(rgba(255,255,255,.09) 1px, transparent 1px); }
+    html[data-theme="dark"] .hero-badge,
+    html[data-theme="dark"] .browser,
+    html[data-theme="dark"] .float-card,
+    html[data-theme="dark"] .browser-url,
+    html[data-theme="dark"] .card,
+    html[data-theme="dark"] .module,
+    html[data-theme="dark"] .segment,
+    html[data-theme="dark"] .shot,
+    html[data-theme="dark"] .modal-box,
+    html[data-theme="dark"] .field input,
+    html[data-theme="dark"] .field select,
+    html[data-theme="dark"] .btn-outline { background: #182038; }
+    html[data-theme="dark"] .browser-bar { background: #12182C; }
+    html[data-theme="dark"] .browser-bar i { background: #3A4260; }
+    html[data-theme="dark"] .intro,
+    html[data-theme="dark"] .stats,
+    html[data-theme="dark"] .pris-divider.to-alt { background: var(--bg); }
+    html[data-theme="dark"] .pris-divider.to-white .divider-fill { fill: var(--bg); }
+    html[data-theme="dark"] .fc-revenue .fc-icon { background: rgba(74,222,128,.14); }
+    html[data-theme="dark"] .btn-primary,
+    html[data-theme="dark"] .tab[aria-selected="true"],
+    html[data-theme="dark"] .badge,
+    html[data-theme="dark"] .cta { background: #2454F0; color: #fff; }
+    html[data-theme="dark"] .btn-primary:hover { background: #1C46D4; }
+    html[data-theme="dark"] .cta .btn-outline { background: transparent; }
+    html[data-theme="dark"] .btn-white { color: #2454F0; }
+    html[data-theme="dark"] .field input::placeholder { color: #8B93AD; }
+    html[data-theme="dark"] .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23A7AEC6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+    }
+    html[data-theme="dark"] .js .reveal.in.card:hover,
+    html[data-theme="dark"] .js .reveal.in.module:hover,
+    html[data-theme="dark"] .js .reveal.in.segment:hover { border-color: #3D4E86; box-shadow: 0 16px 36px rgba(0,0,0,.35); }
+    html[data-theme="dark"] .module:hover { background: var(--accent-soft); }
+
+    .theme-toggle {
+      position: fixed; right: 20px; bottom: 20px; z-index: 180;
+      display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 18px 0 14px;
+      border-radius: 999px; background: #0B1020; color: #fff; border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 14px 36px rgba(3,4,94,.32); font-size: 14px; font-weight: 600;
+      transition: background .25s, color .25s, transform .2s;
+    }
+    .theme-toggle:hover { transform: translateY(-2px); }
+    .theme-toggle iconify-icon { font-size: 18px; }
+    .theme-toggle .theme-icon-light { display: none; }
+    .theme-label::after { content: 'Ver versão escura'; }
+    html[data-theme="dark"] .theme-toggle { background: #fff; color: #0B1020; border-color: transparent; }
+    html[data-theme="dark"] .theme-toggle .theme-icon-dark { display: none; }
+    html[data-theme="dark"] .theme-toggle .theme-icon-light { display: inline-block; }
+    html[data-theme="dark"] .theme-label::after { content: 'Ver versão clara'; }
   </style>
+  <script>
+    document.documentElement.classList.add('js');
+    try { if (localStorage.getItem('pris-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+  </script>
 </head>
 <body>
 
-<!-- SCROLL PROGRESS -->
-<div class="scroll-bar" id="scroll-bar"></div>
+<div class="page-progress" id="page-progress" aria-hidden="true"></div>
 
-<!-- NAV -->
-<nav id="main-nav">
-  <a href="#hero" class="nav-logo">
-    <img src="assets/logo-pris.svg" alt="PRIS Sistemas" />
-  </a>
-  <div style="display:flex;align-items:center;gap:40px;">
-    <div class="nav-links" style="display:flex;gap:32px;">
-      <a href="#produto">Produto</a>
-      <a href="#segmentos">Setores</a>
-      <a href="#como-funciona">Como Funciona</a>
-      <a href="#precos">Preços</a>
-    </div>
-    <button class="nav-cta" onclick="openModal()">Demo Grátis <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+<button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Ver versão escura">
+  <iconify-icon class="theme-icon-dark" icon="solar:moon-bold"></iconify-icon>
+  <iconify-icon class="theme-icon-light" icon="solar:sun-bold"></iconify-icon>
+  <span class="theme-label"></span>
+</button>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobile-menu">
-  <a href="#produto" onclick="toggleMenu()">Produto</a>
-  <a href="#segmentos" onclick="toggleMenu()">Setores</a>
-  <a href="#como-funciona" onclick="toggleMenu()">Como Funciona</a>
-  <a href="#precos" onclick="toggleMenu()">Preços</a>
-  <button class="btn btn-blue" onclick="toggleMenu();openModal();" style="margin-top:16px;padding:18px 48px;font-size:16px;">Agendar Demo</button>
+<div class="topbar">
+  Demonstração gratuita e implantação acompanhada pela nossa equipe.
+  <button type="button" onclick="openModal()">Agendar agora</button>
 </div>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero" id="hero">
-  <!-- Geometric shapes -->
-  <div class="geo-shape parallax-slow" style="width:320px;height:320px;top:40px;right:8%;transform:rotate(22deg);opacity:0.3; filter: blur(40px); background: var(--accent);"></div>
-  <div class="geo-shape parallax-medium" style="width:180px;height:180px;bottom:15%;left:4%;transform:rotate(-15deg);opacity:0.2; filter: blur(30px); background: var(--bright);"></div>
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="#inicio" class="logo" aria-label="PRIS Sistemas">
+      <img src="assets/logo-pris.svg" alt="PRIS Sistemas" width="128" height="40" />
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#plataforma">Plataforma</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#segmentos">Segmentos</a>
+      <a href="#planos">Planos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="link-login">Entrar</a>
+      <button type="button" class="btn btn-primary btn-sm" onclick="openModal()">Agendar demonstração</button>
+      <button type="button" class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+        <iconify-icon icon="solar:hamburger-menu-linear"></iconify-icon>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menu móvel">
+    <a href="#plataforma">Plataforma</a>
+    <a href="#recursos">Recursos</a>
+    <a href="#segmentos">Segmentos</a>
+    <a href="#planos">Planos</a>
+    <a href="#contato">Contato</a>
+    <button type="button" class="btn btn-primary" onclick="openModal()">Agendar demonstração</button>
+  </nav>
+</header>
 
-  <div class="hero-inner">
-    <!-- LEFT -->
-    <div>
-      <span class="t-label reveal-blur">Gestão Inteligente para Varejo</span>
-      <h1 class="t-display hero-title">
-        <span class="text-clip-line delay-1"><span>O Sistema</span></span>
-        <span class="text-clip-line delay-2"><span>que <span class="grad-text">Transforma</span></span></span>
-        <span class="text-clip-line delay-3"><span>seu Varejo.</span></span>
-      </h1>
-      <p class="hero-desc reveal delay-3">
-        A PRIS Sistemas reúne vendas, estoque, financeiro e fiscal em um único sistema intuitivo — feito para gestores que querem controle real, com um visual leve e objetivo.
-      </p>
-      <div class="hero-btns reveal delay-4">
-        <button class="btn btn-blue btn-beam" onclick="openModal()">Agendar Demo <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
-        <a href="#produto" class="btn btn-ghost-dark btn-beam">Explorar <iconify-icon icon="solar:arrow-down-linear"></iconify-icon></a>
+<main>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="hero-badge"><i></i> ERP 100% online para o varejo</span>
+      <h1>Gestão pensada para a <span class="hl">sua rotina.</span></h1>
+      <ul class="hero-sub">
+        <li><iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon> Mais controle do seu negócio.</li>
+        <li><iconify-icon icon="solar:devices-bold-duotone"></iconify-icon> Mais liberdade para acompanhar de onde estiver.</li>
+      </ul>
+      <div class="hero-ctas">
+        <button type="button" class="btn btn-primary" onclick="openModal()">
+          Agendar demonstração grátis <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+        </button>
+        <a href="#plataforma" class="btn btn-outline">Conhecer a plataforma</a>
       </div>
-      <!-- Trust badges -->
-      <div class="reveal delay-4" style="display:flex;align-items:center;gap:24px;margin-top:48px;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">+500 empresas</span>
-        </div>
-        <div style="width:1px;height:16px;background:var(--l-border);"></div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">99.9% uptime</span>
-        </div>
-        <div style="width:1px;height:16px;background:var(--l-border);"></div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">Suporte 24/7</span>
-        </div>
+      <div class="hero-trust">
+        <span><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Implantação acompanhada</span>
+        <span><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Suporte humano e próximo</span>
       </div>
     </div>
-
-    <!-- RIGHT: Platform Mockup -->
-    <div class="reveal delay-2" style="position:relative;">
-      <img src="assets/platform-mockup-1.jpg" alt="PRIS ERP Dashboard" style="width:100%; border-radius:12px; box-shadow: 0 30px 60px rgba(3,4,94,0.12), 0 0 0 1px rgba(3,4,94,0.05); transform: perspective(1000px) rotateY(-5deg); transition: transform 0.5s;">
+    <div class="hero-shot">
+      <div class="float-card fc-nfe" aria-hidden="true">
+        <span class="fc-icon"><iconify-icon icon="solar:bill-check-bold-duotone"></iconify-icon></span>
+        <span><small>NF-e emitida</small><b>Venda #4821</b></span>
+      </div>
+      <div class="browser">
+        <div class="browser-bar" aria-hidden="true">
+          <i></i><i></i><i></i>
+          <span class="browser-url">app.prissistemas.com.br</span>
+        </div>
+        <img src="assets/print-dashboard.jpg" alt="Painel inicial do PRIS ERP com faturamento, fluxo de caixa, vendas dos últimos 30 dias e atalhos rápidos"
+             width="1600" height="573" fetchpriority="high" decoding="async" />
+      </div>
+      <div class="float-card fc-revenue" aria-hidden="true">
+        <span class="fc-icon"><iconify-icon icon="solar:graph-up-bold-duotone"></iconify-icon></span>
+        <span><small>Faturamento do mês</small><b>R$ 178.532,51</b><em>↑ comparado ao mês anterior</em></span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ METRICS (light) ═══ -->
-<section class="sec-light" style="padding:0;" id="metricas">
-  <div class="metrics-strip">
-    <div class="metric-block reveal">
-      <div class="metric-num" data-count="500" data-prefix="+" data-suffix="">0</div>
-      <div class="metric-label">Empresas ativas</div>
-    </div>
-    <div class="metric-block reveal delay-1">
-      <div class="metric-num" data-count="99" data-prefix="" data-suffix=".9%">0</div>
-      <div class="metric-label">Uptime garantido</div>
-    </div>
-    <div class="metric-block reveal delay-2">
-      <div class="metric-num" data-count="7" data-prefix="" data-suffix=" dias">0</div>
-      <div class="metric-label">Para entrar em operação</div>
-    </div>
-    <div class="metric-block reveal delay-3">
-      <div class="metric-num" data-count="24" data-prefix="" data-suffix="/7">0</div>
-      <div class="metric-label">Suporte disponível</div>
-    </div>
-  </div>
-</section>
-
-<!-- WAVE offwhite->light -->
-<div class="wave-div" style="background:var(--offwhite);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,60 C360,0 1080,80 1440,20 L1440,80 L0,80 Z" fill="var(--l-bg)"/></svg>
-</div>
-
-<!-- ═══ MARQUEE SOCIAL PROOF ═══ -->
-<div class="marquee-section">
-  <div class="marquee-track">
-    <!-- Set 1 -->
-    <div class="marquee-item"><iconify-icon icon="solar:cloud-bold-duotone"></iconify-icon> Cloud Native</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:shield-check-bold-duotone"></iconify-icon> LGPD Compliance</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:server-bold-duotone"></iconify-icon> 99.9% Uptime</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:lock-bold-duotone"></iconify-icon> Criptografia AES-256</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bolt-bold-duotone"></iconify-icon> Tempo Real</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:devices-bold-duotone"></iconify-icon> Multi-plataforma</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon> BI Integrado</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bill-check-bold-duotone"></iconify-icon> NF-e Automática</div>
-    <div class="marquee-dot"></div>
-    <!-- Set 2 (duplicate for seamless loop) -->
-    <div class="marquee-item"><iconify-icon icon="solar:cloud-bold-duotone"></iconify-icon> Cloud Native</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:shield-check-bold-duotone"></iconify-icon> LGPD Compliance</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:server-bold-duotone"></iconify-icon> 99.9% Uptime</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:lock-bold-duotone"></iconify-icon> Criptografia AES-256</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bolt-bold-duotone"></iconify-icon> Tempo Real</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:devices-bold-duotone"></iconify-icon> Multi-plataforma</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon> BI Integrado</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bill-check-bold-duotone"></iconify-icon> NF-e Automática</div>
-    <div class="marquee-dot"></div>
-  </div>
-</div>
-
-<!-- ═══ SEGMENTOS (dark) ═══ -->
-<section class="sec-dark section-fade" id="segmentos">
+<!-- INTRO -->
+<section class="intro">
   <div class="container">
-    <div class="sec-header">
-      <span class="t-label reveal">Setores Atendidos</span>
-      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:white;">Feito para o seu <span class="grad-text">segmento.</span></h2>
-    </div>
-
-    <div class="bento reveal delay-1">
-      <div class="bento-cell bento-span2 bento-cell-accent" style="min-height:280px;">
-        <div class="bento-geo"></div><div class="bento-geo2"></div>
-        <span class="bento-icon"><iconify-icon icon="solar:cart-large-bold-duotone"></iconify-icon></span>
-        <div class="bento-tag">Segmento principal</div>
-        <h3 style="font-size:24px;">Varejo Alimentar</h3>
-        <p>Supermercados, mercearias e distribuidoras com controle total de perecíveis, lote e giro rápido de estoque.</p>
-      </div>
-      <div class="bento-cell">
-        <div class="bento-geo" style="width:80px;height:80px;"></div>
-        <span class="bento-icon" style="font-size:28px;"><iconify-icon icon="solar:buildings-bold-duotone"></iconify-icon></span>
-        <div class="bento-tag">Construção</div>
-        <h3>Material de Construção</h3>
-      </div>
-      <div class="bento-cell">
-        <span class="bento-icon" style="font-size:28px;"><iconify-icon icon="solar:leaf-bold-duotone"></iconify-icon></span>
-        <div class="bento-tag">Agro</div>
-        <h3>Agropecuária</h3>
-      </div>
-      <div class="bento-cell" style="min-height:160px;">
-        <span class="bento-icon" style="font-size:28px;"><iconify-icon icon="solar:pills-bold-duotone"></iconify-icon></span>
-        <div class="bento-tag">Saúde</div>
-        <h3>Farmácia & Drogaria</h3>
-        <p style="font-size:12px;">Controle de medicamentos, lote e validade.</p>
-      </div>
-      <div class="bento-cell">
-        <span class="bento-icon" style="font-size:28px;"><iconify-icon icon="solar:t-shirt-bold-duotone"></iconify-icon></span>
-        <div class="bento-tag">Moda</div>
-        <h3>Vestuário & Calçados</h3>
-      </div>
-      <div class="bento-cell" style="background:rgba(28,75,226,0.08);border-color:rgba(28,75,226,0.2);">
-        <span style="font-size:11px;font-weight:800;color:var(--accent);letter-spacing:0.05em;">+12 segmentos</span>
-        <h3 style="font-size:18px;margin-top:8px;">Outros Setores</h3>
-        <p style="font-size:13px;margin-top:6px;">Pet Shop, Eletrônicos, Autopeças e mais.</p>
-      </div>
+    <p class="reveal">
+      O <strong>PRIS integra vendas, estoque, gestão financeira e fiscal</strong> para simplificar o dia a dia da sua empresa.
+      Acompanhe as informações do seu negócio de onde estiver, com flexibilidade de acesso e       uma <strong>equipe próxima para orientar e ajudar.</strong>
+    </p>
+    <div class="sec-cta">
+      <button type="button" class="btn btn-primary" onclick="openModal()">Agendar demonstração grátis <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
     </div>
   </div>
 </section>
 
-<!-- WAVE dark→light -->
-<div class="wave-div" style="background:var(--d-bg);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,20 C480,80 960,0 1440,50 L1440,80 L0,80 Z" fill="var(--l-bg)"/></svg>
-</div>
+<!-- STATS -->
+<section class="stats" aria-label="Números">
+  <div class="stats-grid">
+    <div class="stat reveal"><b>+500</b><span>Empresas ativas</span></div>
+    <div class="stat reveal"><b>99,9%</b><span>Uptime garantido</span></div>
+    <div class="stat reveal"><b>7 dias</b><span>Para entrar em operação</span></div>
+    <div class="stat reveal"><b>24/7</b><span>Suporte disponível</span></div>
+  </div>
+  <div class="sec-cta">
+    <button type="button" class="btn btn-primary" onclick="openModal()">Quero esses resultados <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+  </div>
+</section>
 
-<!-- ═══ PRODUTO — GRÁFICO ANIMADO (light) ═══ -->
-<section class="sec-light section-fade" id="produto">
+<!-- PLATAFORMA: TABS -->
+<section class="section" id="plataforma">
   <div class="container">
-    <div class="produto-grid" style="display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center;">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Plataforma PRIS</span>
+      <h2 class="h2">Tudo conectado <strong>no mesmo lugar.</strong></h2>
+      <p class="lead">Da venda no balcão à nota fiscal, do estoque ao fluxo de caixa: cada informação alimenta a outra, sem retrabalho.</p>
+    </div>
+
+    <div class="tabs-wrap">
+      <div class="tabs" role="tablist" aria-label="Áreas da plataforma">
+        <button type="button" class="tab" role="tab" id="tab-gerir" aria-controls="panel-gerir" aria-selected="true">Gerir</button>
+        <button type="button" class="tab" role="tab" id="tab-vender" aria-controls="panel-vender" aria-selected="false">Vender</button>
+        <button type="button" class="tab" role="tab" id="tab-acompanhar" aria-controls="panel-acompanhar" aria-selected="false">Acompanhar</button>
+      </div>
+    </div>
+
+    <div class="tab-panel active" role="tabpanel" id="panel-gerir" aria-labelledby="tab-gerir">
       <div>
-        <span class="t-label t-label-light reveal-blur">Performance em tempo real</span>
-        <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:var(--navy);margin-bottom:24px;">
-          Dados que <span class="grad-text">iluminam</span> decisões.
-        </h2>
-        <p style="font-size:16px;line-height:1.75;color:var(--l-muted);margin-bottom:40px;" class="reveal delay-2">
-          Dashboards em tempo real com faturamento, giro de estoque, NF-e emitidas e fluxo de caixa — tudo visível em uma tela, sempre atualizado.
-        </p>
-        <div style="display:grid;gap:16px;" class="reveal delay-3">
-          <div style="display:flex;align-items:center;gap:14px;">
-            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
-            <span style="font-size:14px;font-weight:600;color:var(--l-muted);">Atualização automática a cada minuto</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;">
-            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
-            <span style="font-size:14px;font-weight:600;color:var(--l-muted);">Comparativo com período anterior</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:14px;">
-            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
-            <span style="font-size:14px;font-weight:600;color:var(--l-muted);">Alertas de ruptura e desvios</span>
-          </div>
-        </div>
-        <div style="margin-top:40px;" class="reveal delay-4">
-          <button class="btn btn-blue" onclick="openModal()">Ver Demonstração</button>
-        </div>
+        <h3>Estoque, cadastros e financeiro organizados.</h3>
+        <p>Controle produtos, clientes e fornecedores com um cadastro único. Acompanhe entradas, saídas e contas a pagar e receber em tempo real.</p>
+        <ul class="checks">
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Estoque e materiais com alertas de estoque mínimo</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Contas a pagar e a receber com vencimentos</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Importação de XML para agilizar entradas</li>
+        </ul>
+        <button type="button" class="btn btn-primary" onclick="openModal()">Ver na prática</button>
       </div>
+      <div class="shot"><img src="assets/print-produtos.png" alt="Tela de produtos do PRIS" width="1024" height="575" loading="lazy" decoding="async" /></div>
+    </div>
 
-      <!-- SCREESNHOT VENDAS -->
-      <div class="reveal-right delay-2">
-        <img src="assets/print-vendas.png" alt="Módulo de Vendas" style="width:100%; border-radius:12px; box-shadow: 0 30px 60px rgba(3,4,94,0.12), 0 0 0 1px rgba(3,4,94,0.05);">
+    <div class="tab-panel" role="tabpanel" id="panel-vender" aria-labelledby="tab-vender" hidden>
+      <div>
+        <h3>Venda no balcão e no PDV, com nota fiscal emitida.</h3>
+        <p>Frente de caixa ágil, orçamentos e emissão de NF-e e NFC-e integrados ao fluxo de vendas e ao estoque.</p>
+        <ul class="checks">
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> PDV e Balcão integrados ao estoque</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Orçamentos convertidos em venda com um clique</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Emissão de NF-e, NFC-e e gestão fiscal</li>
+        </ul>
+        <button type="button" class="btn btn-primary" onclick="openModal()">Ver na prática</button>
       </div>
+      <div class="shot"><img src="assets/print-vendas.png" alt="Módulo de vendas do PRIS" width="1024" height="575" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <div class="tab-panel" role="tabpanel" id="panel-acompanhar" aria-labelledby="tab-acompanhar" hidden>
+      <div>
+        <h3>Seu negócio na palma da mão, de onde estiver.</h3>
+        <p>Faturamento, lucro estimado, fluxo de caixa e vendas dos últimos 30 dias em um painel claro, atualizado e acessível pelo navegador.</p>
+        <ul class="checks">
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Fluxo de caixa do dia, da semana e do mês</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Comparativo com o mês anterior</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Atalhos rápidos para as tarefas do dia a dia</li>
+        </ul>
+        <button type="button" class="btn btn-primary" onclick="openModal()">Ver na prática</button>
+      </div>
+      <div class="shot"><img src="assets/print-dashboard.jpg" alt="Painel de acompanhamento do PRIS" width="1600" height="573" loading="lazy" decoding="async" /></div>
     </div>
   </div>
 </section>
 
-<!-- WAVE light→dark -->
-<div class="wave-div" style="background:var(--l-bg);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,30 L1440,80 L0,80 Z" fill="var(--d-bg)"/></svg>
+<div class="pris-divider to-alt" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path class="divider-fill" d="M0 18H600c60 0 80 46 120 46s60-46 120-46H1440V80H0Z"/>
+  </svg>
 </div>
 
-<!-- ═══ FUNCIONALIDADES (dark) ═══ -->
-<section class="sec-dark section-fade" id="funcionalidades">
+<!-- BENEFÍCIOS -->
+<section class="section section-alt">
   <div class="container">
-    <div class="sec-header">
-      <span class="t-label reveal">Módulos do Sistema</span>
-      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:white;">Tudo que seu negócio <span class="grad-text">precisa.</span></h2>
+    <div class="sec-head reveal">
+      <span class="eyebrow">Por que o PRIS</span>
+      <h2 class="h2">Menos esforço na rotina. <strong>Mais tempo para crescer.</strong></h2>
     </div>
-    <div class="feat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;">
-      <div class="card-dark tilt-card reveal delay-1">
-        <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:bill-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Gestão Fiscal</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">NF-e, NFC-e, SPED e obrigações acessórias automáticas integradas ao fluxo da operação.</p>
-        </div>
+    <div class="grid-3">
+      <div class="card reveal">
+        <div class="card-icon"><iconify-icon icon="solar:widget-5-bold-duotone"></iconify-icon></div>
+        <h3>Plataforma integrada</h3>
+        <p>Vendas, estoque, financeiro e fiscal em um só sistema, com informações que se conversam.</p>
       </div>
-      <div class="card-dark tilt-card reveal delay-2">
-        <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:box-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Controle de Estoque</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Entradas, saídas, transferências, alertas de ruptura e inventário em tempo real.</p>
-        </div>
+      <div class="card reveal">
+        <div class="card-icon"><iconify-icon icon="solar:devices-bold-duotone"></iconify-icon></div>
+        <h3>Acesso de onde estiver</h3>
+        <p>100% online. Acompanhe a empresa do escritório, de casa ou em viagem, pelo navegador.</p>
       </div>
-      <div class="card-dark tilt-card reveal delay-3">
-        <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:point-on-map-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">PDV Integrado</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Frente de caixa ágil, múltiplas formas de pagamento e integração com TEF e PIX.</p>
-        </div>
+      <div class="card reveal">
+        <div class="card-icon"><iconify-icon icon="solar:chat-round-like-bold-duotone"></iconify-icon></div>
+        <h3>Equipe próxima</h3>
+        <p>Atendimento humano para orientar, tirar dúvidas e ajudar sempre que você precisar.</p>
       </div>
-      <div class="card-dark tilt-card reveal delay-4">
-        <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:chart-square-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Financeiro & BI</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">DRE, fluxo de caixa, contas a pagar/receber e dashboards de desempenho ao vivo.</p>
-        </div>
+      <div class="card reveal">
+        <div class="card-icon"><iconify-icon icon="solar:document-text-bold-duotone"></iconify-icon></div>
+        <h3>Fiscal em dia</h3>
+        <p>Emissão de NF-e e NFC-e, certificado digital e obrigações organizadas dentro da operação.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon></div>
+        <h3>Decisões com dados</h3>
+        <p>Painel com faturamento, lucro estimado e fluxo de caixa para decidir com segurança.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon"><iconify-icon icon="solar:rocket-2-bold-duotone"></iconify-icon></div>
+        <h3>Implantação rápida</h3>
+        <p>Nossa equipe configura, importa seus dados e treina seu time. Em poucos dias você está operando.</p>
       </div>
     </div>
-
-    <!-- Screenshots -->
-    <div class="screens-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:64px;" id="screenshots">
-      <div class="reveal delay-1">
-        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent);margin-bottom:12px;">Login Centralizado</p>
-        <div style="border-radius:14px;overflow:hidden;border:1px solid var(--d-border);box-shadow:0 24px 80px rgba(0,0,0,0.5);">
-          <div style="display:flex;align-items:center;gap:7px;padding:10px 14px;background:rgba(255,255,255,0.04);border-bottom:1px solid var(--d-border);">
-            <div style="width:8px;height:8px;border-radius:50%;background:#FF5F56;"></div>
-            <div style="width:8px;height:8px;border-radius:50%;background:#FFBD2E;"></div>
-            <div style="width:8px;height:8px;border-radius:50%;background:#27C93F;"></div>
-            <span style="font-size:8px;color:var(--d-faint);font-family:'Fira Code',monospace;margin:0 auto;">login.prissistemas.com.br</span>
-          </div>
-          <img src="assets/print-login.png" alt="Login PRIS Sistemas" style="width:100%;display:block;"
-               onerror="this.style.cssText='width:100%;height:220px;display:block;background:rgba(255,255,255,0.03);'" />
-        </div>
-      </div>
-      <div class="reveal delay-2">
-        <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent);margin-bottom:12px;">Painel de Gestão</p>
-        <div style="border-radius:14px;overflow:hidden;border:1px solid var(--d-border);box-shadow:0 24px 80px rgba(0,0,0,0.5);">
-          <div style="display:flex;align-items:center;gap:7px;padding:10px 14px;background:rgba(255,255,255,0.04);border-bottom:1px solid var(--d-border);">
-            <div style="width:8px;height:8px;border-radius:50%;background:#FF5F56;"></div>
-            <div style="width:8px;height:8px;border-radius:50%;background:#FFBD2E;"></div>
-            <div style="width:8px;height:8px;border-radius:50%;background:#27C93F;"></div>
-            <span style="font-size:8px;color:var(--d-faint);font-family:'Fira Code',monospace;margin:0 auto;">app.prissistemas.com.br</span>
-          </div>
-          <img src="assets/print-produtos.png" alt="Sistema PRIS Sistemas" style="width:100%;display:block;"
-               onerror="this.style.cssText='width:100%;height:220px;display:block;background:rgba(255,255,255,0.03);'" />
-        </div>
-      </div>
+    <div class="sec-cta">
+      <button type="button" class="btn btn-primary" onclick="openModal()">Quero simplificar minha rotina <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
     </div>
   </div>
 </section>
 
-<!-- WAVE dark→light -->
-<div class="wave-div" style="background:var(--d-bg);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,50 C480,0 960,80 1440,20 L1440,80 L0,80 Z" fill="var(--l-bg)"/></svg>
+<div class="pris-divider to-white" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path class="divider-fill" d="M0 18H40c60 0 80 46 120 46s60-46 120-46H1440V80H0Z"/>
+  </svg>
 </div>
 
-<!-- ═══ COMO FUNCIONA (light) ═══ -->
-<section class="sec-light section-fade" id="como-funciona">
+<!-- RECURSOS -->
+<section class="section" id="recursos">
   <div class="container">
-    <div class="sec-header">
-      <span class="t-label t-label-light reveal">Implementação</span>
-      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);">Começar é <span class="grad-text">simples.</span></h2>
+    <div class="sec-head reveal">
+      <span class="eyebrow">Recursos</span>
+      <h2 class="h2">Todos os recursos que a sua empresa <strong>precisa no dia a dia.</strong></h2>
     </div>
-    <div class="steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
-      <div class="card-light reveal delay-1">
-        <div class="step-num step-num-light">01</div>
-        <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:calendar-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:12px;">Demonstração</h3>
-        <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Agende uma demo gratuita e entenda como o PRIS se encaixa na sua operação.</p>
-      </div>
-      <div class="card-light reveal delay-2">
-        <div class="step-num step-num-light">02</div>
-        <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:12px;">Configuração</h3>
-        <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Nossa equipe importa dados, configura o sistema e treina sua equipe completa.</p>
-      </div>
-      <div class="card-light reveal delay-3">
-        <div class="step-num step-num-light">03</div>
-        <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:rocket-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:12px;">Operação</h3>
-        <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Empresa rodando em até 7 dias com suporte VIP durante toda a implantação.</p>
-      </div>
+    <div class="modules">
+      <div class="module reveal"><iconify-icon icon="solar:cart-large-2-bold-duotone"></iconify-icon> PDV</div>
+      <div class="module reveal"><iconify-icon icon="solar:shop-2-bold-duotone"></iconify-icon> Balcão</div>
+      <div class="module reveal"><iconify-icon icon="solar:clipboard-list-bold-duotone"></iconify-icon> Orçamentos</div>
+      <div class="module reveal"><iconify-icon icon="solar:bill-list-bold-duotone"></iconify-icon> Emissão de NF-e</div>
+      <div class="module reveal"><iconify-icon icon="solar:box-bold-duotone"></iconify-icon> Estoque e materiais</div>
+      <div class="module reveal"><iconify-icon icon="solar:users-group-rounded-bold-duotone"></iconify-icon> Clientes</div>
+      <div class="module reveal"><iconify-icon icon="solar:folder-with-files-bold-duotone"></iconify-icon> Cadastros</div>
+      <div class="module reveal"><iconify-icon icon="solar:import-bold-duotone"></iconify-icon> Importar XML</div>
+      <div class="module reveal"><iconify-icon icon="solar:wallet-money-bold-duotone"></iconify-icon> Financeiro</div>
+      <div class="module reveal"><iconify-icon icon="solar:card-recive-bold-duotone"></iconify-icon> Contas a receber</div>
+      <div class="module reveal"><iconify-icon icon="solar:card-send-bold-duotone"></iconify-icon> Contas a pagar</div>
+      <div class="module reveal"><iconify-icon icon="solar:graph-up-bold-duotone"></iconify-icon> Fluxo de caixa</div>
+      <div class="module reveal"><iconify-icon icon="solar:document-text-bold-duotone"></iconify-icon> Fiscal</div>
+      <div class="module reveal"><iconify-icon icon="solar:diploma-verified-bold-duotone"></iconify-icon> Certificação digital</div>
+      <div class="module reveal"><iconify-icon icon="solar:chart-square-bold-duotone"></iconify-icon> Relatórios</div>
+      <div class="module reveal"><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon> Administração</div>
+    </div>
+    <div class="sec-cta">
+      <button type="button" class="btn btn-primary" onclick="openModal()">Ver o sistema na prática <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
     </div>
   </div>
 </section>
 
-<!-- WAVE light→dark -->
-<div class="wave-div" style="background:var(--l-bg);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,30 C360,80 1080,0 1440,55 L1440,80 L0,80 Z" fill="var(--d-bg)"/></svg>
+<div class="pris-divider to-alt" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path class="divider-fill" d="M0 18H1040c60 0 80 46 120 46s60-46 120-46H1440V80H0Z"/>
+  </svg>
 </div>
 
-<!-- ═══ DEPOIMENTOS (dark) ═══ -->
-<section class="sec-dark section-fade" id="depoimentos">
+<!-- SEGMENTOS -->
+<section class="section section-alt" id="segmentos">
   <div class="container">
-    <div class="sec-header">
-      <span class="t-label reveal">Resultados Reais</span>
-      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:white;">Quem usa, <span class="grad-text">recomenda.</span></h2>
+    <div class="sec-head reveal">
+      <span class="eyebrow">Para quem</span>
+      <h2 class="h2">Feito para o <strong>seu segmento.</strong></h2>
     </div>
-    <div class="depo-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
-      <div class="card-dark reveal delay-1">
-        <div class="quote-mark">"</div>
-        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"Reduzi o fechamento fiscal de 3 dias para menos de 4 horas. O suporte é excepcional e sempre disponível."</p>
-        <div style="display:flex;gap:4px;margin-bottom:16px;">
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:36px;height:36px;border-radius:50%;background:rgba(28,75,226,0.2);border:1px solid rgba(28,75,226,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--bright);">MR</div>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:white;">Marcos Ribeiro</div>
-            <div style="font-size:11px;color:var(--d-faint);">Supermercado Ribeiro · MG</div>
-          </div>
-        </div>
+    <div class="segments">
+      <div class="segment reveal">
+        <div class="card-icon"><iconify-icon icon="solar:cart-large-bold-duotone"></iconify-icon></div>
+        <div><h3>Varejo alimentar</h3><p>Supermercados, mercearias e distribuidoras com giro rápido de estoque.</p></div>
       </div>
-      <div class="card-dark reveal delay-2">
-        <div class="quote-mark">"</div>
-        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"Conseguimos visualizar o faturamento em tempo real. A gestão ficou muito mais simples e segura."</p>
-        <div style="display:flex;gap:4px;margin-bottom:16px;">
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:36px;height:36px;border-radius:50%;background:rgba(28,75,226,0.2);border:1px solid rgba(28,75,226,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--bright);">AP</div>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:white;">Ana Paula Souza</div>
-            <div style="font-size:11px;color:var(--d-faint);">Farmácia Central · SP</div>
-          </div>
-        </div>
+      <div class="segment reveal">
+        <div class="card-icon"><iconify-icon icon="solar:buildings-bold-duotone"></iconify-icon></div>
+        <div><h3>Material de construção</h3><p>Orçamentos, balcão e controle de materiais em um só fluxo.</p></div>
       </div>
-      <div class="card-dark reveal delay-3">
-        <div class="quote-mark">"</div>
-        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"O controle de estoque acabou com as perdas. Hoje temos visibilidade total do que entra e sai a qualquer hora."</p>
-        <div style="display:flex;gap:4px;margin-bottom:16px;">
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-          <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:36px;height:36px;border-radius:50%;background:rgba(28,75,226,0.2);border:1px solid rgba(28,75,226,0.3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--bright);">JC</div>
-          <div>
-            <div style="font-size:13px;font-weight:800;color:white;">José Carlos Lima</div>
-            <div style="font-size:11px;color:var(--d-faint);">Material de Construção Lima · RJ</div>
-          </div>
-        </div>
+      <div class="segment reveal">
+        <div class="card-icon"><iconify-icon icon="solar:leaf-bold-duotone"></iconify-icon></div>
+        <div><h3>Agropecuária</h3><p>Vendas, estoque e fiscal adaptados à rotina do campo.</p></div>
       </div>
+      <div class="segment reveal">
+        <div class="card-icon"><iconify-icon icon="solar:pills-bold-duotone"></iconify-icon></div>
+        <div><h3>Farmácia e drogaria</h3><p>Controle de medicamentos, lote e validade.</p></div>
+      </div>
+      <div class="segment reveal">
+        <div class="card-icon"><iconify-icon icon="solar:t-shirt-bold-duotone"></iconify-icon></div>
+        <div><h3>Vestuário e calçados</h3><p>Gestão de produtos, vendas e estoque por loja.</p></div>
+      </div>
+      <div class="segment reveal">
+        <div class="card-icon"><iconify-icon icon="solar:widget-add-bold-duotone"></iconify-icon></div>
+        <div><h3>Outros segmentos</h3><p>Pet shop, eletrônicos, autopeças e muito mais.</p></div>
+      </div>
+    </div>
+    <div class="sec-cta">
+      <button type="button" class="btn btn-primary" onclick="openModal()">Agendar para o meu segmento <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
     </div>
   </div>
 </section>
 
-<!-- WAVE dark→light -->
-<div class="wave-div" style="background:var(--d-bg);">
-  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,10 C480,80 960,0 1440,40 L1440,80 L0,80 Z" fill="var(--offwhite)"/></svg>
+<div class="pris-divider to-white" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path class="divider-fill" d="M0 62C240 62 360 8 560 8s360 70 560 54 220-28 320-40V80H0Z"/>
+  </svg>
 </div>
 
-<!-- ═══ PREÇOS (offwhite) ═══ -->
-<section id="precos" style="background:var(--offwhite);padding:120px 6%;position:relative;z-index:1;">
-  <div class="container" style="text-align:center;">
-    <span class="t-label t-label-light reveal">Investimento</span>
-    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);margin-bottom:16px;">Planos sob <span class="grad-text">medida.</span></h2>
-    <p class="reveal delay-2" style="font-size:17px;color:var(--l-muted);margin-bottom:64px;">Escale conforme cresce. Sem surpresas.</p>
+<!-- DEPOIMENTOS -->
+<section class="section">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Depoimentos</span>
+      <h2 class="h2">Quem usa, <strong>recomenda.</strong></h2>
+    </div>
+    <div class="grid-3">
+      <figure class="card quote reveal">
+        <div class="stars" aria-label="5 estrelas"><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon></div>
+        <p>“Reduzi o fechamento fiscal de 3 dias para menos de 4 horas. O suporte é excepcional e sempre disponível.”</p>
+        <figcaption class="author"><div class="avatar">MR</div><div><b>Marcos Ribeiro</b><span>Supermercado Ribeiro · MG</span></div></figcaption>
+      </figure>
+      <figure class="card quote reveal">
+        <div class="stars" aria-label="5 estrelas"><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon></div>
+        <p>“Conseguimos visualizar o faturamento em tempo real. A gestão ficou muito mais simples e segura.”</p>
+        <figcaption class="author"><div class="avatar">AP</div><div><b>Ana Paula Souza</b><span>Farmácia Central · SP</span></div></figcaption>
+      </figure>
+      <figure class="card quote reveal">
+        <div class="stars" aria-label="5 estrelas"><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon><iconify-icon icon="solar:star-bold"></iconify-icon></div>
+        <p>“O controle de estoque acabou com as perdas. Hoje temos visibilidade total do que entra e sai a qualquer hora.”</p>
+        <figcaption class="author"><div class="avatar">JC</div><div><b>José Carlos Lima</b><span>Material de Construção Lima · RJ</span></div></figcaption>
+      </figure>
+    </div>
+    <div class="sec-cta">
+      <button type="button" class="btn btn-primary" onclick="openModal()">Quero o mesmo resultado <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+    </div>
+  </div>
+</section>
 
-    <div class="price-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:flex-end;">
-      <div class="price-card price-card-base reveal delay-1">
-        <div style="font-size:10px;font-weight:800;color:var(--l-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px;">Essencial</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--navy);margin-bottom:36px;">Consulte</div>
-        <div style="display:grid;gap:12px;text-align:left;margin-bottom:40px;">
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Gestão Fiscal Básica</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Controle de Estoque</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Suporte Comercial</span></div>
-        </div>
-        <button class="btn btn-ghost-dark" style="width:100%;justify-content:center;" onclick="openModal()">Falar com Consultor</button>
+<div class="pris-divider to-alt" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path class="divider-fill" d="M0 10L1440 58V80H0Z"/>
+  </svg>
+</div>
+
+<!-- PLANOS -->
+<section class="section section-alt" id="planos">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Planos</span>
+      <h2 class="h2">Planos que <strong>acompanham o seu crescimento.</strong></h2>
+      <p class="lead">Escolha o plano ideal e conte com a nossa equipe na implantação. Sem surpresas.</p>
+    </div>
+    <div class="price-grid">
+      <div class="card price reveal">
+        <span class="plan">Essencial</span>
+        <div class="value">Consulte</div>
+        <p class="desc">Para quem está organizando a gestão.</p>
+        <ul class="checks">
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Vendas e estoque</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Gestão fiscal básica</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Suporte comercial</li>
+        </ul>
+        <button type="button" class="btn btn-outline" onclick="openModal()">Falar com consultor</button>
       </div>
-
-      <div class="price-card price-card-featured reveal delay-2">
-        <div style="display:flex;justify-content:center;margin-bottom:20px;">
-          <span style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px 16px;border-radius:4px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.15em;">Mais Escolhido</span>
-        </div>
-        <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px;">Profissional</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:white;line-height:1;margin-bottom:6px;">R$ 300</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;margin-bottom:36px;">/mês</div>
-        <div style="display:grid;gap:12px;text-align:left;margin-bottom:44px;">
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:rgba(255,255,255,0.9);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.85);">Multiempresas Hub</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:rgba(255,255,255,0.9);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.85);">Automação Fiscal Completa</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:rgba(255,255,255,0.9);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.85);">Suporte VIP 24/7</span></div>
-        </div>
-        <button class="btn" style="width:100%;justify-content:center;background:white;color:var(--accent);font-weight:800;" onclick="openModal()">Agendar Demonstração</button>
+      <div class="card price price-featured reveal">
+        <span class="badge">Mais escolhido</span>
+        <span class="plan">Profissional</span>
+        <div class="value">R$ 300 <small>/mês</small></div>
+        <p class="desc">Para empresas que querem controle completo.</p>
+        <ul class="checks">
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Multiempresas</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Automação fiscal completa</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Suporte prioritário</li>
+        </ul>
+        <button type="button" class="btn btn-primary" onclick="openModal()">Agendar demonstração</button>
       </div>
-
-      <div class="price-card price-card-base reveal delay-3">
-        <div style="font-size:10px;font-weight:800;color:var(--l-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px;">Enterprise</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--navy);margin-bottom:36px;">Personalizado</div>
-        <div style="display:grid;gap:12px;text-align:left;margin-bottom:40px;">
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">API Aberta Ilimitada</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">BI de Alta Performance</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Gerente VIP Dedicado</span></div>
-        </div>
-        <button class="btn btn-ghost-dark" style="width:100%;justify-content:center;" onclick="openModal()">Solicitar Orçamento</button>
+      <div class="card price reveal">
+        <span class="plan">Enterprise</span>
+        <div class="value">Sob medida</div>
+        <p class="desc">Para operações com necessidades específicas.</p>
+        <ul class="checks">
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Integrações via API</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Relatórios avançados</li>
+          <li><iconify-icon icon="solar:check-circle-bold"></iconify-icon> Gerente de conta dedicado</li>
+        </ul>
+        <button type="button" class="btn btn-outline" onclick="openModal()">Solicitar orçamento</button>
       </div>
     </div>
   </div>
 </section>
 
+<div class="pris-divider to-white" aria-hidden="true">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path class="divider-fill" d="M0 64H560c80 0 100-52 160-52s80 52 160 52H1440V80H0Z"/>
+  </svg>
+</div>
 
-
-<!-- ═══ FOOTER ═══ -->
-<footer style="background:var(--l-bg);border-top:1px solid var(--l-border);padding:80px 6% 48px;position:relative;overflow:hidden;">
-  <div style="position:absolute;bottom:-30px;right:0;font-family:'Barlow Condensed',sans-serif;font-size:180px;font-weight:900;color:var(--l-border);opacity:0.3;pointer-events:none;user-select:none;">PRIS</div>
-  <div class="grid-footer" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:80px;position:relative;z-index:1;">
-    <div>
-      <div style="display:flex;align-items:center;margin-bottom:24px;">
-        <img src="assets/logo-pris.svg" alt="PRIS Sistemas" style="width:160px; height:auto;" />
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta reveal">
+      <div>
+        <h2>Mais controle do seu negócio, de onde você estiver.</h2>
+        <p>Agende uma demonstração gratuita e veja o PRIS funcionando com a rotina da sua empresa.</p>
       </div>
-      <p style="font-size:14px;line-height:1.7;color:var(--l-muted);max-width:300px;margin-bottom:28px;">Liderando a transformação digital de varejos com tecnologia de ponta e foco total no controle do gestor.</p>
-      <div style="display:flex;gap:14px;">
-        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-bg);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:instagram-linear"></iconify-icon></a>
-        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-bg);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:linkedin-linear"></iconify-icon></a>
+      <div class="cta-actions">
+        <button type="button" class="btn btn-white" onclick="openModal()">Agendar demonstração</button>
+        <a href="#contato" class="btn btn-outline">Falar com a equipe</a>
       </div>
-    </div>
-    <div>
-      <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Navegação</h4>
-      <a href="#hero" class="footer-link">Início</a>
-      <a href="#segmentos" class="footer-link">Setores</a>
-      <a href="#funcionalidades" class="footer-link">Funcionalidades</a>
-      <a href="#precos" class="footer-link">Preços</a>
-    </div>
-    <div>
-      <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Atendimento</h4>
-      <p style="font-size:14px;color:var(--l-muted);margin-bottom:8px;">(31) 9999-9999</p>
-      <p style="font-size:14px;color:var(--l-muted);margin-bottom:24px;">contato@prissistemas.com.br</p>
-      <button class="nav-cta" onclick="openModal()" style="font-size:11px;">Agendar Demo</button>
     </div>
   </div>
-  <div style="max-width:1200px;margin:48px auto 0;padding-top:28px;border-top:1px solid var(--l-border);display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:12px;color:var(--l-muted);">© 2025 PRIS Sistemas · Tecnologia para Crescer.</span>
-    <span style="font-size:12px;color:var(--l-muted);">Todos os direitos reservados.</span>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer" id="contato">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#inicio" class="logo"><img src="assets/logo-pris.svg" alt="PRIS Sistemas" width="128" height="40" loading="lazy" /></a>
+        <p>Gestão pensada para a sua rotina. Vendas, estoque, financeiro e fiscal em um só lugar.</p>
+        <div class="social">
+          <a href="#" aria-label="Instagram"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
+          <a href="#" aria-label="LinkedIn"><iconify-icon icon="mdi:linkedin"></iconify-icon></a>
+        </div>
+      </div>
+      <div>
+        <h4>Plataforma</h4>
+        <a href="#plataforma">Visão geral</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#segmentos">Segmentos</a>
+        <a href="#planos">Planos</a>
+      </div>
+      <div>
+        <h4>Empresa</h4>
+        <a href="parceiros.html">Seja um parceiro</a>
+        <a href="#">Central de ajuda</a>
+        <a href="#">Privacidade</a>
+      </div>
+      <div>
+        <h4>Atendimento</h4>
+        <a href="tel:+553199999999">(31) 9999-9999</a>
+        <a href="mailto:contato@prissistemas.com.br">contato@prissistemas.com.br</a>
+        <button type="button" class="btn btn-primary btn-sm" onclick="openModal()" style="margin-top:8px;">Agendar demonstração</button>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> PRIS Sistemas. Todos os direitos reservados.</span>
+      <span>Feito para o varejo brasileiro.</span>
+    </div>
   </div>
 </footer>
 
 <!-- MODAL -->
-<div class="modal-overlay" id="demo-modal">
+<div class="modal" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true" inert>
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()"><iconify-icon icon="solar:close-circle-bold-duotone"></iconify-icon></button>
-    <div class="step-dots" id="step-dots">
-      <div class="step-dot active"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-    </div>
+    <button type="button" class="modal-close" onclick="closeModal()" aria-label="Fechar"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+    <div class="step-dots"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div class="modal-viewport">
     <div class="modal-slider" id="modal-slider">
       <div class="form-step">
-        <div class="step-title">Olá! 👋</div>
-        <div class="step-desc">Vamos agendar sua demonstração gratuita. Começa com seu nome.</div>
-        <div class="input-group"><label class="ds-label">Seu nome</label><input class="ds-input" type="text" placeholder="João Silva" /></div>
-        <div class="input-group"><label class="ds-label">E-mail comercial</label><input class="ds-input" type="email" placeholder="joao@suaempresa.com.br" /></div>
-        <div class="input-group"><label class="ds-label">Telefone</label><input class="ds-input" type="tel" placeholder="(31) 99999-9999" /></div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:8px;" onclick="nextStep()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+        <div class="step-title" id="modal-title">Agende sua demonstração</div>
+        <div class="step-desc">Preencha seus dados e nossa equipe entra em contato.</div>
+        <div class="field"><label for="f-nome">Nome</label><input id="f-nome" type="text" placeholder="João Silva" autocomplete="name" /></div>
+        <div class="field"><label for="f-tel">Telefone</label><input id="f-tel" type="tel" placeholder="(31) 99999-9999" autocomplete="tel" /></div>
+        <div class="field"><label for="f-cargo">Cargo na empresa</label><input id="f-cargo" type="text" placeholder="Proprietário, gerente, financeiro..." autocomplete="organization-title" /></div>
+        <button type="button" class="btn btn-primary" style="width:100%;" onclick="nextStep()">Continuar</button>
       </div>
       <div class="form-step">
         <div class="step-title">Sua empresa</div>
-        <div class="step-desc">Qual segmento melhor descreve seu negócio?</div>
-        <div style="display:grid;gap:10px;margin-bottom:24px;">
-          <button class="btn-check" onclick="selectCheck(this)">🛒 Varejo Alimentar</button>
-          <button class="btn-check" onclick="selectCheck(this)">💊 Farmácia</button>
-          <button class="btn-check" onclick="selectCheck(this)">🏗️ Material de Construção</button>
-          <button class="btn-check" onclick="selectCheck(this)">👗 Moda & Vestuário</button>
+        <div class="step-desc">Conte um pouco da operação para prepararmos a demonstração.</div>
+        <div class="field">
+          <label for="f-segmento">Segmento</label>
+          <select id="f-segmento">
+            <option value="" selected disabled>Selecione</option>
+            <option>Varejo alimentar</option>
+            <option>Material de construção</option>
+            <option>Agropecuária</option>
+            <option>Farmácia e drogaria</option>
+            <option>Vestuário e calçados</option>
+            <option>Outro</option>
+          </select>
         </div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;" onclick="nextStep()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
-      </div>
-      <div class="form-step" style="text-align:center;padding-top:24px;">
-        <div style="width:68px;height:68px;border-radius:50%;background:rgba(45,203,117,0.12);border:1px solid rgba(45,203,117,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#2DCB75;">
-          <iconify-icon icon="solar:check-circle-bold"></iconify-icon>
+        <div class="field">
+          <label for="f-colab">Número de colaboradores</label>
+          <select id="f-colab">
+            <option value="" selected disabled>Selecione</option>
+            <option>1 a 5</option>
+            <option>6 a 15</option>
+            <option>16 a 50</option>
+            <option>Mais de 50</option>
+          </select>
         </div>
-        <div class="step-title">Perfeito!</div>
-        <div class="step-desc">Nossa equipe entrará em contato em até 2 horas para confirmar sua demonstração.</div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:8px;" onclick="closeModal()">Concluir</button>
+        <div class="field">
+          <label for="f-dificuldade">Principal dificuldade</label>
+          <select id="f-dificuldade">
+            <option value="" selected disabled>Selecione</option>
+            <option>Controle de estoque</option>
+            <option>Gestão financeira</option>
+            <option>Emissão fiscal</option>
+            <option>Vendas e PDV</option>
+            <option>Falta de visibilidade do negócio</option>
+            <option>Outra</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Já tem ERP?</label>
+          <div class="choice-row">
+            <button type="button" class="option" onclick="selectOption(this)">Sim</button>
+            <button type="button" class="option" onclick="selectOption(this)">Não</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" style="width:100%;" onclick="nextStep()">Continuar</button>
       </div>
+      <div class="form-step" style="text-align:center;padding-top:16px;">
+        <iconify-icon class="done-icon" icon="solar:check-circle-bold"></iconify-icon>
+        <div class="step-title">Tudo certo!</div>
+        <div class="step-desc">Nossa equipe vai entrar em contato em breve para confirmar sua demonstração.</div>
+        <button type="button" class="btn btn-primary" style="width:100%;" onclick="closeModal()">Concluir</button>
+      </div>
+    </div>
     </div>
   </div>
 </div>
 
 <script>
-/* ── SCROLL BAR + NAV + PARALLAX (enhanced) ── */
-const heroArt = document.querySelector('.hero-art');
-const parallaxSlow = document.querySelectorAll('.parallax-slow');
-const parallaxMedium = document.querySelectorAll('.parallax-medium');
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      const sy = window.scrollY;
-      const pct = sy / (document.body.scrollHeight - window.innerHeight) * 100;
-      document.getElementById('scroll-bar').style.width = pct + '%';
-      document.getElementById('main-nav').classList.toggle('scrolled', sy > 60);
-      // Parallax hero art — subtle vertical drift
-      if (heroArt && sy < window.innerHeight * 1.5) {
-        heroArt.style.transform = `translateY(${sy * 0.18}px) scale(1.04)`;
-      }
-      // Multi-layer parallax for geo shapes
-      parallaxSlow.forEach(el => {
-        el.style.transform = `rotate(22deg) translateY(${sy * 0.06}px)`;
-      });
-      parallaxMedium.forEach(el => {
-        el.style.transform = `rotate(-15deg) translateY(${sy * -0.1}px)`;
-      });
-      ticking = false;
-    });
-    ticking = true;
-  }
-});
-
-/* ── REVEAL (all variants + text-clip + rotate) ── */
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('in');
-    } else {
-      e.target.classList.remove('in');
-    }
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-blur, .reveal-rotate, .text-clip-line')
-  .forEach(el => revObs.observe(el));
-
-/* ── HAMBURGER MENU ── */
-function toggleMenu() {
-  const hb = document.getElementById('hamburger');
-  const mm = document.getElementById('mobile-menu');
-  hb.classList.toggle('open');
-  mm.classList.toggle('open');
-  document.body.style.overflow = mm.classList.contains('open') ? 'hidden' : '';
+const themeToggle = document.getElementById('theme-toggle');
+function syncThemeToggle() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  themeToggle.setAttribute('aria-pressed', dark);
+  themeToggle.setAttribute('aria-label', dark ? 'Ver versão clara' : 'Ver versão escura');
 }
-
-/* ── SMOOTH SCROLL with nav offset ── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h') || '68');
-    const top = target.getBoundingClientRect().top + window.scrollY - offset - 8;
-    window.scrollTo({ top, behavior: 'smooth' });
-  });
+themeToggle.addEventListener('click', () => {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  if (dark) delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = 'dark';
+  try { localStorage.setItem('pris-theme', dark ? 'light' : 'dark'); } catch (e) {}
+  syncThemeToggle();
 });
+syncThemeToggle();
 
-/* ── FLASHLIGHT ON DARK CARDS ── */
-document.querySelectorAll('.card-dark').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-  });
-});
-
-
-/* ── CTA CANVAS (PARTNER) ── */
-(function() {
-  const canvas = document.getElementById('cta-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, t = 0;
-  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
-  resize(); window.addEventListener('resize', resize);
-  const waves2 = [
-    { color: 'rgba(28,75,226,0.25)', speed: 0.002, amp: 0.3, freq: 1.6, phase: 0.5 },
-    { color: 'rgba(74,127,255,0.15)', speed: 0.003, amp: 0.22, freq: 2.2, phase: 1.8 },
-    { color: 'rgba(120,80,220,0.12)', speed: 0.0018, amp: 0.35, freq: 1.2, phase: 3.0 },
-  ];
-  function draw2() {
-    ctx.clearRect(0, 0, W, H);
-    t += 1;
-    waves2.forEach((w, i) => {
-      ctx.beginPath();
-      const base = H * (0.4 + i * 0.12);
-      ctx.moveTo(0, H);
-      for (let x = 0; x <= W; x += 4) {
-        const y = base + Math.sin(x * w.freq / W * Math.PI * 2 + t * w.speed * 60 + w.phase) * H * w.amp;
-        ctx.lineTo(x, y);
-      }
-      ctx.lineTo(W, H); ctx.closePath();
-      ctx.fillStyle = w.color; ctx.fill();
-    });
-    requestAnimationFrame(draw2);
-  }
-  draw2();
-})();
-
-/* ── MINI CHART (hero dash) ── */
-(function() {
-  const canvas = document.getElementById('mini-chart');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const data = [42, 55, 48, 70, 65, 85, 78, 92, 88, 105, 98, 118];
-  const W = canvas.width, H = canvas.height;
-  const max = Math.max(...data), min = Math.min(...data);
-  const px = (i) => (i / (data.length - 1)) * (W - 20) + 10;
-  const py = (v) => H - 10 - ((v - min) / (max - min)) * (H - 20);
-
-  ctx.clearRect(0, 0, W, H);
-
-  // Area fill
-  const grad = ctx.createLinearGradient(0, 0, 0, H);
-  grad.addColorStop(0, 'rgba(28,75,226,0.3)');
-  grad.addColorStop(1, 'rgba(28,75,226,0)');
-  ctx.beginPath();
-  ctx.moveTo(px(0), py(data[0]));
-  data.forEach((v, i) => { if (i > 0) ctx.bezierCurveTo(px(i - 0.5), py(data[i-1]), px(i - 0.5), py(v), px(i), py(v)); });
-  ctx.lineTo(px(data.length - 1), H);
-  ctx.lineTo(px(0), H);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  ctx.moveTo(px(0), py(data[0]));
-  data.forEach((v, i) => { if (i > 0) ctx.bezierCurveTo(px(i - 0.5), py(data[i-1]), px(i - 0.5), py(v), px(i), py(v)); });
-  ctx.strokeStyle = '#4A7FFF';
-  ctx.lineWidth = 2;
-  ctx.stroke();
-})();
-
-/* ── LIVE CHART (animated draw) ── */
-(function() {
-  const canvas = document.getElementById('live-chart');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-  canvas.height = 140 * window.devicePixelRatio;
-  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-  const W = canvas.offsetWidth, H = 140;
-
-  const data = [58, 72, 65, 88, 80, 102, 95, 118, 112, 130, 124, 145];
-  const data2 = [45, 60, 55, 70, 68, 85, 80, 98, 94, 108, 100, 120];
-  const max = 160, min = 30;
-  const px = (i) => (i / (data.length - 1)) * (W - 24) + 12;
-  const py = (v) => H - 20 - ((v - min) / (max - min)) * (H - 36);
-
-  let progress = 0;
-  let started = false;
-
-  function draw(prog) {
-    ctx.clearRect(0, 0, W, H);
-
-    // Grid lines
-    [0.25, 0.5, 0.75, 1].forEach(r => {
-      ctx.beginPath();
-      ctx.moveTo(0, py(min + (max-min)*r));
-      ctx.lineTo(W, py(min + (max-min)*r));
-      ctx.strokeStyle = 'rgba(3,4,94,0.08)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    });
-
-    const clip = Math.floor(prog * (data.length - 1));
-    const frac = prog * (data.length - 1) - clip;
-
-    // Draw area + line for main data
-    [data2, data].forEach((d, di) => {
-      const color = di === 1 ? '#1C4BE2' : '#A0B4E8';
-      const alpha = di === 1 ? 0.15 : 0.07;
-
-      ctx.beginPath();
-      ctx.moveTo(px(0), py(d[0]));
-      for (let i = 1; i <= Math.min(clip + 1, d.length - 1); i++) {
-        const xi = i < clip + 1 ? i : clip + frac;
-        const vi = i < clip + 1 ? d[i] : d[clip] + (d[Math.min(clip+1,d.length-1)] - d[clip]) * frac;
-        ctx.bezierCurveTo(px(i-0.5), py(d[i-1]), px(xi-0.5), py(vi), px(xi), py(vi));
-      }
-      const endX = clip < d.length - 1 ? px(clip + frac) : px(d.length - 1);
-      ctx.lineTo(endX, H - 20); ctx.lineTo(px(0), H - 20); ctx.closePath();
-      const grad = ctx.createLinearGradient(0, 0, 0, H);
-      grad.addColorStop(0, color.replace(')', `,${alpha})`).replace('rgb', 'rgba'));
-      grad.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = grad; ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(px(0), py(d[0]));
-      for (let i = 1; i <= Math.min(clip + 1, d.length - 1); i++) {
-        const xi = i < clip + 1 ? i : clip + frac;
-        const vi = i < clip + 1 ? d[i] : d[clip] + (d[Math.min(clip+1,d.length-1)] - d[clip]) * frac;
-        ctx.bezierCurveTo(px(i-0.5), py(d[i-1]), px(xi-0.5), py(vi), px(xi), py(vi));
-      }
-      ctx.strokeStyle = di === 1 ? '#1C4BE2' : '#A0B4E8';
-      ctx.lineWidth = di === 1 ? 2.5 : 1.5;
-      ctx.stroke();
-    });
-
-    // Animated dot on main line tip
-    if (clip < data.length - 1) {
-      const tipX = px(clip + frac);
-      const tipV = data[clip] + (data[Math.min(clip+1, data.length-1)] - data[clip]) * frac;
-      const tipY = py(tipV);
-      const pulse = (Math.sin(Date.now() / 300) + 1) / 2;
-      ctx.beginPath();
-      ctx.arc(tipX, tipY, 6 + pulse * 4, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(28,75,226,${0.15 + pulse * 0.1})`;
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(tipX, tipY, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#1C4BE2';
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(tipX, tipY, 2, 0, Math.PI * 2);
-      ctx.fillStyle = 'white';
-      ctx.fill();
-    }
-  }
-
-  function animate() {
-    if (progress < 1) progress = Math.min(1, progress + 0.012);
-    draw(progress);
-    if (progress < 1) requestAnimationFrame(animate);
-    else {
-      // Keep redrawing for the pulse animation
-      setInterval(() => draw(1), 50);
-    }
-  }
-
-  // Start when in view
-  const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting && !started) {
-      started = true;
-      animate();
-    }
-  }, { threshold: 0.3 });
-  obs.observe(canvas);
-})();
-
-/* ── COUNTER ANIMATION (eased) ── */
-function easeOutExpo(t) {
-  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+const header = document.getElementById('header');
+const pageProgress = document.getElementById('page-progress');
+function updatePageMotion() {
+  header.classList.toggle('scrolled', window.scrollY > 8);
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  pageProgress.style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
 }
-document.querySelectorAll('.metric-num').forEach(el => {
-  const obs = new IntersectionObserver(entries => {
-    if (!entries[0].isIntersecting) return;
-    const target = parseInt(el.dataset.count);
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const duration = 1800; // ms
-    const startTime = performance.now();
-    el.style.filter = 'blur(6px)';
-    el.style.transition = 'filter 0.8s ease';
-    requestAnimationFrame(function tick(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = easeOutExpo(progress);
-      const current = Math.floor(easedProgress * target);
-      el.textContent = prefix + current + suffix;
-      if (progress < 0.15) {
-        el.style.filter = `blur(${6 * (1 - progress / 0.15)}px)`;
-      } else {
-        el.style.filter = 'blur(0px)';
-      }
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      }
-    });
-    obs.disconnect();
-  }, { threshold: 0.5 });
-  obs.observe(el);
-});
+window.addEventListener('scroll', updatePageMotion, { passive: true });
+updatePageMotion();
 
-/* ── TILT CARD 3D ── */
-document.querySelectorAll('.tilt-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -8; // max 8deg
-    const rotateY = ((x - centerX) / centerX) * 8;
-    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+hamburger.addEventListener('click', () => {
+  const open = mobileNav.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', open);
+});
+mobileNav.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
+  mobileNav.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+}));
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', t === tab));
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      const active = p.id === tab.getAttribute('aria-controls');
+      p.classList.toggle('active', active);
+      p.hidden = !active;
+    });
   });
 });
 
-/* ── SECTION FADE ON SCROLL ── */
-(function() {
-  const sections = document.querySelectorAll('.section-fade');
-  if (!sections.length) return;
-  const sectionObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('fading-out');
-      } else {
-        // Only fade out if scrolling past (not before)
-        const rect = entry.boundingClientRect;
-        if (rect.top < 0) {
-          entry.target.classList.add('fading-out');
-        }
-      }
-    });
-  }, { threshold: [0, 0.15] });
-  sections.forEach(s => sectionObs.observe(s));
-})();
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => e.target.classList.toggle('in', e.isIntersecting));
+}, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-/* ── MODAL ── */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const modal = document.getElementById('demo-modal');
+const slider = document.getElementById('modal-slider');
+const viewport = document.querySelector('.modal-viewport');
 let step = 0;
-function openModal() { document.getElementById('demo-modal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeModal() { document.getElementById('demo-modal').classList.remove('active'); document.body.style.overflow = ''; step = 0; document.getElementById('modal-slider').style.transform = ''; document.querySelectorAll('.step-dot').forEach((d,i) => d.classList.toggle('active', i === 0)); }
-function nextStep() { step++; document.getElementById('modal-slider').style.transform = `translateX(-${step*100}%)`; document.querySelectorAll('.step-dot').forEach((d,i) => d.classList.toggle('active', i <= step)); }
-function selectCheck(el) { document.querySelectorAll('.btn-check').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
-document.getElementById('demo-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+function setStep(n) {
+  step = n;
+  slider.style.transform = `translateX(-${step * 100}%)`;
+  viewport.style.height = slider.children[step].offsetHeight + 'px';
+  document.querySelectorAll('.step-dot').forEach((d, i) => d.classList.toggle('active', i <= step));
+}
+function openModal() {
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+  modal.inert = false;
+  document.body.style.overflow = 'hidden';
+  setStep(0);
+  setTimeout(() => document.getElementById('f-nome').focus(), 200);
+}
+function closeModal() {
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+  modal.inert = true;
+  document.body.style.overflow = '';
+  setStep(0);
+}
+function nextStep() { setStep(Math.min(step + 1, 2)); }
+function selectOption(el) {
+  el.parentElement.querySelectorAll('.option').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+window.addEventListener('resize', () => { if (modal.classList.contains('active')) setStep(step); });
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
 </script>
 </body>
 </html>

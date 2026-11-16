@@ -208,9 +208,9 @@
       content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
       background: radial-gradient(circle at 80% 20%, rgba(28,75,226,0.08) 0%, transparent 50%);
     }
-    .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .hero-title { font-size: clamp(52px, 6.5vw, 96px); color: var(--navy); margin-bottom: 28px; }
-    .hero-desc { font-size: 18px; line-height: 1.7; color: var(--l-muted); margin-bottom: 44px; font-weight: 500; max-width: 440px; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
+    .hero-title { font-size: clamp(32px, 4.1vw, 52px); color: var(--navy); margin-bottom: 28px; line-height: 1.08; }
+    .hero-desc { font-size: 18px; line-height: 1.7; color: var(--l-muted); margin-bottom: 44px; font-weight: 500; max-width: 540px; }
     .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 
     /* ── FLOATING DASHBOARD CARD ── */
@@ -293,6 +293,10 @@
     }
     .feat-icon-dark { background:rgba(28,75,226,0.12); border:1px solid rgba(28,75,226,0.25); color:var(--accent); }
     .feat-icon-light { background:rgba(28,75,226,0.08); border:1px solid rgba(28,75,226,0.18); color:var(--accent); }
+    .feat-icon-plain {
+      width:auto; height:auto; border:none; border-radius:0; background:none;
+      font-size:30px; margin-bottom:16px; color:var(--bright);
+    }
 
     /* ── STEPS ── */
     .step-num { font-family:'Barlow Condensed',sans-serif; font-size:64px; font-weight:900; color:rgba(28,75,226,0.15); line-height:1; margin-bottom:16px; }
@@ -306,13 +310,24 @@
       border-radius:16px; padding:44px 36px;
       position:relative; overflow:hidden;
     }
-    .price-card-base { background:var(--d-surf); border:1px solid var(--d-border); }
+    .price-card-base { background:#fff; border:1px solid var(--l-border); box-shadow:0 8px 32px rgba(3,4,94,0.05); }
     .price-card-featured {
-      background:var(--accent);
-      box-shadow:0 20px 80px rgba(28,75,226,0.5);
-      transform:scale(1.04); z-index:2;
+      background:#fff;
+      border:2px solid var(--accent);
+      box-shadow:0 24px 60px rgba(28,75,226,0.16);
+      transform:translateY(-12px); z-index:2;
     }
-    .price-check { display:flex; align-items:center; gap:10px; font-size:14px; font-weight:600; margin-bottom:14px; }
+    .price-banner {
+      margin:-44px -36px 28px; padding:10px 16px;
+      background:var(--accent); color:#fff;
+      font-size:11px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase;
+    }
+    .price-check { display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:600; margin-bottom:12px; }
+    .price-name { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--navy); line-height:1; }
+    .price-name em { font-style:normal; color:var(--accent); }
+    .price-value { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--navy); line-height:1; }
+    .price-value span { font-family:'Barlow',sans-serif; font-size:16px; font-weight:600; color:var(--l-muted); }
+    .price-note { max-width:760px; margin:28px auto 0; font-size:13px; line-height:1.6; color:var(--l-muted); }
 
     /* ── PARTNER CTA ── */
     .cta-abstract { position:absolute; inset:0; z-index:0; overflow:hidden; }
@@ -332,11 +347,20 @@
     /* ── MODAL ── */
     .modal-overlay { position:fixed; inset:0; background:rgba(2,3,24,0.8); backdrop-filter:blur(16px); z-index:2000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:0.4s; }
     .modal-overlay.active { opacity:1; pointer-events:all; }
-    .modal-box { background:#060920; border:1px solid rgba(28,75,226,0.4); width:95%; max-width:460px; border-radius:20px; padding:48px 0; position:relative; box-shadow:0 40px 120px rgba(0,0,0,0.7), 0 0 60px rgba(28,75,226,0.15); overflow:hidden; }
-    .modal-close { position:absolute; top:18px; right:18px; background:none; border:none; font-size:24px; color:var(--d-faint); cursor:pointer; transition:0.2s; }
+    .modal-box { background:#060920; border:1px solid rgba(28,75,226,0.4); width:95%; max-width:520px; max-height:min(92dvh, 860px); border-radius:20px; padding:48px 0 32px; position:relative; box-shadow:0 40px 120px rgba(0,0,0,0.7), 0 0 60px rgba(28,75,226,0.15); overflow:hidden; }
+    textarea.ds-input { min-height:88px; resize:vertical; }
+    select.ds-input { appearance:none; }
+    .lead-error { margin:0 44px; font-size:13px; font-weight:600; color:#ff8d8d; line-height:1.5; min-height:0; }
+    .lead-error:not([hidden]) { margin-top:8px; }
+    .segment-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .modal-close { position:absolute; top:18px; right:18px; background:none; border:none; font-size:24px; color:var(--d-faint); cursor:pointer; transition:0.2s; z-index:2; }
     .modal-close:hover { color:var(--bright); }
-    .modal-slider { display:flex; transition:0.7s var(--ease-spring); }
-    .form-step { width:100%; flex:0 0 100%; padding:0 44px; }
+    .modal-viewport { overflow:hidden; transition:height 0.55s var(--ease-spring); }
+    .modal-slider { display:flex; flex-direction:row-reverse; align-items:flex-start; width:calc(var(--count) * 100%); transition:transform 0.7s var(--ease-spring); touch-action:pan-y; }
+    .modal-slider.is-dragging { transition:none; }
+    .form-step { width:calc(100% / var(--count)); flex:0 0 calc(100% / var(--count)); padding:0 44px; }
+    .step-back { margin-top:14px; background:none; border:none; color:var(--d-muted); font-family:'Barlow',sans-serif; font-size:13px; font-weight:700; cursor:pointer; }
+    .step-back:hover { color:var(--bright); }
     .step-title { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:800; color:white; margin-bottom:8px; }
     .step-desc { font-size:14px; color:var(--d-muted); margin-bottom:28px; line-height:1.6; }
     .step-dots { display:flex; gap:8px; padding:0 44px; margin-bottom:32px; }
@@ -371,7 +395,7 @@
       display: block;
     }
     .text-clip-line > span {
-      display: inline-block;
+      display: block;
       transform: translateY(110%);
       opacity: 0;
       transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
@@ -505,7 +529,7 @@
       width:40px; height:40px; cursor:pointer; background:none; border:none; padding:6px;
     }
     .nav-hamburger span {
-      display:block; width:22px; height:2px; background:white;
+      display:block; width:22px; height:2px; background:var(--navy);
       transition:transform 0.35s var(--ease-spring), opacity 0.2s;
       border-radius:2px;
     }
@@ -530,6 +554,36 @@
     }
     .mobile-menu a:hover { color:var(--bright); }
 
+    /* ── SOBRE / FAQ / APP ── */
+    .pillar-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:40px; text-align:left; }
+    .faq-list { max-width:760px; margin:0 auto; text-align:left; }
+    .faq-item { border-bottom:1px solid var(--l-border); }
+    .faq-q {
+      width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px;
+      padding:22px 0; background:none; border:none; cursor:pointer; text-align:left;
+      font-family:'Barlow',sans-serif; font-size:18px; font-weight:700; color:var(--navy);
+    }
+    .faq-q iconify-icon { color:var(--accent); font-size:20px; transition:transform 0.25s; flex-shrink:0; }
+    .faq-q[aria-expanded="true"] iconify-icon { transform:rotate(45deg); }
+    .faq-a { padding:0 0 22px; font-size:15px; line-height:1.7; color:var(--l-muted); }
+    .faq-a[hidden] { display:none; }
+    .app-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:center; }
+    .app-list { display:grid; gap:18px; margin-top:28px; }
+    .app-list li { list-style:none; display:flex; gap:12px; align-items:flex-start; font-size:15px; font-weight:600; color:var(--l-muted); line-height:1.5; }
+    .phone { width:min(280px, 100%); margin:0 auto; background:#10182e; border-radius:36px; padding:12px; box-shadow:0 30px 70px rgba(3,4,94,0.18); }
+    .phone-screen { background:var(--offwhite); border-radius:26px; overflow:hidden; min-height:460px; }
+    .phone-bar { display:flex; align-items:center; justify-content:space-between; padding:16px 14px 12px; background:#fff; }
+    .phone-bar img { height:22px; width:auto; }
+    .phone-body { display:grid; gap:10px; padding:14px; }
+    .phone-card { background:#fff; border-radius:12px; padding:12px 14px; }
+    .phone-card span { display:block; font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--l-muted); }
+    .phone-card strong { display:block; margin-top:4px; font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); line-height:1; }
+    .phone-alert { background:#fff; border-radius:12px; padding:12px 14px; font-size:13px; font-weight:600; color:var(--navy); }
+    @media(max-width:768px) {
+      .pillar-grid { grid-template-columns:1fr; }
+      .segment-grid { grid-template-columns:1fr; }
+    }
+
     /* ── RESPONSIVE ── */
     @media(max-width:1024px) {
       .hero-inner { grid-template-columns:1fr; }
@@ -543,8 +597,9 @@
       .produto-grid { grid-template-columns:1fr !important; }
       .steps-grid { grid-template-columns:1fr 1fr !important; gap:24px !important; }
       .depo-grid { grid-template-columns:1fr 1fr !important; }
-      .price-grid { grid-template-columns:1fr 1fr !important; }
+      .price-grid { grid-template-columns:1fr !important; max-width:520px; margin:0 auto; }
       .price-card-featured { transform:none; }
+      .app-grid { grid-template-columns:1fr !important; }
       .screens-grid { grid-template-columns:1fr !important; }
     }
     @media(max-width:768px) {
@@ -552,12 +607,16 @@
       nav { padding:0 20px; height:60px; }
       .nav-links { display:none !important; }
       .nav-cta { display:none; }
-      .nav-hamburger { display:none !important; }
-      .mobile-menu { top:60px; }
+      .nav-hamburger { display:flex !important; }
+      .band-pad { padding:72px 20px !important; }
+      .app-grid { grid-template-columns:1fr !important; }
+      .faq-list { max-width:100%; }
+      .mobile-menu { top:60px; gap:20px; justify-content:flex-start; padding:40px 20px 32px; overflow-y:auto; }
+      .mobile-menu a { font-size:28px; }
       .hero { padding:100px 20px 60px; min-height:auto; }
       .hero-inner { gap:36px; }
       .dash-card { max-width:100%; }
-      .hero-title { font-size:clamp(40px,11vw,64px) !important; }
+      .hero-title { font-size:clamp(28px,7.4vw,40px) !important; line-height:1.12 !important; }
       .bento { grid-template-columns:1fr; }
       .bento-span2 { grid-column:span 1; }
       .metrics-strip { grid-template-columns:1fr 1fr; }
@@ -599,9 +658,11 @@
     <img src="assets/logo-pris.svg" alt="PRIS Sistemas" />
   </a>
   <div style="display:flex;align-items:center;gap:40px;">
-    <div class="nav-links" style="display:flex;gap:32px;">
+    <div class="nav-links" style="display:flex;gap:22px;">
       <a href="#produto">Produto</a>
       <a href="#segmentos">Setores</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#faq">FAQ</a>
       <a href="#como-funciona">Como Funciona</a>
       <a href="#precos">Preços</a>
     </div>
@@ -616,6 +677,8 @@
 <div class="mobile-menu" id="mobile-menu">
   <a href="#produto" onclick="toggleMenu()">Produto</a>
   <a href="#segmentos" onclick="toggleMenu()">Setores</a>
+  <a href="#sobre" onclick="toggleMenu()">Sobre</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
   <a href="#como-funciona" onclick="toggleMenu()">Como Funciona</a>
   <a href="#precos" onclick="toggleMenu()">Preços</a>
   <button class="btn btn-blue" onclick="toggleMenu();openModal();" style="margin-top:16px;padding:18px 48px;font-size:16px;">Agendar Demo</button>
@@ -624,27 +687,25 @@
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="hero">
   <!-- Geometric shapes -->
-  <div class="geo-shape parallax-slow" style="width:320px;height:320px;top:40px;right:8%;transform:rotate(22deg);opacity:0.3; filter: blur(40px); background: var(--accent);"></div>
-  <div class="geo-shape parallax-medium" style="width:180px;height:180px;bottom:15%;left:4%;transform:rotate(-15deg);opacity:0.2; filter: blur(30px); background: var(--bright);"></div>
-
   <div class="hero-inner">
     <!-- LEFT -->
     <div>
-      <span class="t-label reveal-blur">Gestão Inteligente para Varejo</span>
+      <!-- TODO: conteúdo pendente — texto definitivo do hero -->
+      <span class="t-label reveal-blur">100% online para o seu negócio</span>
       <h1 class="t-display hero-title">
-        <span class="text-clip-line delay-1"><span>O Sistema</span></span>
-        <span class="text-clip-line delay-2"><span>que <span class="grad-text">Transforma</span></span></span>
-        <span class="text-clip-line delay-3"><span>seu Varejo.</span></span>
+        <span class="text-clip-line delay-1"><span>Gestão pensada para a sua rotina.</span></span>
+        <span class="text-clip-line delay-2"><span>Mais <span class="grad-text">controle</span> do seu negócio.</span></span>
+        <span class="text-clip-line delay-3"><span>Mais liberdade para acompanhar de onde estiver.</span></span>
       </h1>
       <p class="hero-desc reveal delay-3">
-        A PRIS Sistemas reúne vendas, estoque, financeiro e fiscal em um único sistema intuitivo — feito para gestores que querem controle real, com um visual leve e objetivo.
+        O PRIS integra vendas, estoque, gestão financeira e fiscal para simplificar o dia a dia da sua empresa. Acompanhe as informações do seu negócio de onde estiver, com flexibilidade de acesso e uma equipe próxima para orientar e ajudar.
       </p>
       <div class="hero-btns reveal delay-4">
         <button class="btn btn-blue btn-beam" onclick="openModal()">Agendar Demo <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
         <a href="#produto" class="btn btn-ghost-dark btn-beam">Explorar <iconify-icon icon="solar:arrow-down-linear"></iconify-icon></a>
       </div>
       <!-- Trust badges -->
-      <div class="reveal delay-4" style="display:flex;align-items:center;gap:24px;margin-top:48px;">
+      <div class="reveal delay-4" style="display:flex;align-items:center;gap:16px 24px;margin-top:48px;flex-wrap:wrap;">
         <div style="display:flex;align-items:center;gap:6px;">
           <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
           <span style="font-size:12px;font-weight:600;color:var(--l-muted);">+500 empresas</span>
@@ -657,14 +718,14 @@
         <div style="width:1px;height:16px;background:var(--l-border);"></div>
         <div style="display:flex;align-items:center;gap:6px;">
           <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">Suporte 24/7</span>
+          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">+20 anos de experiência no mercado</span>
         </div>
       </div>
     </div>
 
     <!-- RIGHT: Platform Mockup -->
     <div class="reveal delay-2" style="position:relative;">
-      <img src="assets/platform-mockup-1.jpg" alt="PRIS ERP Dashboard" style="width:100%; border-radius:12px; box-shadow: 0 30px 60px rgba(3,4,94,0.12), 0 0 0 1px rgba(3,4,94,0.05); transform: perspective(1000px) rotateY(-5deg); transition: transform 0.5s;">
+      <img src="assets/hero-sistema.jpg" alt="Painel do PRIS com vendas, caixa e contas" style="width:100%; border-radius:12px; box-shadow: 0 30px 60px rgba(3,4,94,0.12), 0 0 0 1px rgba(3,4,94,0.05);">
     </div>
   </div>
 </section>
@@ -685,8 +746,8 @@
       <div class="metric-label">Para entrar em operação</div>
     </div>
     <div class="metric-block reveal delay-3">
-      <div class="metric-num" data-count="24" data-prefix="" data-suffix="/7">0</div>
-      <div class="metric-label">Suporte disponível</div>
+      <div class="metric-num" data-count="20" data-prefix="+" data-suffix=" anos">0</div>
+      <div class="metric-label">De experiência no mercado</div>
     </div>
   </div>
 </section>
@@ -700,40 +761,65 @@
 <div class="marquee-section">
   <div class="marquee-track">
     <!-- Set 1 -->
-    <div class="marquee-item"><iconify-icon icon="solar:cloud-bold-duotone"></iconify-icon> Cloud Native</div>
+    <div class="marquee-item"><iconify-icon icon="solar:global-linear"></iconify-icon> Acesso remoto</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:shield-check-bold-duotone"></iconify-icon> LGPD Compliance</div>
+    <div class="marquee-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon> Disponibilidade</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:server-bold-duotone"></iconify-icon> 99.9% Uptime</div>
+    <div class="marquee-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon> Gestão de empresas</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:lock-bold-duotone"></iconify-icon> Criptografia AES-256</div>
+    <div class="marquee-item"><iconify-icon icon="solar:shield-check-linear"></iconify-icon> Proteção de dados</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bolt-bold-duotone"></iconify-icon> Tempo Real</div>
+    <div class="marquee-item"><iconify-icon icon="solar:lock-linear"></iconify-icon> Criptografia</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:devices-bold-duotone"></iconify-icon> Multi-plataforma</div>
+    <div class="marquee-item"><iconify-icon icon="solar:chart-linear"></iconify-icon> Indicadores de gestão</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon> BI Integrado</div>
+    <div class="marquee-item"><iconify-icon icon="solar:devices-linear"></iconify-icon> Acesso em vários dispositivos</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bill-check-bold-duotone"></iconify-icon> NF-e Automática</div>
+    <div class="marquee-item"><iconify-icon icon="solar:global-linear"></iconify-icon> Acesso remoto</div>
     <div class="marquee-dot"></div>
-    <!-- Set 2 (duplicate for seamless loop) -->
-    <div class="marquee-item"><iconify-icon icon="solar:cloud-bold-duotone"></iconify-icon> Cloud Native</div>
+    <div class="marquee-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon> Disponibilidade</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:shield-check-bold-duotone"></iconify-icon> LGPD Compliance</div>
+    <div class="marquee-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon> Gestão de empresas</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:server-bold-duotone"></iconify-icon> 99.9% Uptime</div>
+    <div class="marquee-item"><iconify-icon icon="solar:shield-check-linear"></iconify-icon> Proteção de dados</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:lock-bold-duotone"></iconify-icon> Criptografia AES-256</div>
+    <div class="marquee-item"><iconify-icon icon="solar:lock-linear"></iconify-icon> Criptografia</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bolt-bold-duotone"></iconify-icon> Tempo Real</div>
+    <div class="marquee-item"><iconify-icon icon="solar:chart-linear"></iconify-icon> Indicadores de gestão</div>
     <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:devices-bold-duotone"></iconify-icon> Multi-plataforma</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon> BI Integrado</div>
-    <div class="marquee-dot"></div>
-    <div class="marquee-item"><iconify-icon icon="solar:bill-check-bold-duotone"></iconify-icon> NF-e Automática</div>
+    <div class="marquee-item"><iconify-icon icon="solar:devices-linear"></iconify-icon> Acesso em vários dispositivos</div>
     <div class="marquee-dot"></div>
   </div>
+</div>
+
+<!-- WAVE dark→light -->
+<div class="wave-div" style="background:var(--d-bg);">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,20 C480,80 960,0 1440,50 L1440,80 L0,80 Z" fill="var(--l-bg)"/></svg>
+</div>
+
+<!-- ═══ SOBRE (light) ═══ -->
+<section class="sec-light section-fade" id="sobre">
+  <div class="container" style="text-align:center;">
+    <span class="t-label t-label-light reveal">Sobre a Pris</span>
+    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);">Conheça a <span class="grad-text">Pris.</span></h2>
+    <!-- TODO: conteúdo pendente — texto enviado pela Natália -->
+    <p class="reveal delay-2" style="font-size:17px;line-height:1.7;color:var(--l-muted);max-width:640px;margin:20px auto 0;">Mais de 20 anos acompanhando a rotina de quem vende. O texto completo desta história entra aqui.</p>
+    <div class="pillar-grid">
+      <div class="card-light reveal delay-1">
+        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">Experiência na rotina</h3>
+        <p style="font-size:15px;line-height:1.7;color:var(--l-muted);">O sistema nasce do dia a dia de supermercados, mercearias e distribuidoras, não de uma tela genérica.</p>
+      </div>
+      <div class="card-light reveal delay-2">
+        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">Proximidade no atendimento</h3>
+        <p style="font-size:15px;line-height:1.7;color:var(--l-muted);">Uma equipe próxima para orientar a implantação, o uso e as dúvidas da operação.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE light→dark -->
+<div class="wave-div" style="background:var(--l-bg);">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,30 L1440,80 L0,80 Z" fill="var(--d-bg)"/></svg>
 </div>
 
 <!-- ═══ SEGMENTOS (dark) ═══ -->
@@ -749,8 +835,8 @@
         <div class="bento-geo"></div><div class="bento-geo2"></div>
         <span class="bento-icon"><iconify-icon icon="solar:cart-large-bold-duotone"></iconify-icon></span>
         <div class="bento-tag">Segmento principal</div>
-        <h3 style="font-size:24px;">Varejo Alimentar</h3>
-        <p>Supermercados, mercearias e distribuidoras com controle total de perecíveis, lote e giro rápido de estoque.</p>
+        <h3 style="font-size:24px;">Varejo e atacado</h3>
+        <p>Supermercados, mercearias e distribuidoras, com controle de estoque, vendas e giro.</p>
       </div>
       <div class="bento-cell">
         <div class="bento-geo" style="width:80px;height:80px;"></div>
@@ -842,28 +928,28 @@
     <div class="feat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;">
       <div class="card-dark tilt-card reveal delay-1">
         <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:bill-bold-duotone"></iconify-icon></div>
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:bill-linear"></iconify-icon></div>
         <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Gestão Fiscal</h3>
         <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">NF-e, NFC-e, SPED e obrigações acessórias automáticas integradas ao fluxo da operação.</p>
         </div>
       </div>
       <div class="card-dark tilt-card reveal delay-2">
         <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:box-bold-duotone"></iconify-icon></div>
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:box-linear"></iconify-icon></div>
         <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Controle de Estoque</h3>
         <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Entradas, saídas, transferências, alertas de ruptura e inventário em tempo real.</p>
         </div>
       </div>
       <div class="card-dark tilt-card reveal delay-3">
         <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:point-on-map-bold-duotone"></iconify-icon></div>
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:shop-linear"></iconify-icon></div>
         <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">PDV Integrado</h3>
         <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Frente de caixa ágil, múltiplas formas de pagamento e integração com TEF e PIX.</p>
         </div>
       </div>
       <div class="card-dark tilt-card reveal delay-4">
         <div class="tilt-inner">
-        <div class="feat-icon feat-icon-dark"><iconify-icon icon="solar:chart-square-bold-duotone"></iconify-icon></div>
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:chart-square-linear"></iconify-icon></div>
         <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Financeiro & BI</h3>
         <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">DRE, fluxo de caixa, contas a pagar/receber e dashboards de desempenho ao vivo.</p>
         </div>
@@ -906,6 +992,45 @@
 <div class="wave-div" style="background:var(--d-bg);">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,50 C480,0 960,80 1440,20 L1440,80 L0,80 Z" fill="var(--l-bg)"/></svg>
 </div>
+
+<!-- ═══ APP (light) ═══ -->
+<section class="sec-light section-fade" id="app">
+  <div class="container">
+    <div class="app-grid">
+      <div>
+        <span class="t-label t-label-light reveal">Mobilidade</span>
+        <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:var(--navy);margin-bottom:16px;">Acompanhe pelo <span class="grad-text">celular.</span></h2>
+        <p class="reveal delay-2" style="font-size:16px;line-height:1.75;color:var(--l-muted);">A rotina não fica só no balcão. Pelo celular dá para consultar a operação e fazer a contagem de estoque sem voltar ao computador.</p>
+        <ul class="app-list reveal delay-3">
+          <!-- TODO: conteúdo pendente -->
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span>Contagem de estoque pelo celular</span></li>
+          <!-- TODO: conteúdo pendente -->
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span>Vendas do dia e faturamento do mês</span></li>
+          <!-- TODO: conteúdo pendente -->
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span>Contas a receber, a pagar e saldo em caixa</span></li>
+          <!-- TODO: conteúdo pendente -->
+          <li><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span>Alertas de estoque baixo</span></li>
+        </ul>
+      </div>
+      <div class="reveal delay-2" aria-hidden="true">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-bar">
+              <img src="assets/logo-pris.svg" alt="" />
+              <span style="font-size:11px;font-weight:700;color:var(--l-muted);">Hoje</span>
+            </div>
+            <div class="phone-body">
+              <div class="phone-card"><span>Vendas do dia</span><strong>R$ 12.480</strong></div>
+              <div class="phone-card"><span>A receber</span><strong>R$ 3.260</strong></div>
+              <div class="phone-card"><span>Saldo em caixa</span><strong>R$ 8.940</strong></div>
+              <div class="phone-alert">3 produtos abaixo do estoque mínimo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══ COMO FUNCIONA (light) ═══ -->
 <section class="sec-light section-fade" id="como-funciona">
@@ -1013,51 +1138,93 @@
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,10 C480,80 960,0 1440,40 L1440,80 L0,80 Z" fill="var(--offwhite)"/></svg>
 </div>
 
-<!-- ═══ PREÇOS (offwhite) ═══ -->
-<section id="precos" style="background:var(--offwhite);padding:120px 6%;position:relative;z-index:1;">
-  <div class="container" style="text-align:center;">
-    <span class="t-label t-label-light reveal">Investimento</span>
-    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);margin-bottom:16px;">Planos sob <span class="grad-text">medida.</span></h2>
-    <p class="reveal delay-2" style="font-size:17px;color:var(--l-muted);margin-bottom:64px;">Escale conforme cresce. Sem surpresas.</p>
-
-    <div class="price-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:flex-end;">
-      <div class="price-card price-card-base reveal delay-1">
-        <div style="font-size:10px;font-weight:800;color:var(--l-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px;">Essencial</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--navy);margin-bottom:36px;">Consulte</div>
-        <div style="display:grid;gap:12px;text-align:left;margin-bottom:40px;">
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Gestão Fiscal Básica</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Controle de Estoque</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Suporte Comercial</span></div>
-        </div>
-        <button class="btn btn-ghost-dark" style="width:100%;justify-content:center;" onclick="openModal()">Falar com Consultor</button>
+<!-- ═══ FAQ (offwhite, corta o bloco escuro dos depoimentos) ═══ -->
+<section id="faq" class="section-fade band-pad" style="background:var(--offwhite);padding:120px 6%;position:relative;z-index:1;">
+  <div class="container">
+    <div class="sec-header">
+      <span class="t-label t-label-light reveal">Dúvidas</span>
+      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);">Perguntas <span class="grad-text">frequentes.</span></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-1" aria-expanded="false" aria-controls="faq-1">Como funciona a implantação? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <!-- TODO: conteúdo pendente -->
+        <div class="faq-a" id="faq-1" role="region" aria-labelledby="faq-btn-1" hidden>A resposta completa desta pergunta entra aqui.</div>
       </div>
-
-      <div class="price-card price-card-featured reveal delay-2">
-        <div style="display:flex;justify-content:center;margin-bottom:20px;">
-          <span style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px 16px;border-radius:4px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.15em;">Mais Escolhido</span>
-        </div>
-        <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px;">Profissional</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:900;color:white;line-height:1;margin-bottom:6px;">R$ 300</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;margin-bottom:36px;">/mês</div>
-        <div style="display:grid;gap:12px;text-align:left;margin-bottom:44px;">
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:rgba(255,255,255,0.9);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.85);">Multiempresas Hub</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:rgba(255,255,255,0.9);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.85);">Automação Fiscal Completa</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:rgba(255,255,255,0.9);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:rgba(255,255,255,0.85);">Suporte VIP 24/7</span></div>
-        </div>
-        <button class="btn" style="width:100%;justify-content:center;background:white;color:var(--accent);font-weight:800;" onclick="openModal()">Agendar Demonstração</button>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-2" aria-expanded="false" aria-controls="faq-2">Minha equipe receberá treinamento? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <!-- TODO: conteúdo pendente -->
+        <div class="faq-a" id="faq-2" role="region" aria-labelledby="faq-btn-2" hidden>A resposta completa desta pergunta entra aqui.</div>
       </div>
-
-      <div class="price-card price-card-base reveal delay-3">
-        <div style="font-size:10px;font-weight:800;color:var(--l-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:12px;">Enterprise</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--navy);margin-bottom:36px;">Personalizado</div>
-        <div style="display:grid;gap:12px;text-align:left;margin-bottom:40px;">
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">API Aberta Ilimitada</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">BI de Alta Performance</span></div>
-          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:var(--accent);font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Gerente VIP Dedicado</span></div>
-        </div>
-        <button class="btn btn-ghost-dark" style="width:100%;justify-content:center;" onclick="openModal()">Solicitar Orçamento</button>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-3" aria-expanded="false" aria-controls="faq-3">Já utilizo outro sistema, posso transferir meus dados? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <!-- TODO: conteúdo pendente -->
+        <div class="faq-a" id="faq-3" role="region" aria-labelledby="faq-btn-3" hidden>A resposta completa desta pergunta entra aqui.</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══ PREÇOS (offwhite) ═══ -->
+<section id="precos" class="band-pad" style="background:var(--offwhite);padding:80px 6% 120px;position:relative;z-index:1;">
+  <div class="container" style="text-align:center;">
+    <span class="t-label t-label-light reveal">Investimento</span>
+    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);margin-bottom:16px;">Escolha o <span class="grad-text">PRIS</span> para o seu negócio.</h2>
+    <p class="reveal delay-2" style="font-size:17px;color:var(--l-muted);margin-bottom:64px;">Mais organização, controle e agilidade para sua empresa.</p>
+
+    <div class="price-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;">
+      <div class="price-card price-card-base reveal delay-1" style="display:flex;flex-direction:column;text-align:left;">
+        <div class="price-name">PRIS <em>MEI</em></div>
+        <p style="font-size:14px;line-height:1.6;color:var(--l-muted);margin:12px 0 28px;">Praticidade para organizar o dia a dia do microempreendedor.</p>
+        <div style="font-size:13px;font-weight:600;color:var(--l-muted);margin-bottom:6px;">A partir de</div>
+        <div class="price-value" style="margin-bottom:28px;">R$ 99,90<span>/mês</span></div>
+        <div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;">Recursos para sua rotina</div>
+        <div style="display:grid;margin-bottom:28px;">
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Cadastro de clientes e produtos</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Controle de vendas</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Organização do estoque</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Contas a pagar e a receber</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Consulta de movimentações</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Relatórios de acompanhamento</span></div>
+        </div>
+        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:auto;" onclick="openModal()">Conhecer o plano <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+      </div>
+
+      <div class="price-card price-card-featured reveal delay-2" style="display:flex;flex-direction:column;text-align:left;">
+        <div class="price-banner">Oferta de fim de ano</div>
+        <div class="price-name">PRIS <em>Negócios</em></div>
+        <p style="font-size:14px;line-height:1.6;color:var(--l-muted);margin:12px 0 28px;">Gestão integrada para acompanhar sua operação e seus resultados.</p>
+        <div style="font-size:13px;font-weight:600;color:var(--l-muted);margin-bottom:6px;">A partir de</div>
+        <div class="price-value" style="margin-bottom:28px;">R$ 269,00<span>/mês</span></div>
+        <div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;">Mais controle para sua empresa</div>
+        <div style="display:grid;margin-bottom:28px;">
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Vendas, estoque e financeiro integrados</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Frente de caixa (PDV)</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Emissão de NF-e e NFC-e</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Gestão de compras e fornecedores</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Orçamentos e pedidos de venda</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Relatórios e indicadores de gestão</span></div>
+        </div>
+        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:auto;" onclick="openModal()">Solicitar demonstração <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+      </div>
+
+      <div class="price-card price-card-base reveal delay-3" style="display:flex;flex-direction:column;text-align:left;">
+        <div class="price-name">PRIS <em>Sob Medida</em></div>
+        <p style="font-size:14px;line-height:1.6;color:var(--l-muted);margin:12px 0 28px;">Configuração adequada às necessidades da sua operação.</p>
+        <div class="price-value" style="margin:36px 0 28px;font-size:40px;">Sob consulta</div>
+        <div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;">Configuração personalizada</div>
+        <div style="display:grid;margin-bottom:28px;">
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Avaliação das necessidades da empresa</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Definição dos módulos necessários</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Configuração de usuários e acessos</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Organização dos processos de gestão</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Recursos para operações específicas</span></div>
+          <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Proposta conforme o escopo contratado</span></div>
+        </div>
+        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:auto;" onclick="openModal()">Falar com a equipe <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+      </div>
+    </div>
+    <p class="price-note">Proposta de apresentação. Recursos, usuários, emissão fiscal e valores sujeitos à configuração e à validação comercial. Consulte condições de implantação e da oferta.</p>
   </div>
 </section>
 
@@ -1080,13 +1247,14 @@
     <div>
       <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Navegação</h4>
       <a href="#hero" class="footer-link">Início</a>
+      <a href="#sobre" class="footer-link">Sobre</a>
       <a href="#segmentos" class="footer-link">Setores</a>
-      <a href="#funcionalidades" class="footer-link">Funcionalidades</a>
+      <a href="#faq" class="footer-link">FAQ</a>
       <a href="#precos" class="footer-link">Preços</a>
     </div>
     <div>
       <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Atendimento</h4>
-      <p style="font-size:14px;color:var(--l-muted);margin-bottom:8px;">(31) 9999-9999</p>
+      <p style="font-size:14px;margin-bottom:8px;"><a data-whatsapp="label" href="https://wa.me/5565976010411" style="color:var(--l-muted);text-decoration:none;">(65) 97601-0411</a></p>
       <p style="font-size:14px;color:var(--l-muted);margin-bottom:24px;">contato@prissistemas.com.br</p>
       <button class="nav-cta" onclick="openModal()" style="font-size:11px;">Agendar Demo</button>
     </div>
@@ -1100,41 +1268,94 @@
 <!-- MODAL -->
 <div class="modal-overlay" id="demo-modal">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()"><iconify-icon icon="solar:close-circle-bold-duotone"></iconify-icon></button>
+    <button class="modal-close" type="button" onclick="closeModal()" aria-label="Fechar"><iconify-icon icon="solar:close-circle-bold-duotone"></iconify-icon></button>
     <div class="step-dots" id="step-dots">
       <div class="step-dot active"></div>
       <div class="step-dot"></div>
       <div class="step-dot"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
+      <div class="step-dot"></div>
     </div>
-    <div class="modal-slider" id="modal-slider">
-      <div class="form-step">
-        <div class="step-title">Olá! 👋</div>
-        <div class="step-desc">Vamos agendar sua demonstração gratuita. Começa com seu nome.</div>
-        <div class="input-group"><label class="ds-label">Seu nome</label><input class="ds-input" type="text" placeholder="João Silva" /></div>
-        <div class="input-group"><label class="ds-label">E-mail comercial</label><input class="ds-input" type="email" placeholder="joao@suaempresa.com.br" /></div>
-        <div class="input-group"><label class="ds-label">Telefone</label><input class="ds-input" type="tel" placeholder="(31) 99999-9999" /></div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:8px;" onclick="nextStep()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
-      </div>
-      <div class="form-step">
-        <div class="step-title">Sua empresa</div>
-        <div class="step-desc">Qual segmento melhor descreve seu negócio?</div>
-        <div style="display:grid;gap:10px;margin-bottom:24px;">
-          <button class="btn-check" onclick="selectCheck(this)">🛒 Varejo Alimentar</button>
-          <button class="btn-check" onclick="selectCheck(this)">💊 Farmácia</button>
-          <button class="btn-check" onclick="selectCheck(this)">🏗️ Material de Construção</button>
-          <button class="btn-check" onclick="selectCheck(this)">👗 Moda & Vestuário</button>
+    <form id="lead-form" onsubmit="submitLead(event)">
+      <div class="modal-viewport" id="lead-viewport">
+        <div class="modal-slider" id="modal-slider" style="--count:8">
+          <div class="form-step">
+            <div class="step-title">Seu nome</div>
+            <div class="step-desc">Vamos agendar a demonstração. Começa por aqui.</div>
+            <div class="input-group"><label class="ds-label" for="lead-nome">Nome</label><input class="ds-input" id="lead-nome" name="nome" type="text" autocomplete="name" placeholder="João Silva" /></div>
+            <button class="btn btn-blue" type="button" style="width:100%;justify-content:center;" onclick="goNext()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+          </div>
+          <div class="form-step">
+            <div class="step-title">E-mail</div>
+            <div class="step-desc">Usamos esse endereço para confirmar o horário.</div>
+            <div class="input-group"><label class="ds-label" for="lead-email">E-mail comercial</label><input class="ds-input" id="lead-email" name="email" type="email" autocomplete="email" placeholder="joao@suaempresa.com.br" /></div>
+            <button class="btn btn-blue" type="button" style="width:100%;justify-content:center;" onclick="goNext()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+            <button class="step-back" type="button" onclick="goBack()">Voltar</button>
+          </div>
+          <div class="form-step">
+            <div class="step-title">Telefone</div>
+            <div class="step-desc">Se precisar, a equipe fala com você por aqui.</div>
+            <div class="input-group"><label class="ds-label" for="lead-telefone">Telefone</label><input class="ds-input" id="lead-telefone" name="telefone" type="tel" autocomplete="tel" placeholder="(65) 97601-0411" /></div>
+            <button class="btn btn-blue" type="button" style="width:100%;justify-content:center;" onclick="goNext()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+            <button class="step-back" type="button" onclick="goBack()">Voltar</button>
+          </div>
+          <div class="form-step">
+            <div class="step-title">Segmento</div>
+            <div class="step-desc">Qual ramo descreve melhor a empresa?</div>
+            <div class="segment-grid" role="group" aria-labelledby="lead-segmento-label">
+              <button type="button" class="btn-check" data-segment="Varejo e atacado" onclick="selectCheck(this)">Varejo e atacado</button>
+              <button type="button" class="btn-check" data-segment="Farmácia" onclick="selectCheck(this)">Farmácia</button>
+              <button type="button" class="btn-check" data-segment="Material de Construção" onclick="selectCheck(this)">Material de Construção</button>
+              <button type="button" class="btn-check" data-segment="Moda e Vestuário" onclick="selectCheck(this)">Moda e Vestuário</button>
+            </div>
+            <span class="ds-label" id="lead-segmento-label" hidden>Segmento</span>
+            <button class="btn btn-blue" type="button" style="width:100%;justify-content:center;margin-top:18px;" onclick="goNext()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+            <button class="step-back" type="button" onclick="goBack()">Voltar</button>
+          </div>
+          <div class="form-step">
+            <div class="step-title">Equipe</div>
+            <div class="step-desc">Quantas pessoas trabalham na operação?</div>
+            <div class="input-group">
+              <label class="ds-label" for="lead-colaboradores">Nº de colaboradores</label>
+              <select class="ds-input" id="lead-colaboradores" name="colaboradores">
+                <option value="">Selecione</option>
+                <option>1 a 5</option>
+                <option>6 a 20</option>
+                <option>21 a 50</option>
+                <option>Mais de 50</option>
+              </select>
+            </div>
+            <button class="btn btn-blue" type="button" style="width:100%;justify-content:center;" onclick="goNext()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+            <button class="step-back" type="button" onclick="goBack()">Voltar</button>
+          </div>
+          <div class="form-step">
+            <div class="step-title">Dificuldade</div>
+            <div class="step-desc">O que mais trava a rotina hoje?</div>
+            <div class="input-group"><label class="ds-label" for="lead-dificuldade">Principal dificuldade</label><textarea class="ds-input" id="lead-dificuldade" name="dificuldade" placeholder="Estoque, caixa, fiscal..."></textarea></div>
+            <button class="btn btn-blue" type="button" style="width:100%;justify-content:center;" onclick="goNext()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+            <button class="step-back" type="button" onclick="goBack()">Voltar</button>
+          </div>
+          <div class="form-step">
+            <div class="step-title">Sistema atual</div>
+            <div class="step-desc">Se não usa nenhum, pode escrever “nenhum”.</div>
+            <div class="input-group"><label class="ds-label" for="lead-erp">ERP atual</label><input class="ds-input" id="lead-erp" name="erpAtual" type="text" placeholder="Nome do sistema, ou nenhum" /></div>
+            <button class="btn btn-blue" id="lead-submit" type="submit" style="width:100%;justify-content:center;">Enviar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+            <button class="step-back" type="button" onclick="goBack()">Voltar</button>
+          </div>
+          <div class="form-step" id="lead-success" style="text-align:center;padding-top:12px;">
+            <div style="width:68px;height:68px;border-radius:50%;background:rgba(45,203,117,0.12);border:1px solid rgba(45,203,117,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#2DCB75;">
+              <iconify-icon icon="solar:check-circle-bold"></iconify-icon>
+            </div>
+            <div class="step-title">Recebemos o seu contato.</div>
+            <div class="step-desc">A equipe retorna para confirmar a demonstração.</div>
+            <button class="btn btn-blue" type="button" style="width:100%;justify-content:center;margin-top:8px;" onclick="closeModal()">Concluir</button>
+          </div>
         </div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;" onclick="nextStep()">Continuar <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
       </div>
-      <div class="form-step" style="text-align:center;padding-top:24px;">
-        <div style="width:68px;height:68px;border-radius:50%;background:rgba(45,203,117,0.12);border:1px solid rgba(45,203,117,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:36px;color:#2DCB75;">
-          <iconify-icon icon="solar:check-circle-bold"></iconify-icon>
-        </div>
-        <div class="step-title">Perfeito!</div>
-        <div class="step-desc">Nossa equipe entrará em contato em até 2 horas para confirmar sua demonstração.</div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:8px;" onclick="closeModal()">Concluir</button>
-      </div>
-    </div>
+      <p class="lead-error" id="lead-error" hidden></p>
+    </form>
   </div>
 </div>
 
@@ -1457,13 +1678,237 @@ document.querySelectorAll('.tilt-card').forEach(card => {
   sections.forEach(s => sectionObs.observe(s));
 })();
 
-/* ── MODAL ── */
-let step = 0;
-function openModal() { document.getElementById('demo-modal').classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeModal() { document.getElementById('demo-modal').classList.remove('active'); document.body.style.overflow = ''; step = 0; document.getElementById('modal-slider').style.transform = ''; document.querySelectorAll('.step-dot').forEach((d,i) => d.classList.toggle('active', i === 0)); }
-function nextStep() { step++; document.getElementById('modal-slider').style.transform = `translateX(-${step*100}%)`; document.querySelectorAll('.step-dot').forEach((d,i) => d.classList.toggle('active', i <= step)); }
-function selectCheck(el) { document.querySelectorAll('.btn-check').forEach(b => b.classList.remove('active')); el.classList.add('active'); }
-document.getElementById('demo-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+/* ── WHATSAPP ── */
+const WHATSAPP_NUMBER = "5565976010411";
+function whatsappLabel(number) {
+  const local = number.replace(/^55/, "");
+  return `(${local.slice(0, 2)}) ${local.slice(2, 7)}-${local.slice(7)}`;
+}
+document.querySelectorAll("[data-whatsapp]").forEach((el) => {
+  el.href = "https://wa.me/" + WHATSAPP_NUMBER;
+  if (el.dataset.whatsapp === "label") el.textContent = whatsappLabel(WHATSAPP_NUMBER);
+});
+
+/* ── FAQ ── */
+document.querySelectorAll(".faq-q").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const open = btn.getAttribute("aria-expanded") === "true";
+    document.querySelectorAll(".faq-q").forEach((other) => {
+      other.setAttribute("aria-expanded", "false");
+      document.getElementById(other.getAttribute("aria-controls")).hidden = true;
+    });
+    if (!open) {
+      btn.setAttribute("aria-expanded", "true");
+      document.getElementById(btn.getAttribute("aria-controls")).hidden = false;
+    }
+  });
+});
+
+/* ── LEADS ── */
+const LEAD_LAST = 7;
+let leadStep = 0;
+let leadSegment = "";
+let leadDrag = null;
+const leadViewport = document.getElementById("lead-viewport");
+const leadSlider = document.getElementById("modal-slider");
+
+function selectCheck(el) {
+  document.querySelectorAll(".btn-check").forEach((b) => {
+    b.classList.remove("active");
+    b.setAttribute("aria-pressed", "false");
+  });
+  el.classList.add("active");
+  el.setAttribute("aria-pressed", "true");
+  leadSegment = el.dataset.segment || "";
+  showLeadError("");
+}
+function leadPageWidth() {
+  return leadViewport.clientWidth;
+}
+function placeLead(extra = 0) {
+  const page = leadPageWidth();
+  leadSlider.style.transform = `translateX(${-((LEAD_LAST - leadStep) * page) + extra}px)`;
+}
+function sizeLead() {
+  const page = leadSlider.children[leadStep];
+  if (!page) return;
+  leadViewport.style.height = page.offsetHeight + "px";
+}
+function paintDots() {
+  document.querySelectorAll("#step-dots .step-dot").forEach((dot, index) => {
+    dot.classList.toggle("active", index <= Math.min(leadStep, 6));
+  });
+}
+function showLeadError(message) {
+  const error = document.getElementById("lead-error");
+  error.textContent = message;
+  error.hidden = !message;
+}
+function focusLeadField() {
+  const field = leadSlider.children[leadStep]?.querySelector("input, textarea, select");
+  if (field) field.focus();
+}
+function goToLead(next) {
+  leadStep = Math.max(0, Math.min(LEAD_LAST, next));
+  placeLead(0);
+  paintDots();
+  showLeadError("");
+  window.setTimeout(sizeLead, 40);
+  window.setTimeout(focusLeadField, 280);
+}
+function leadValueOk() {
+  const nome = document.getElementById("lead-nome").value.trim();
+  const email = document.getElementById("lead-email").value.trim();
+  const telefone = document.getElementById("lead-telefone").value.trim();
+  const colaboradores = document.getElementById("lead-colaboradores").value;
+  const dificuldade = document.getElementById("lead-dificuldade").value.trim();
+  const erpAtual = document.getElementById("lead-erp").value.trim();
+  if (leadStep === 0 && !nome) return "Escreva o seu nome.";
+  if (leadStep === 1 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Informe um e-mail válido.";
+  if (leadStep === 2 && telefone.length < 8) return "Informe um telefone.";
+  if (leadStep === 3 && !leadSegment) return "Escolha o segmento da empresa.";
+  if (leadStep === 4 && !colaboradores) return "Selecione o número de colaboradores.";
+  if (leadStep === 5 && !dificuldade) return "Conte a principal dificuldade.";
+  if (leadStep === 6 && !erpAtual) return "Informe o sistema atual, ou escreva nenhum.";
+  return "";
+}
+function goNext() {
+  if (leadStep >= 6) return;
+  const message = leadValueOk();
+  if (message) {
+    showLeadError(message);
+    placeLead(0);
+    return;
+  }
+  goToLead(leadStep + 1);
+}
+function goBack() {
+  if (leadStep <= 0) return;
+  goToLead(leadStep - 1);
+}
+async function sendLead(payload) {
+  const response = await fetch("/api/lead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  let data = {};
+  try { data = await response.json(); } catch (error) { data = {}; }
+  if (!response.ok || !data.ok) {
+    throw new Error(data.error || "Não foi possível enviar. Tente de novo.");
+  }
+  return data;
+}
+async function submitLead(event) {
+  event.preventDefault();
+  if (leadStep !== 6) {
+    goNext();
+    return;
+  }
+  const message = leadValueOk();
+  if (message) {
+    showLeadError(message);
+    placeLead(0);
+    return;
+  }
+  const btn = document.getElementById("lead-submit");
+  showLeadError("");
+  btn.disabled = true;
+  const previous = btn.textContent;
+  btn.textContent = "Enviando...";
+  try {
+    await sendLead({
+      nome: document.getElementById("lead-nome").value.trim(),
+      email: document.getElementById("lead-email").value.trim(),
+      telefone: document.getElementById("lead-telefone").value.trim(),
+      segmento: leadSegment,
+      colaboradores: document.getElementById("lead-colaboradores").value,
+      dificuldade: document.getElementById("lead-dificuldade").value.trim(),
+      erpAtual: document.getElementById("lead-erp").value.trim(),
+    });
+    btn.disabled = false;
+    btn.textContent = previous;
+    goToLead(LEAD_LAST);
+  } catch (err) {
+    showLeadError(err.message);
+    placeLead(0);
+    btn.disabled = false;
+    btn.textContent = previous;
+  }
+}
+function openModal() {
+  document.getElementById("demo-modal").classList.add("active");
+  document.body.style.overflow = "hidden";
+  placeLead(0);
+  sizeLead();
+  window.setTimeout(focusLeadField, 280);
+}
+function closeModal() {
+  document.getElementById("demo-modal").classList.remove("active");
+  document.body.style.overflow = "";
+  document.getElementById("lead-form").reset();
+  leadSegment = "";
+  document.querySelectorAll(".btn-check").forEach((b) => {
+    b.classList.remove("active");
+    b.setAttribute("aria-pressed", "false");
+  });
+  const btn = document.getElementById("lead-submit");
+  btn.disabled = false;
+  btn.textContent = "Enviar";
+  leadSlider.classList.add("is-dragging");
+  leadStep = 0;
+  placeLead(0);
+  paintDots();
+  showLeadError("");
+  requestAnimationFrame(() => leadSlider.classList.remove("is-dragging"));
+  sizeLead();
+}
+leadViewport.addEventListener("pointerdown", (event) => {
+  if (event.target.closest("input, textarea, select, button, a")) return;
+  leadDrag = { x: event.clientX, moved: 0 };
+  leadSlider.classList.add("is-dragging");
+  leadViewport.setPointerCapture(event.pointerId);
+});
+leadViewport.addEventListener("pointermove", (event) => {
+  if (!leadDrag) return;
+  leadDrag.moved = event.clientX - leadDrag.x;
+  const atStart = leadStep <= 0 && leadDrag.moved < 0;
+  const atEnd = leadStep >= LEAD_LAST && leadDrag.moved > 0;
+  const pull = atStart || atEnd ? leadDrag.moved * 0.25 : leadDrag.moved;
+  placeLead(pull);
+});
+leadViewport.addEventListener("pointerup", () => {
+  if (!leadDrag) return;
+  const moved = leadDrag.moved;
+  leadDrag = null;
+  leadSlider.classList.remove("is-dragging");
+  if (moved > 70 && leadStep < 6) goNext();
+  else if (moved > 70 && leadStep === 6) document.getElementById("lead-form").requestSubmit();
+  else if (moved < -70) goBack();
+  else placeLead(0);
+});
+leadViewport.addEventListener("pointercancel", () => {
+  leadDrag = null;
+  leadSlider.classList.remove("is-dragging");
+  placeLead(0);
+});
+document.getElementById("lead-form").addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" || event.target.tagName === "TEXTAREA") return;
+  event.preventDefault();
+  if (leadStep < 6) goNext();
+});
+window.addEventListener("resize", () => {
+  if (!document.getElementById("demo-modal").classList.contains("active")) return;
+  leadSlider.classList.add("is-dragging");
+  placeLead(0);
+  sizeLead();
+  requestAnimationFrame(() => leadSlider.classList.remove("is-dragging"));
+});
+document.getElementById("demo-modal").addEventListener("click", (e) => {
+  if (e.target === e.currentTarget) closeModal();
+});
+placeLead(0);
+sizeLead();
 </script>
 </body>
 </html>

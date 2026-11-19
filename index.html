@@ -215,7 +215,7 @@
       background: radial-gradient(circle at 80% 20%, rgba(28,75,226,0.08) 0%, transparent 50%);
     }
     .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
-    .hero-title { font-size: clamp(32px, 4.1vw, 52px); color: var(--ink); margin-bottom: 28px; line-height: 1.08; }
+    .hero-title { font-family: 'Barlow', sans-serif; font-weight: 800; font-size: clamp(32px, 3.4vw, 46px); color: var(--ink); margin-bottom: 26px; line-height: 1.14; letter-spacing: -0.02em; max-width: 600px; }
     .hero-desc { font-size: 18px; line-height: 1.7; color: var(--l-muted); margin-bottom: 44px; font-weight: 500; max-width: 540px; }
     .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 
@@ -645,7 +645,7 @@
     }
 
     /* ── RESPONSIVE ── */
-    @media(max-width:1180px) {
+    @media(max-width:1280px) {
       nav .nav-links, nav .nav-cta { display:none !important; }
       .nav-hamburger { display:flex !important; }
       .grid-footer { gap:40px !important; }
@@ -681,7 +681,7 @@
       .hero { padding:100px 20px 60px; min-height:auto; }
       .hero-inner { gap:36px; }
       .dash-card { max-width:100%; }
-      .hero-title { font-size:clamp(28px,7.4vw,40px) !important; line-height:1.12 !important; }
+      .hero-title { font-size:clamp(28px,8vw,34px) !important; line-height:1.16 !important; letter-spacing:-0.015em; }
       .bento { grid-template-columns:1fr; }
       .bento-span2 { grid-column:span 1; }
       .metrics-strip { grid-template-columns:1fr 1fr; }
@@ -739,10 +739,11 @@
     <div class="nav-links" style="display:flex;gap:22px;">
       <a href="#produto">Produto</a>
       <a href="#segmentos">Setores</a>
-      <a href="#sobre">Sobre</a>
+      <a href="#sobre">Nossa história</a>
       <a href="#faq">FAQ</a>
       <a href="#como-funciona">Como Funciona</a>
       <a href="#precos">Planos</a>
+      <a href="#parceiros">Parceiros</a>
     </div>
     <button class="nav-cta" onclick="openModal()">Demo Grátis <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
@@ -755,10 +756,11 @@
 <div class="mobile-menu" id="mobile-menu">
   <a href="#produto" onclick="toggleMenu()">Produto</a>
   <a href="#segmentos" onclick="toggleMenu()">Setores</a>
-  <a href="#sobre" onclick="toggleMenu()">Sobre</a>
+  <a href="#sobre" onclick="toggleMenu()">Nossa história</a>
   <a href="#faq" onclick="toggleMenu()">FAQ</a>
   <a href="#como-funciona" onclick="toggleMenu()">Como Funciona</a>
   <a href="#precos" onclick="toggleMenu()">Planos</a>
+  <a href="#parceiros" onclick="toggleMenu()">Parceiros</a>
   <button class="btn btn-blue" onclick="toggleMenu();openModal();" style="margin-top:16px;padding:18px 48px;font-size:16px;">Agendar Demo</button>
 </div>
 
@@ -769,11 +771,10 @@
     <!-- LEFT -->
     <div>
       <!-- TODO: conteúdo pendente — texto definitivo do hero -->
-      <span class="t-label reveal-blur">100% online para o seu negócio</span>
+      <span class="t-label reveal-blur">Acesso remoto para o seu negócio</span>
       <h1 class="t-display hero-title">
-        <span class="text-clip-line delay-1"><span>Gestão pensada para a sua rotina.</span></span>
-        <span class="text-clip-line delay-2"><span>Mais <span class="grad-text">controle</span> do seu negócio.</span></span>
-        <span class="text-clip-line delay-3"><span>Mais liberdade para acompanhar de onde estiver.</span></span>
+        <span class="text-clip-line delay-1"><span>Sua empresa <span class="grad-text">mais organizada.</span></span></span>
+        <span class="text-clip-line delay-2"><span>Sua gestão mais simples.</span></span>
       </h1>
       <p class="hero-desc reveal delay-3">
         O PRIS integra vendas, estoque, gestão financeira e fiscal para simplificar o dia a dia da sua empresa. Acompanhe as informações do seu negócio de onde estiver, com flexibilidade de acesso e uma equipe próxima para orientar e ajudar.
@@ -791,7 +792,7 @@
         <div style="width:1px;height:16px;background:var(--l-border);"></div>
         <div style="display:flex;align-items:center;gap:6px;">
           <iconify-icon icon="solar:check-circle-bold" style="color:#2DCB75;font-size:16px;"></iconify-icon>
-          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">99.9% uptime</span>
+          <span style="font-size:12px;font-weight:600;color:var(--l-muted);">Acesso de onde estiver</span>
         </div>
         <div style="width:1px;height:16px;background:var(--l-border);"></div>
         <div style="display:flex;align-items:center;gap:6px;">
@@ -878,20 +879,20 @@
 <!-- ═══ SOBRE (light) ═══ -->
 <section class="sec-light section-fade" id="sobre">
   <div class="container" style="text-align:center;">
-    <span class="t-label t-label-light reveal">Sobre a Pris</span>
-    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--ink);">Conheça a <span class="grad-text">Pris.</span></h2>
-    <!-- TODO: conteúdo pendente — texto enviado pela Natália -->
-    <p class="reveal delay-2" style="font-size:17px;line-height:1.7;color:var(--l-muted);max-width:640px;margin:20px auto 0;">Mais de 20 anos acompanhando a rotina de quem vende. O texto completo desta história entra aqui.</p>
-    <div class="pillar-grid">
-      <div class="card-light reveal delay-1">
-        <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:10px;">Experiência na rotina</h3>
-        <p style="font-size:15px;line-height:1.7;color:var(--l-muted);">O sistema nasce do dia a dia de supermercados, mercearias e distribuidoras, não de uma tela genérica.</p>
-      </div>
-      <div class="card-light reveal delay-2">
-        <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:10px;">Proximidade no atendimento</h3>
-        <p style="font-size:15px;line-height:1.7;color:var(--l-muted);">Uma equipe próxima para orientar a implantação, o uso e as dúvidas da operação.</p>
-      </div>
+    <span class="t-label t-label-light reveal">História e confiança</span>
+    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--ink);">Há mais de 20 anos, <span class="grad-text">perto de quem empreende.</span></h2>
+    <div class="reveal delay-2" style="max-width:720px;margin:28px auto 0;text-align:left;font-size:17px;line-height:1.75;color:var(--l-muted);">
+      <p>A PRISERP Sistemas nasceu em 2005, da proximidade com comerciantes do interior de Goiás e Tocantins. Ao conhecer suas dificuldades na gestão de estoque, nas vendas e no cumprimento das obrigações fiscais, desenvolvemos uma solução acessível e fácil de usar, pensada para simplificar o dia a dia de suas empresas.</p>
+      <p style="margin-top:20px;">Desde então, evoluímos junto com nossos clientes, acompanhando as mudanças na tecnologia, na legislação e na forma de administrar as empresas. Unimos conhecimento tecnológico, fiscal e empresarial para transformar informações em mais controle e apoio às decisões do dia a dia.</p>
+      <p style="margin-top:20px;">Essa evolução preserva o que faz parte da nossa história: a proximidade. Por trás do PRIS, existe uma equipe preparada para ouvir, orientar e ajudar, da implantação ao suporte cotidiano. Construímos relações de confiança para continuar crescendo junto com cada cliente.</p>
     </div>
+    <div class="card-light reveal delay-2" style="max-width:720px;margin:36px auto 0;text-align:left;">
+      <span class="t-label t-label-light">Atendimento</span>
+      <h3 style="font-size:24px;font-weight:800;color:var(--ink);margin-bottom:12px;">Atendimento que continua próximo.</h3>
+      <p style="font-size:16px;line-height:1.75;color:var(--l-muted);">Na PRIS, você conta com uma equipe preparada para orientar sua empresa desde a implantação e o treinamento até o suporte no dia a dia.</p>
+      <p style="font-size:16px;line-height:1.75;color:var(--l-muted);margin-top:14px;">Porque tão importante quanto ter um bom sistema é saber com quem contar quando precisar.</p>
+    </div>
+    <p class="reveal delay-3" style="margin-top:36px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,2.6vw,30px);font-weight:800;color:var(--ink);letter-spacing:0.01em;">Tecnologia que evolui. <span class="grad-text">Proximidade que permanece.</span></p>
   </div>
 </section>
 
@@ -957,17 +958,17 @@
   <div class="container">
     <div class="produto-grid" style="display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center;">
       <div>
-        <span class="t-label t-label-light reveal-blur">Performance em tempo real</span>
+        <span class="t-label t-label-light reveal-blur">Acompanhamento da operação</span>
         <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:var(--ink);margin-bottom:24px;">
           Dados que <span class="grad-text">iluminam</span> decisões.
         </h2>
         <p style="font-size:16px;line-height:1.75;color:var(--l-muted);margin-bottom:40px;" class="reveal delay-2">
-          Dashboards em tempo real com faturamento, giro de estoque, NF-e emitidas e fluxo de caixa — tudo visível em uma tela, sempre atualizado.
+          Acompanhe faturamento, estoque, documentos fiscais e fluxo de caixa reunidos em uma tela, de acordo com os recursos contratados.
         </p>
         <div style="display:grid;gap:16px;" class="reveal delay-3">
           <div style="display:flex;align-items:center;gap:14px;">
             <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
-            <span style="font-size:14px;font-weight:600;color:var(--l-muted);">Atualização automática a cada minuto</span>
+            <span style="font-size:14px;font-weight:600;color:var(--l-muted);">Informações da operação em um só lugar</span>
           </div>
           <div style="display:flex;align-items:center;gap:14px;">
             <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>
@@ -1006,30 +1007,44 @@
     <div class="feat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:24px;">
       <div class="card-dark tilt-card reveal delay-1">
         <div class="tilt-inner">
-        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:bill-linear"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Gestão Fiscal</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">NF-e, NFC-e, SPED e obrigações acessórias automáticas integradas ao fluxo da operação.</p>
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:cart-large-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Vendas e PDV</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Vendas, orçamentos, pedidos e pagamentos.</p>
         </div>
       </div>
       <div class="card-dark tilt-card reveal delay-2">
         <div class="tilt-inner">
         <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:box-linear"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Controle de Estoque</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Entradas, saídas, transferências, alertas de ruptura e inventário em tempo real.</p>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Estoque e compras</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Movimentações, alertas e fornecedores.</p>
         </div>
       </div>
       <div class="card-dark tilt-card reveal delay-3">
         <div class="tilt-inner">
-        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:shop-linear"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">PDV Integrado</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Frente de caixa ágil, múltiplas formas de pagamento e integração com TEF e PIX.</p>
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:wallet-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Gestão financeira</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Contas, caixa e indicadores.</p>
         </div>
       </div>
       <div class="card-dark tilt-card reveal delay-4">
         <div class="tilt-inner">
-        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:chart-square-linear"></iconify-icon></div>
-        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Financeiro & BI</h3>
-        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">DRE, fluxo de caixa, contas a pagar/receber e dashboards de desempenho ao vivo.</p>
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:bill-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Gestão fiscal</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Documentos fiscais e recursos tributários.</p>
+        </div>
+      </div>
+      <div class="card-dark tilt-card reveal delay-1">
+        <div class="tilt-inner">
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:clipboard-list-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Ordens de serviço</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Acompanhamento das etapas e garantias.</p>
+        </div>
+      </div>
+      <div class="card-dark tilt-card reveal delay-2">
+        <div class="tilt-inner">
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:smartphone-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Acesso remoto</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Acompanhamento dos resultados pelo celular.</p>
         </div>
       </div>
     </div>
@@ -1128,13 +1143,13 @@
         <div class="step-num step-num-light">02</div>
         <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon></div>
         <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px;">Configuração</h3>
-        <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Nossa equipe importa dados, configura o sistema e treina sua equipe completa.</p>
+        <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">A equipe configura os recursos contratados, orienta o uso e avalia a importação dos dados disponíveis.</p>
       </div>
       <div class="card-light reveal delay-3">
         <div class="step-num step-num-light">03</div>
         <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:rocket-bold-duotone"></iconify-icon></div>
         <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px;">Operação</h3>
-        <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Empresa rodando em até 7 dias com suporte VIP durante toda a implantação.</p>
+        <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">A operação começa no prazo combinado para a sua empresa, com acompanhamento durante a implantação.</p>
       </div>
     </div>
   </div>
@@ -1149,13 +1164,13 @@
 <section class="sec-dark section-fade" id="depoimentos">
   <div class="container">
     <div class="sec-header">
-      <span class="t-label reveal">Resultados Reais</span>
+      <span class="t-label reveal">Depoimentos</span>
       <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:white;">Quem usa, <span class="grad-text">recomenda.</span></h2>
     </div>
     <div class="depo-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
       <div class="card-dark reveal delay-1">
         <div class="quote-mark">"</div>
-        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"Reduzi o fechamento fiscal de 3 dias para menos de 4 horas. O suporte é excepcional e sempre disponível."</p>
+        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"O fechamento fiscal ficou mais organizado, e a equipe da PRIS ajuda quando a rotina trava."</p>
         <div style="display:flex;gap:4px;margin-bottom:16px;">
           <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
           <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
@@ -1173,7 +1188,7 @@
       </div>
       <div class="card-dark reveal delay-2">
         <div class="quote-mark">"</div>
-        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"Conseguimos visualizar o faturamento em tempo real. A gestão ficou muito mais simples e segura."</p>
+        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"Passamos a acompanhar o faturamento com mais clareza. A gestão ficou mais simples."</p>
         <div style="display:flex;gap:4px;margin-bottom:16px;">
           <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
           <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
@@ -1191,7 +1206,7 @@
       </div>
       <div class="card-dark reveal delay-3">
         <div class="quote-mark">"</div>
-        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"O controle de estoque acabou com as perdas. Hoje temos visibilidade total do que entra e sai a qualquer hora."</p>
+        <p style="font-size:15px;color:var(--d-muted);line-height:1.75;margin-bottom:28px;">"O controle de estoque deixou mais claro o que entra e o que sai, e os alertas ajudam a repor a tempo."</p>
         <div style="display:flex;gap:4px;margin-bottom:16px;">
           <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
           <iconify-icon icon="solar:star-bold" style="color:#F59E0B;font-size:13px;"></iconify-icon>
@@ -1225,20 +1240,46 @@
     </div>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" id="faq-btn-1" aria-expanded="false" aria-controls="faq-1">Como funciona a implantação? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
-        <!-- TODO: conteúdo pendente -->
-        <div class="faq-a" id="faq-1" role="region" aria-labelledby="faq-btn-1" hidden>A resposta completa desta pergunta entra aqui.</div>
+        <button class="faq-q" id="faq-btn-1" aria-expanded="false" aria-controls="faq-1">Como funciona a implantação do PRIS? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-1" role="region" aria-labelledby="faq-btn-1" hidden>Nossa equipe conhece a rotina da sua empresa, configura os recursos contratados e orienta os primeiros passos no sistema. As etapas e o prazo de implantação são definidos conforme as necessidades da sua operação.</div>
       </div>
       <div class="faq-item">
         <button class="faq-q" id="faq-btn-2" aria-expanded="false" aria-controls="faq-2">Minha equipe receberá treinamento? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
-        <!-- TODO: conteúdo pendente -->
-        <div class="faq-a" id="faq-2" role="region" aria-labelledby="faq-btn-2" hidden>A resposta completa desta pergunta entra aqui.</div>
+        <div class="faq-a" id="faq-2" role="region" aria-labelledby="faq-btn-2" hidden>Sim. Você e seus colaboradores recebem orientação para utilizar o PRIS nas atividades do dia a dia. O treinamento considera os recursos contratados e as rotinas que cada equipe precisa executar.</div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" id="faq-btn-3" aria-expanded="false" aria-controls="faq-3">Já utilizo outro sistema, posso transferir meus dados? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
-        <!-- TODO: conteúdo pendente -->
-        <div class="faq-a" id="faq-3" role="region" aria-labelledby="faq-btn-3" hidden>A resposta completa desta pergunta entra aqui.</div>
+        <button class="faq-q" id="faq-btn-3" aria-expanded="false" aria-controls="faq-3">Já utilizo outro sistema. Posso transferir meus dados? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-3" role="region" aria-labelledby="faq-btn-3" hidden>Nossa equipe avalia a possibilidade de importar os dados do sistema atual, considerando as informações disponíveis e seus formatos. Antes da implantação, alinhamos o que poderá ser transferido e quais ajustes serão necessários.</div>
       </div>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-4" aria-expanded="false" aria-controls="faq-4">Posso acompanhar minha empresa de onde estiver? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-4" role="region" aria-labelledby="faq-btn-4" hidden>Sim. O PRIS oferece possibilidades de acesso remoto para consultar informações e acompanhar o negócio à distância. Os recursos disponíveis e as condições de acesso dependem da solução e da configuração contratadas.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-5" aria-expanded="false" aria-controls="faq-5">O PRIS é exclusivamente on-line? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-5" role="region" aria-labelledby="faq-btn-5" hidden>O PRIS conta com diferentes possibilidades de utilização, incluindo soluções web e híbridas. Nossa equipe orienta a escolha conforme a estrutura e as necessidades da sua empresa.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-6" aria-expanded="false" aria-controls="faq-6">Como funciona o suporte técnico? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-6" role="region" aria-labelledby="faq-btn-6" hidden>Você conta com uma equipe preparada para ouvir, orientar e ajudar na utilização do sistema. Os canais e horários de atendimento são apresentados na contratação, para que você saiba como buscar apoio quando precisar.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-7" aria-expanded="false" aria-controls="faq-7">Como saber qual plano escolher? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-7" role="region" aria-labelledby="faq-btn-7" hidden>Nossa equipe considera o perfil da empresa, o regime tributário, a quantidade de computadores e os recursos necessários para indicar a opção adequada. Você também pode solicitar uma demonstração para conhecer o PRIS antes de contratar.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-8" aria-expanded="false" aria-controls="faq-8">Além da mensalidade, existem outros custos? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-8" role="region" aria-labelledby="faq-btn-8" hidden>Sim. Pode haver cobrança de implantação e, conforme a configuração do sistema escolhida, de serviços e recursos adicionais. Os adicionais são cobrados por item ou módulo contratado, com todos os valores detalhados na proposta comercial antes da contratação.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" id="faq-btn-9" aria-expanded="false" aria-controls="faq-9">Como funcionam as ofertas promocionais? <iconify-icon icon="solar:add-circle-linear"></iconify-icon></button>
+        <div class="faq-a" id="faq-9" role="region" aria-labelledby="faq-btn-9" hidden>Cada campanha possui condições próprias, como prazo de adesão, recursos incluídos e duração do valor promocional. Essas informações são apresentadas antes da contratação.</div>
+      </div>
+    </div>
+    <div class="faq-cta reveal" style="margin:56px auto 0;max-width:760px;text-align:center;">
+      <p style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:8px;">Ainda ficou com alguma dúvida?</p>
+      <p style="font-size:16px;line-height:1.7;color:var(--l-muted);margin-bottom:28px;">Converse com nossa equipe e descubra como o PRIS pode atender à sua empresa.</p>
+      <a class="btn btn-blue" href="https://wa.me/5565976010411?text=Ol%C3%A1%2C%20tenho%20uma%20d%C3%BAvida%20sobre%20o%20sistema%20PRIS." target="_blank" rel="noopener noreferrer">Falar com a equipe PRIS <iconify-icon icon="solar:chat-round-line-linear"></iconify-icon></a>
     </div>
   </div>
 </section>
@@ -1300,7 +1341,36 @@
   </div>
 </section>
 
-
+<!-- ═══ PARCEIROS ═══ -->
+<section class="sec-navy section-fade" id="parceiros">
+  <div class="container">
+    <div class="sec-header">
+      <span class="t-label reveal">PRIS Network</span>
+      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:white;">Indique o PRIS e <span class="grad-text">cresça junto.</span></h2>
+      <p class="reveal delay-2" style="font-size:17px;line-height:1.7;color:rgba(255,255,255,0.62);max-width:640px;margin:20px auto 0;">Um programa para contadores e consultores. Você indica empresas, acompanha a relação e recebe comissão recorrente enquanto o cliente permanece ativo. As condições são apresentadas antes da adesão.</p>
+    </div>
+    <div class="feat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:24px;">
+      <div class="card-dark reveal delay-1">
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Indicação</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">Apresente o PRIS para empresas da sua carteira e acompanhe o interesse com a nossa equipe.</p>
+      </div>
+      <div class="card-dark reveal delay-2">
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:hand-shake-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Acompanhamento</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">A implantação e o atendimento seguem com a PRIS. Você permanece próximo do cliente.</p>
+      </div>
+      <div class="card-dark reveal delay-3">
+        <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:wallet-money-linear"></iconify-icon></div>
+        <h3 style="font-size:18px;font-weight:800;margin-bottom:12px;">Comissão recorrente</h3>
+        <p style="font-size:14px;color:var(--d-muted);line-height:1.7;">A comissão vale enquanto o cliente estiver ativo. Percentual e regras entram na proposta de parceria.</p>
+      </div>
+    </div>
+    <div class="reveal delay-2" style="text-align:center;margin-top:48px;">
+      <a class="btn btn-blue" data-whatsapp-text="Olá, tenho interesse no programa de parceiros PRIS." href="https://wa.me/5565976010411">Quero ser parceiro <iconify-icon icon="solar:chat-round-line-linear"></iconify-icon></a>
+    </div>
+  </div>
+</section>
 
 <!-- ═══ FOOTER ═══ -->
 <footer style="background:var(--l-bg);border-top:1px solid var(--l-border);padding:80px 6% 48px;position:relative;overflow:hidden;">
@@ -1319,10 +1389,11 @@
     <div>
       <h4 style="font-size:10px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Navegação</h4>
       <a href="#hero" class="footer-link">Início</a>
-      <a href="#sobre" class="footer-link">Sobre</a>
+      <a href="#sobre" class="footer-link">Nossa história</a>
       <a href="#segmentos" class="footer-link">Setores</a>
       <a href="#faq" class="footer-link">FAQ</a>
       <a href="#precos" class="footer-link">Planos</a>
+      <a href="#parceiros" class="footer-link">Parceiros</a>
     </div>
     <div>
       <h4 style="font-size:10px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Atendimento</h4>
@@ -1756,14 +1827,14 @@ function whatsappLabel(number) {
   const local = number.replace(/^55/, "");
   return `(${local.slice(0, 2)}) ${local.slice(2, 7)}-${local.slice(7)}`;
 }
-function whatsappHref(plan) {
+function whatsappHref(el) {
   const base = "https://wa.me/" + WHATSAPP_NUMBER;
-  if (!plan) return base;
-  return base + "?text=" + encodeURIComponent("Olá, tenho interesse no sistema PRIS no plano " + plan);
+  const text = el.dataset.whatsappText || (el.dataset.whatsappPlan ? "Olá, tenho interesse no sistema PRIS no plano " + el.dataset.whatsappPlan : "");
+  return text ? base + "?text=" + encodeURIComponent(text) : base;
 }
-document.querySelectorAll("[data-whatsapp], [data-whatsapp-plan]").forEach((el) => {
-  el.href = whatsappHref(el.dataset.whatsappPlan || "");
-  if (el.dataset.whatsappPlan) {
+document.querySelectorAll("[data-whatsapp], [data-whatsapp-plan], [data-whatsapp-text]").forEach((el) => {
+  el.href = whatsappHref(el);
+  if (el.dataset.whatsappPlan || el.dataset.whatsappText) {
     el.target = "_blank";
     el.rel = "noopener noreferrer";
   }

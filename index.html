@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
+<script>try{if(localStorage.getItem("pris-theme")==="dark")document.documentElement.dataset.theme="dark";}catch(e){}</script>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,6 +39,10 @@
       --l-border:#DDE4F5;
       --l-text:  #03045E;
       --l-muted: #54648A;
+      --ink:     #03045E;
+      --nav-bg:  rgba(255,255,255,0.85);
+      --nav-bg-solid: rgba(255,255,255,0.98);
+      --card:    #ffffff;
 
       --grad: linear-gradient(135deg, #03045E 0%, #1C4BE2 100%);
       --grad-bright: linear-gradient(135deg, #1C4BE2 0%, #4A7FFF 100%);
@@ -46,7 +51,8 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       font-family: 'Barlow', sans-serif;
       background: var(--l-bg);
@@ -77,7 +83,7 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; height: 76px;
-      background: rgba(255,255,255,0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(16px) saturate(140%);
       z-index: 1000; display: flex; align-items: center;
       padding: 0 6%; justify-content: space-between;
@@ -85,7 +91,7 @@
       border-bottom: 1px solid transparent;
     }
     nav.scrolled {
-      background: rgba(255,255,255,0.98);
+      background: var(--nav-bg-solid);
       backdrop-filter: blur(24px) saturate(160%);
       box-shadow: 0 4px 20px rgba(3,4,94,0.05);
       border-bottom: 1px solid var(--l-border);
@@ -94,7 +100,7 @@
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .nav-logo img { width: 150px; height: auto; transition: width 0.4s; }
     nav.scrolled .nav-logo img { width: 120px; }
-    .nav-logo-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--navy); letter-spacing: 0.04em; line-height: 1; transition: font-size 0.4s; }
+    .nav-logo-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 24px; color: var(--ink); letter-spacing: 0.04em; line-height: 1; transition: font-size 0.4s; }
     nav.scrolled .nav-logo-wordmark { font-size: 20px; }
     .nav-logo-sub { font-size: 8px; font-weight: 600; color: var(--accent); letter-spacing: 0.3em; text-transform: uppercase; }
     .nav-links a {
@@ -139,12 +145,12 @@
     }
     .btn-blue:hover { background: var(--bright); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(28,75,226,0.6); }
     .btn-ghost {
-      background: transparent; color: var(--navy);
+      background: transparent; color: var(--ink);
       border: 1.5px solid rgba(3,4,94,0.2);
     }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(28,75,226,0.05); }
     .btn-ghost-dark {
-      background: transparent; color: var(--navy);
+      background: transparent; color: var(--ink);
       border: 1.5px solid rgba(3,4,94,0.25);
     }
     .btn-ghost-dark:hover { border-color: var(--accent); color: var(--accent); }
@@ -164,7 +170,7 @@
     }
     .card-dark:hover::before { opacity: 1; }
     .card-light {
-      background: white; border: 1px solid var(--l-border);
+      background: var(--card); border: 1px solid var(--l-border);
       border-radius: 16px; padding: 36px;
       box-shadow: 0 2px 16px rgba(3,4,94,0.06);
       transition: box-shadow 0.3s, transform 0.4s;
@@ -172,8 +178,8 @@
     .card-light:hover { box-shadow: 0 12px 48px rgba(3,4,94,0.12); transform: translateY(-4px); }
 
     /* ── SECTIONS ── */
-    .sec-dark  { background: var(--d-bg); color: white; padding: 120px 6%; position: relative; z-index: 1; }
-    .sec-light { background: var(--l-bg); color: var(--l-text); padding: 120px 6%; position: relative; z-index: 1; }
+    .sec-dark  { background: var(--d-bg); color: white; padding: 120px 6%; position: relative; z-index: 1; overflow-x: clip; }
+    .sec-light { background: var(--l-bg); color: var(--l-text); padding: 120px 6%; position: relative; z-index: 1; overflow-x: clip; }
     .sec-navy  { background: var(--navy); color: white; padding: 120px 6%; position: relative; z-index: 1; overflow: hidden; }
 
     .container { max-width: 1200px; margin: 0 auto; }
@@ -209,7 +215,7 @@
       background: radial-gradient(circle at 80% 20%, rgba(28,75,226,0.08) 0%, transparent 50%);
     }
     .hero-inner { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
-    .hero-title { font-size: clamp(32px, 4.1vw, 52px); color: var(--navy); margin-bottom: 28px; line-height: 1.08; }
+    .hero-title { font-size: clamp(32px, 4.1vw, 52px); color: var(--ink); margin-bottom: 28px; line-height: 1.08; }
     .hero-desc { font-size: 18px; line-height: 1.7; color: var(--l-muted); margin-bottom: 44px; font-weight: 500; max-width: 540px; }
     .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 
@@ -272,7 +278,7 @@
 
     /* ── LIVE CHART SECTION (light) ── */
     .chart-frame {
-      background:white; border:1px solid var(--l-border); border-radius:16px;
+      background:var(--card); border:1px solid var(--l-border); border-radius:16px;
       overflow:hidden; box-shadow:0 8px 48px rgba(3,4,94,0.1);
     }
     .chart-topbar { display:flex; align-items:center; gap:8px; padding:14px 20px; border-bottom:1px solid var(--l-border); background:var(--offwhite); }
@@ -282,7 +288,7 @@
     .chart-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:28px; }
     .chart-kpi { }
     .chart-kpi-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--l-muted); margin-bottom:4px; }
-    .chart-kpi-val { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--navy); line-height:1; }
+    .chart-kpi-val { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--ink); line-height:1; }
     .chart-kpi-delta { font-size:10px; font-weight:700; color:#2DCB75; margin-top:2px; }
 
     /* ── FEAT ICONS ── */
@@ -310,9 +316,9 @@
       border-radius:16px; padding:44px 36px;
       position:relative; overflow:hidden;
     }
-    .price-card-base { background:#fff; border:1px solid var(--l-border); box-shadow:0 8px 32px rgba(3,4,94,0.05); }
+    .price-card-base { background:var(--card); border:1px solid var(--l-border); box-shadow:0 8px 32px rgba(3,4,94,0.05); }
     .price-card-featured {
-      background:#fff;
+      background:var(--card);
       border:2px solid var(--accent);
       box-shadow:0 24px 60px rgba(28,75,226,0.16);
       transform:translateY(-12px); z-index:2;
@@ -323,11 +329,12 @@
       font-size:11px; font-weight:800; letter-spacing:0.14em; text-transform:uppercase;
     }
     .price-check { display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:600; margin-bottom:12px; }
-    .price-name { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--navy); line-height:1; }
+    .price-name { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; color:var(--ink); line-height:1; }
     .price-name em { font-style:normal; color:var(--accent); }
-    .price-value { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--navy); line-height:1; }
+    .price-value { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--ink); line-height:1; }
     .price-value span { font-family:'Barlow',sans-serif; font-size:16px; font-weight:600; color:var(--l-muted); }
     .price-note { max-width:760px; margin:28px auto 0; font-size:13px; line-height:1.6; color:var(--l-muted); }
+    .price-card .btn { width:100%; justify-content:center; margin-top:auto; text-align:center; white-space:normal; line-height:1.3; }
 
     /* ── PARTNER CTA ── */
     .cta-abstract { position:absolute; inset:0; z-index:0; overflow:hidden; }
@@ -529,7 +536,7 @@
       width:40px; height:40px; cursor:pointer; background:none; border:none; padding:6px;
     }
     .nav-hamburger span {
-      display:block; width:22px; height:2px; background:var(--navy);
+      display:block; width:22px; height:2px; background:var(--ink);
       transition:transform 0.35s var(--ease-spring), opacity 0.2s;
       border-radius:2px;
     }
@@ -542,11 +549,11 @@
       background:rgba(2,3,24,0.97); backdrop-filter:blur(20px);
       z-index:999; display:flex; flex-direction:column; align-items:center;
       justify-content:center; gap:36px;
-      opacity:0; pointer-events:none;
+      opacity:0; pointer-events:none; visibility:hidden;
       transform:translateY(-16px);
       transition:opacity 0.4s var(--ease-spring), transform 0.4s var(--ease-spring);
     }
-    .mobile-menu.open { opacity:1; pointer-events:all; transform:none; }
+    .mobile-menu.open { opacity:1; pointer-events:all; visibility:visible; transform:none; }
     .mobile-menu a {
       font-family:'Barlow Condensed',sans-serif; font-size:36px; font-weight:800;
       color:rgba(255,255,255,0.85); text-decoration:none; text-transform:uppercase;
@@ -561,7 +568,7 @@
     .faq-q {
       width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px;
       padding:22px 0; background:none; border:none; cursor:pointer; text-align:left;
-      font-family:'Barlow',sans-serif; font-size:18px; font-weight:700; color:var(--navy);
+      font-family:'Barlow',sans-serif; font-size:18px; font-weight:700; color:var(--ink);
     }
     .faq-q iconify-icon { color:var(--accent); font-size:20px; transition:transform 0.25s; flex-shrink:0; }
     .faq-q[aria-expanded="true"] iconify-icon { transform:rotate(45deg); }
@@ -571,20 +578,78 @@
     .app-list { display:grid; gap:18px; margin-top:28px; }
     .app-list li { list-style:none; display:flex; gap:12px; align-items:flex-start; font-size:15px; font-weight:600; color:var(--l-muted); line-height:1.5; }
     .phone { width:min(280px, 100%); margin:0 auto; background:#10182e; border-radius:36px; padding:12px; box-shadow:0 30px 70px rgba(3,4,94,0.18); }
-    .phone-screen { background:var(--offwhite); border-radius:26px; overflow:hidden; min-height:460px; }
-    .phone-bar { display:flex; align-items:center; justify-content:space-between; padding:16px 14px 12px; background:#fff; }
+    .phone-screen { background:#F4F6FB; border-radius:26px; overflow:hidden; min-height:460px; }
+    .phone-bar { display:flex; align-items:center; justify-content:space-between; padding:16px 14px 12px; background:#fff; color:#54648A; }
     .phone-bar img { height:22px; width:auto; }
     .phone-body { display:grid; gap:10px; padding:14px; }
     .phone-card { background:#fff; border-radius:12px; padding:12px 14px; }
-    .phone-card span { display:block; font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--l-muted); }
-    .phone-card strong { display:block; margin-top:4px; font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:var(--navy); line-height:1; }
-    .phone-alert { background:#fff; border-radius:12px; padding:12px 14px; font-size:13px; font-weight:600; color:var(--navy); }
+    .phone-card span { display:block; font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#54648A; }
+    .phone-card strong { display:block; margin-top:4px; font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:900; color:#03045E; line-height:1; }
+    .phone-alert { background:#fff; border-radius:12px; padding:12px 14px; font-size:13px; font-weight:600; color:#03045E; }
     @media(max-width:768px) {
       .pillar-grid { grid-template-columns:1fr; }
       .segment-grid { grid-template-columns:1fr; }
     }
 
+    .band-pad { overflow-x: clip; }
+    .footer-legal {
+      max-width:1200px; margin:48px auto 0; padding-top:28px;
+      border-top:1px solid var(--l-border);
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px 24px; flex-wrap:wrap;
+    }
+    .footer-legal span { font-size:12px; color:var(--l-muted); }
+
+    .theme-toggle {
+      position:fixed; right:20px; bottom:20px; z-index:1400;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      height:48px; padding:0 16px; border-radius:999px;
+      border:1px solid var(--l-border); background:var(--card); color:var(--ink);
+      box-shadow:0 10px 30px rgba(3,4,94,0.16);
+      cursor:pointer; font-family:'Barlow',sans-serif; font-size:13px; font-weight:700;
+      touch-action:manipulation;
+    }
+    .theme-toggle:hover { transform:translateY(-2px); }
+    .theme-toggle iconify-icon { font-size:18px; }
+    .theme-toggle .theme-icon-light { display:none; }
+    .theme-label::after { content:'Modo escuro'; }
+    html[data-theme="dark"] .theme-toggle .theme-icon-dark { display:none; }
+    html[data-theme="dark"] .theme-toggle .theme-icon-light { display:inline-flex; }
+    html[data-theme="dark"] .theme-label::after { content:'Modo claro'; }
+
+    html[data-theme="dark"] {
+      color-scheme:dark;
+      --l-bg:#070b16;
+      --offwhite:#0c1222;
+      --l-surf:#141c33;
+      --l-border:rgba(255,255,255,0.12);
+      --l-text:#f3f6ff;
+      --l-muted:#b7c0d6;
+      --ink:#f4f7ff;
+      --nav-bg:rgba(7,11,22,0.88);
+      --nav-bg-solid:rgba(7,11,22,0.96);
+      --card:#121a2e;
+      --white:#070b16;
+    }
+    html[data-theme="dark"] .btn-ghost,
+    html[data-theme="dark"] .btn-ghost-dark {
+      border-color:rgba(255,255,255,0.28);
+    }
+    html[data-theme="dark"] .btn-ghost:hover,
+    html[data-theme="dark"] .btn-ghost-dark:hover {
+      background:rgba(28,75,226,0.16);
+    }
+    html[data-theme="dark"] .brand-logo {
+      filter:invert(1);
+      mix-blend-mode:screen;
+    }
+
     /* ── RESPONSIVE ── */
+    @media(max-width:1180px) {
+      nav .nav-links, nav .nav-cta { display:none !important; }
+      .nav-hamburger { display:flex !important; }
+      .grid-footer { gap:40px !important; }
+    }
     @media(max-width:1024px) {
       .hero-inner { grid-template-columns:1fr; }
       .dash-card { max-width:480px; width:100%; animation:none; }
@@ -605,8 +670,8 @@
     @media(max-width:768px) {
       .sec-dark,.sec-light,.sec-navy { padding:72px 20px; }
       nav { padding:0 20px; height:60px; }
-      .nav-links { display:none !important; }
-      .nav-cta { display:none; }
+      nav .nav-links { display:none !important; }
+      nav .nav-cta { display:none; }
       .nav-hamburger { display:flex !important; }
       .band-pad { padding:72px 20px !important; }
       .app-grid { grid-template-columns:1fr !important; }
@@ -636,6 +701,11 @@
       .sec-header { margin-bottom:48px; }
       .wave-div svg { height:50px; }
       .nav-logo img { width: 130px !important; }
+      .price-card { padding:32px 22px; }
+      .footer-legal { align-items:flex-start; }
+      .theme-toggle { right:max(12px, env(safe-area-inset-right)); bottom:max(12px, env(safe-area-inset-bottom)); width:48px; padding:0; }
+      .theme-toggle span { display:none; }
+      .hero-desc { font-size:16px; }
     }
     @media(max-width:480px) {
       .metrics-strip { grid-template-columns:1fr; }
@@ -644,10 +714,18 @@
       .chart-kpis { grid-template-columns:1fr !important; }
       .hero-btns { flex-direction:column; }
       .hero-btns .btn { width:100%; justify-content:center; }
+      .price-card { padding:28px 18px; }
+      .mobile-menu a { font-size:24px; }
     }
   </style>
 </head>
 <body>
+
+<button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Ver versão escura">
+  <iconify-icon class="theme-icon-dark" icon="solar:moon-bold"></iconify-icon>
+  <iconify-icon class="theme-icon-light" icon="solar:sun-bold"></iconify-icon>
+  <span class="theme-label"></span>
+</button>
 
 <!-- SCROLL PROGRESS -->
 <div class="scroll-bar" id="scroll-bar"></div>
@@ -655,7 +733,7 @@
 <!-- NAV -->
 <nav id="main-nav">
   <a href="#hero" class="nav-logo">
-    <img src="assets/logo-pris.svg" alt="PRIS Sistemas" />
+    <img class="brand-logo" src="assets/logo-pris.svg" alt="PRIS Sistemas" />
   </a>
   <div style="display:flex;align-items:center;gap:40px;">
     <div class="nav-links" style="display:flex;gap:22px;">
@@ -664,7 +742,7 @@
       <a href="#sobre">Sobre</a>
       <a href="#faq">FAQ</a>
       <a href="#como-funciona">Como Funciona</a>
-      <a href="#precos">Preços</a>
+      <a href="#precos">Planos</a>
     </div>
     <button class="nav-cta" onclick="openModal()">Demo Grátis <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></button>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleMenu()">
@@ -680,7 +758,7 @@
   <a href="#sobre" onclick="toggleMenu()">Sobre</a>
   <a href="#faq" onclick="toggleMenu()">FAQ</a>
   <a href="#como-funciona" onclick="toggleMenu()">Como Funciona</a>
-  <a href="#precos" onclick="toggleMenu()">Preços</a>
+  <a href="#precos" onclick="toggleMenu()">Planos</a>
   <button class="btn btn-blue" onclick="toggleMenu();openModal();" style="margin-top:16px;padding:18px 48px;font-size:16px;">Agendar Demo</button>
 </div>
 
@@ -801,16 +879,16 @@
 <section class="sec-light section-fade" id="sobre">
   <div class="container" style="text-align:center;">
     <span class="t-label t-label-light reveal">Sobre a Pris</span>
-    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);">Conheça a <span class="grad-text">Pris.</span></h2>
+    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--ink);">Conheça a <span class="grad-text">Pris.</span></h2>
     <!-- TODO: conteúdo pendente — texto enviado pela Natália -->
     <p class="reveal delay-2" style="font-size:17px;line-height:1.7;color:var(--l-muted);max-width:640px;margin:20px auto 0;">Mais de 20 anos acompanhando a rotina de quem vende. O texto completo desta história entra aqui.</p>
     <div class="pillar-grid">
       <div class="card-light reveal delay-1">
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">Experiência na rotina</h3>
+        <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:10px;">Experiência na rotina</h3>
         <p style="font-size:15px;line-height:1.7;color:var(--l-muted);">O sistema nasce do dia a dia de supermercados, mercearias e distribuidoras, não de uma tela genérica.</p>
       </div>
       <div class="card-light reveal delay-2">
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:10px;">Proximidade no atendimento</h3>
+        <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:10px;">Proximidade no atendimento</h3>
         <p style="font-size:15px;line-height:1.7;color:var(--l-muted);">Uma equipe próxima para orientar a implantação, o uso e as dúvidas da operação.</p>
       </div>
     </div>
@@ -880,7 +958,7 @@
     <div class="produto-grid" style="display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center;">
       <div>
         <span class="t-label t-label-light reveal-blur">Performance em tempo real</span>
-        <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:var(--navy);margin-bottom:24px;">
+        <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:var(--ink);margin-bottom:24px;">
           Dados que <span class="grad-text">iluminam</span> decisões.
         </h2>
         <p style="font-size:16px;line-height:1.75;color:var(--l-muted);margin-bottom:40px;" class="reveal delay-2">
@@ -925,7 +1003,7 @@
       <span class="t-label reveal">Módulos do Sistema</span>
       <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:white;">Tudo que seu negócio <span class="grad-text">precisa.</span></h2>
     </div>
-    <div class="feat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px;">
+    <div class="feat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:24px;">
       <div class="card-dark tilt-card reveal delay-1">
         <div class="tilt-inner">
         <div class="feat-icon feat-icon-plain"><iconify-icon icon="solar:bill-linear"></iconify-icon></div>
@@ -999,7 +1077,7 @@
     <div class="app-grid">
       <div>
         <span class="t-label t-label-light reveal">Mobilidade</span>
-        <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:var(--navy);margin-bottom:16px;">Acompanhe pelo <span class="grad-text">celular.</span></h2>
+        <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(32px,4vw,52px);color:var(--ink);margin-bottom:16px;">Acompanhe pelo <span class="grad-text">celular.</span></h2>
         <p class="reveal delay-2" style="font-size:16px;line-height:1.75;color:var(--l-muted);">A rotina não fica só no balcão. Pelo celular dá para consultar a operação e fazer a contagem de estoque sem voltar ao computador.</p>
         <ul class="app-list reveal delay-3">
           <!-- TODO: conteúdo pendente -->
@@ -1017,7 +1095,7 @@
           <div class="phone-screen">
             <div class="phone-bar">
               <img src="assets/logo-pris.svg" alt="" />
-              <span style="font-size:11px;font-weight:700;color:var(--l-muted);">Hoje</span>
+              <span style="font-size:11px;font-weight:700;color:#54648A;">Hoje</span>
             </div>
             <div class="phone-body">
               <div class="phone-card"><span>Vendas do dia</span><strong>R$ 12.480</strong></div>
@@ -1037,25 +1115,25 @@
   <div class="container">
     <div class="sec-header">
       <span class="t-label t-label-light reveal">Implementação</span>
-      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);">Começar é <span class="grad-text">simples.</span></h2>
+      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--ink);">Começar é <span class="grad-text">simples.</span></h2>
     </div>
     <div class="steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
       <div class="card-light reveal delay-1">
         <div class="step-num step-num-light">01</div>
         <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:calendar-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:12px;">Demonstração</h3>
+        <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px;">Demonstração</h3>
         <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Agende uma demo gratuita e entenda como o PRIS se encaixa na sua operação.</p>
       </div>
       <div class="card-light reveal delay-2">
         <div class="step-num step-num-light">02</div>
         <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:12px;">Configuração</h3>
+        <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px;">Configuração</h3>
         <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Nossa equipe importa dados, configura o sistema e treina sua equipe completa.</p>
       </div>
       <div class="card-light reveal delay-3">
         <div class="step-num step-num-light">03</div>
         <div class="feat-icon feat-icon-light"><iconify-icon icon="solar:rocket-bold-duotone"></iconify-icon></div>
-        <h3 style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:12px;">Operação</h3>
+        <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px;">Operação</h3>
         <p style="font-size:14px;color:var(--l-muted);line-height:1.7;">Empresa rodando em até 7 dias com suporte VIP durante toda a implantação.</p>
       </div>
     </div>
@@ -1143,7 +1221,7 @@
   <div class="container">
     <div class="sec-header">
       <span class="t-label t-label-light reveal">Dúvidas</span>
-      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);">Perguntas <span class="grad-text">frequentes.</span></h2>
+      <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--ink);">Perguntas <span class="grad-text">frequentes.</span></h2>
     </div>
     <div class="faq-list">
       <div class="faq-item">
@@ -1168,17 +1246,15 @@
 <!-- ═══ PREÇOS (offwhite) ═══ -->
 <section id="precos" class="band-pad" style="background:var(--offwhite);padding:80px 6% 120px;position:relative;z-index:1;">
   <div class="container" style="text-align:center;">
-    <span class="t-label t-label-light reveal">Investimento</span>
-    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--navy);margin-bottom:16px;">Escolha o <span class="grad-text">PRIS</span> para o seu negócio.</h2>
+    <span class="t-label t-label-light reveal">Planos</span>
+    <h2 class="t-display t-heading reveal delay-1" style="font-size:clamp(36px,5vw,60px);color:var(--ink);margin-bottom:16px;">Escolha o <span class="grad-text">PRIS</span> para o seu negócio.</h2>
     <p class="reveal delay-2" style="font-size:17px;color:var(--l-muted);margin-bottom:64px;">Mais organização, controle e agilidade para sua empresa.</p>
 
     <div class="price-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;">
       <div class="price-card price-card-base reveal delay-1" style="display:flex;flex-direction:column;text-align:left;">
         <div class="price-name">PRIS <em>MEI</em></div>
         <p style="font-size:14px;line-height:1.6;color:var(--l-muted);margin:12px 0 28px;">Praticidade para organizar o dia a dia do microempreendedor.</p>
-        <div style="font-size:13px;font-weight:600;color:var(--l-muted);margin-bottom:6px;">A partir de</div>
-        <div class="price-value" style="margin-bottom:28px;">R$ 99,90<span>/mês</span></div>
-        <div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;">Recursos para sua rotina</div>
+        <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px;">Recursos para sua rotina</div>
         <div style="display:grid;margin-bottom:28px;">
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Cadastro de clientes e produtos</span></div>
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Controle de vendas</span></div>
@@ -1187,16 +1263,13 @@
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Consulta de movimentações</span></div>
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Relatórios de acompanhamento</span></div>
         </div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:auto;" onclick="openModal()">Conhecer o plano <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+        <a class="btn btn-blue" data-whatsapp-plan="PRIS MEI" href="https://wa.me/5565976010411" style="width:100%;justify-content:center;margin-top:auto;">Consultar no WhatsApp <iconify-icon icon="solar:chat-round-line-linear"></iconify-icon></a>
       </div>
 
       <div class="price-card price-card-featured reveal delay-2" style="display:flex;flex-direction:column;text-align:left;">
-        <div class="price-banner">Oferta de fim de ano</div>
         <div class="price-name">PRIS <em>Negócios</em></div>
         <p style="font-size:14px;line-height:1.6;color:var(--l-muted);margin:12px 0 28px;">Gestão integrada para acompanhar sua operação e seus resultados.</p>
-        <div style="font-size:13px;font-weight:600;color:var(--l-muted);margin-bottom:6px;">A partir de</div>
-        <div class="price-value" style="margin-bottom:28px;">R$ 269,00<span>/mês</span></div>
-        <div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;">Mais controle para sua empresa</div>
+        <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px;">Mais controle para sua empresa</div>
         <div style="display:grid;margin-bottom:28px;">
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Vendas, estoque e financeiro integrados</span></div>
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Frente de caixa (PDV)</span></div>
@@ -1205,14 +1278,13 @@
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Orçamentos e pedidos de venda</span></div>
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Relatórios e indicadores de gestão</span></div>
         </div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:auto;" onclick="openModal()">Solicitar demonstração <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+        <a class="btn btn-blue" data-whatsapp-plan="PRIS Negócios" href="https://wa.me/5565976010411" style="width:100%;justify-content:center;margin-top:auto;">Consultar no WhatsApp <iconify-icon icon="solar:chat-round-line-linear"></iconify-icon></a>
       </div>
 
       <div class="price-card price-card-base reveal delay-3" style="display:flex;flex-direction:column;text-align:left;">
         <div class="price-name">PRIS <em>Sob Medida</em></div>
         <p style="font-size:14px;line-height:1.6;color:var(--l-muted);margin:12px 0 28px;">Configuração adequada às necessidades da sua operação.</p>
-        <div class="price-value" style="margin:36px 0 28px;font-size:40px;">Sob consulta</div>
-        <div style="font-size:15px;font-weight:800;color:var(--navy);margin-bottom:14px;">Configuração personalizada</div>
+        <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:14px;">Configuração personalizada</div>
         <div style="display:grid;margin-bottom:28px;">
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Avaliação das necessidades da empresa</span></div>
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Definição dos módulos necessários</span></div>
@@ -1221,10 +1293,10 @@
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Recursos para operações específicas</span></div>
           <div class="price-check"><iconify-icon icon="solar:check-circle-bold" style="color:#16a34a;font-size:18px;flex-shrink:0;"></iconify-icon><span style="font-size:14px;font-weight:600;color:var(--l-muted);">Proposta conforme o escopo contratado</span></div>
         </div>
-        <button class="btn btn-blue" style="width:100%;justify-content:center;margin-top:auto;" onclick="openModal()">Falar com a equipe <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+        <a class="btn btn-blue" data-whatsapp-plan="PRIS Sob Medida" href="https://wa.me/5565976010411" style="width:100%;justify-content:center;margin-top:auto;">Consultar no WhatsApp <iconify-icon icon="solar:chat-round-line-linear"></iconify-icon></a>
       </div>
     </div>
-    <p class="price-note">Proposta de apresentação. Recursos, usuários, emissão fiscal e valores sujeitos à configuração e à validação comercial. Consulte condições de implantação e da oferta.</p>
+    <p class="price-note">A consulta de cada plano abre o WhatsApp. Recursos, usuários e emissão fiscal dependem da configuração da operação.</p>
   </div>
 </section>
 
@@ -1236,32 +1308,32 @@
   <div class="grid-footer" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:80px;position:relative;z-index:1;">
     <div>
       <div style="display:flex;align-items:center;margin-bottom:24px;">
-        <img src="assets/logo-pris.svg" alt="PRIS Sistemas" style="width:160px; height:auto;" />
+        <img class="brand-logo" src="assets/logo-pris.svg" alt="PRIS Sistemas" style="width:160px; height:auto;" />
       </div>
       <p style="font-size:14px;line-height:1.7;color:var(--l-muted);max-width:300px;margin-bottom:28px;">Liderando a transformação digital de varejos com tecnologia de ponta e foco total no controle do gestor.</p>
       <div style="display:flex;gap:14px;">
-        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-bg);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:instagram-linear"></iconify-icon></a>
-        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-bg);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:linkedin-linear"></iconify-icon></a>
+        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-surf);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:instagram-linear"></iconify-icon></a>
+        <a href="#" style="width:36px;height:36px;border-radius:8px;background:var(--l-surf);border:1px solid var(--l-border);display:flex;align-items:center;justify-content:center;color:var(--l-muted);font-size:16px;text-decoration:none;transition:0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--l-border)';this.style.color='var(--l-muted)'"><iconify-icon icon="solar:linkedin-linear"></iconify-icon></a>
       </div>
     </div>
     <div>
-      <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Navegação</h4>
+      <h4 style="font-size:10px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Navegação</h4>
       <a href="#hero" class="footer-link">Início</a>
       <a href="#sobre" class="footer-link">Sobre</a>
       <a href="#segmentos" class="footer-link">Setores</a>
       <a href="#faq" class="footer-link">FAQ</a>
-      <a href="#precos" class="footer-link">Preços</a>
+      <a href="#precos" class="footer-link">Planos</a>
     </div>
     <div>
-      <h4 style="font-size:10px;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Atendimento</h4>
+      <h4 style="font-size:10px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:24px;">Atendimento</h4>
       <p style="font-size:14px;margin-bottom:8px;"><a data-whatsapp="label" href="https://wa.me/5565976010411" style="color:var(--l-muted);text-decoration:none;">(65) 97601-0411</a></p>
       <p style="font-size:14px;color:var(--l-muted);margin-bottom:24px;">contato@prissistemas.com.br</p>
       <button class="nav-cta" onclick="openModal()" style="font-size:11px;">Agendar Demo</button>
     </div>
   </div>
-  <div style="max-width:1200px;margin:48px auto 0;padding-top:28px;border-top:1px solid var(--l-border);display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-size:12px;color:var(--l-muted);">© 2025 PRIS Sistemas · Tecnologia para Crescer.</span>
-    <span style="font-size:12px;color:var(--l-muted);">Todos os direitos reservados.</span>
+  <div class="footer-legal">
+    <span>© 2025 PRIS Sistemas · Tecnologia para Crescer.</span>
+    <span>Todos os direitos reservados.</span>
   </div>
 </footer>
 
@@ -1684,10 +1756,38 @@ function whatsappLabel(number) {
   const local = number.replace(/^55/, "");
   return `(${local.slice(0, 2)}) ${local.slice(2, 7)}-${local.slice(7)}`;
 }
-document.querySelectorAll("[data-whatsapp]").forEach((el) => {
-  el.href = "https://wa.me/" + WHATSAPP_NUMBER;
+function whatsappHref(plan) {
+  const base = "https://wa.me/" + WHATSAPP_NUMBER;
+  if (!plan) return base;
+  return base + "?text=" + encodeURIComponent("Olá, tenho interesse no sistema PRIS no plano " + plan);
+}
+document.querySelectorAll("[data-whatsapp], [data-whatsapp-plan]").forEach((el) => {
+  el.href = whatsappHref(el.dataset.whatsappPlan || "");
+  if (el.dataset.whatsappPlan) {
+    el.target = "_blank";
+    el.rel = "noopener noreferrer";
+  }
   if (el.dataset.whatsapp === "label") el.textContent = whatsappLabel(WHATSAPP_NUMBER);
 });
+
+const themeToggle = document.getElementById("theme-toggle");
+function syncThemeToggle() {
+  const dark = document.documentElement.dataset.theme === "dark";
+  themeToggle.setAttribute("aria-pressed", String(dark));
+  themeToggle.setAttribute("aria-label", dark ? "Ver versão clara" : "Ver versão escura");
+}
+themeToggle.addEventListener("click", () => {
+  const dark = document.documentElement.dataset.theme === "dark";
+  if (dark) {
+    delete document.documentElement.dataset.theme;
+    localStorage.setItem("pris-theme", "light");
+  } else {
+    document.documentElement.dataset.theme = "dark";
+    localStorage.setItem("pris-theme", "dark");
+  }
+  syncThemeToggle();
+});
+syncThemeToggle();
 
 /* ── FAQ ── */
 document.querySelectorAll(".faq-q").forEach((btn) => {
